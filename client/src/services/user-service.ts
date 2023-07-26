@@ -1,5 +1,5 @@
-import httpService from "../../../shared/redux/services/http-service";
-import localStorageService from "../../../shared/redux/services/localStorage-service";
+import httpService from "./http-service";
+import localStorageService from "./local-storage-service";
 
 const userEndpoint = "user/";
 
@@ -23,7 +23,7 @@ const userService = {
       userEndpoint + localStorageService.getUserId(),
       payload
     );
-    
+
     return data;
   },
 };

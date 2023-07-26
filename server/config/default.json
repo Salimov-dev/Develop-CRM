@@ -1,0 +1,6 @@
+{
+  "port": "8080",
+  "mongoUri": "mongodb+srv://ruspb1987:rtkNpn2w1Jc8poKQ@cluster0.ejnptrn.mongodb.net/?retryWrites=true&w=majority",
+  "accessSecret": "the best secure key",
+  "refreshSecret": "super puper refresh key"
+}
