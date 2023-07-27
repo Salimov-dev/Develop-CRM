@@ -36,7 +36,7 @@
       "readyToRenovation": "Неизвестно"
     },
     "lastContact": {
-      "date": "Wed Jul 19 2023 11:23:24",
+      "created_at": "Wed Jul 19 2023 11:23:24",
       "result": "Созвонились обсудили вопросы"
     },
     "description": {
@@ -81,7 +81,7 @@
       "readyToRenovation": "Неизвестно"
     },
     "lastContact": {
-      "date": "Thu May 11 2023 22:33:24",
+      "created_at": "Wed Jul 19 2023 11:23:24",
       "result": "Созвонились обсудили вопросы"
     },
     "description": {
@@ -119,6 +119,10 @@
       "rentSquare": "700",
       "premisesHeight": "4.2",
       "premisesFloor": "Бетон, антипыль, 3т/м2"
+    },
+    "lastContact": {
+      "created_at": "Wed Jul 19 2023 11:23:24",
+      "result": "Созвонились обсудили вопросы"
     },
     "accordTerms": {
       "readyToRent": "Нет",
@@ -164,6 +168,10 @@
       "rentSquare": "700",
       "premisesHeight": "4.2",
       "premisesFloor": "Бетон, антипыль, 3т/м2"
+    },
+    "lastContact": {
+      "created_at": "Wed Jul 19 2023 11:23:24",
+      "result": "Созвонились обсудили вопросы"
     },
     "accordTerms": {
       "readyToRent": "Нет",
@@ -218,6 +226,10 @@
         "result": "Созвонились обсудили вопросы"
       },
       "readyToRenovation": "Неизвестно"
+    },
+    "lastContact": {
+      "created_at": "Wed Jul 19 2023 11:23:24",
+      "result": "Созвонились обсудили вопросы"
     },
     "description": {
       "comment": "ТЦ Эврика. Форматное помещение занято Семишаговым",

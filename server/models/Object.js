@@ -3,8 +3,10 @@ const { Schema, model } = require("mongoose");
 const schema = new Schema(
   {
     status: String,
-    company: { type: Schema.Types.ObjectId, ref: "Company" },
-    userId: { type: Schema.Types.ObjectId, ref: "User" },
+    userId: { type: String, required: true },
+    company: { type: String, required: true },
+    // company: { type: Schema.Types.ObjectId, ref: "Company", required: true },
+    // userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
     contact: {
       email: String,
       name: String,

@@ -34,7 +34,7 @@ module.exports = async () => {
 
   const company = await Company.find();
   if (company.length !== companiesMock.length) {
-    await createInitialEntity(ObjectStatus, companiesMock);
+    await createInitialEntity(Company, companiesMock);
   }
 };
 

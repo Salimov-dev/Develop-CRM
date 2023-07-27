@@ -1,10 +1,11 @@
-import { CssBaseline } from "@mui/material";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import { Box } from "@mui/material";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import ScrollToTop from "./utils/scroll-to-top";
 import AppLoader from "./hoc/app-loader";
 import Main from "./layouts/main";
+import { ColorModeContext, useMode } from "./theme";
 
 const AppStyled = styled(Box)`
   height: 100vh;
@@ -25,16 +26,21 @@ const AppStyled = styled(Box)`
 `;
 
 function App() {
+  const [theme, colorMode] = useMode();
   return (
-    <AppStyled>
-      <AppLoader>
+    <ColorModeContext.Provider value={colorMode}>
+      <ThemeProvider theme={theme}>
         <CssBaseline />
-        <BrowserRouter>
-          <ScrollToTop />
-         <Main/>
-        </BrowserRouter>
-      </AppLoader>
-    </AppStyled>
+        <AppStyled>
+          <AppLoader>
+            <BrowserRouter>
+              <ScrollToTop />
+              <Main />
+            </BrowserRouter>
+          </AppLoader>
+        </AppStyled>
+      </ThemeProvider>
+    </ColorModeContext.Provider>
   );
 }
 
