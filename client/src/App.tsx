@@ -5,9 +5,17 @@ import styled from "@emotion/styled";
 import ScrollToTop from "./utils/scroll-to-top";
 import AppLoader from "./hoc/app-loader";
 import Main from "./layouts/main";
+// import Objects from "./layouts/objects";
+// import Meetings from "./layouts/meetings";
+// import Presentations from "./layouts/poresentations";
+// import Managers from "./layouts/managers";
+// import Materials from "./layouts/materials";
 import { ColorModeContext, useMode } from "./theme";
+import TopBar from "./components/UI/topbar/topbar";
+import Sidebar from "./components/UI/sidebar/sidebar";
 
 const AppStyled = styled(Box)`
+  display: flex;
   height: 100vh;
   overflow: auto;
 
@@ -25,20 +33,28 @@ const AppStyled = styled(Box)`
   }
 `;
 
+const RightSide = styled(Box)`
+  width: 100%;
+`;
+
 function App() {
   const [theme, colorMode] = useMode();
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <AppStyled>
-          <AppLoader>
-            <BrowserRouter>
-              <ScrollToTop />
-              <Main />
-            </BrowserRouter>
-          </AppLoader>
-        </AppStyled>
+        <AppLoader>
+          <ScrollToTop />
+          <AppStyled>
+            <Sidebar />
+            <RightSide>
+              <TopBar />
+              <Routes>
+                <Route index path="" element={<Main />} />
+              </Routes>
+            </RightSide>
+          </AppStyled>
+        </AppLoader>
       </ThemeProvider>
     </ColorModeContext.Provider>
   );

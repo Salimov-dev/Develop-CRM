@@ -1,9 +1,11 @@
 import { useSelector } from "react-redux";
 import { getObjectsList } from "../store/objects.store";
-import TopBar from "../components/UI/top-bar/top-bar";
+import TopBar from "../components/UI/topbar/topbar";
 
-export default function ButtonAppBar() {
+const Main = () => {
   const objects = useSelector(getObjectsList());
   console.log("objects", objects);
-  return <TopBar />;
-}
+  return <h1>Main</h1>;
+};
+
+export default Main;
