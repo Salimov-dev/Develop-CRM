@@ -21,6 +21,22 @@ const Sidebar = () => {
           background: `${colors.primary[400]} !important`,
           width: !isCollapsed ? "220px" : "inherit",
         },
+        "& .ps-sidebar-root": {
+          border: "none",
+        },
+        "& .pro-icon-wrapper": {
+          backgroundColor: "transparent !important",
+        },
+        "& .pro-inner-item": {
+          padding: "5px 35px 5px 20px !important",
+        },
+        "& .ps-menu-button:hover": {
+          color: "#868dfb !important",
+          backgroundColor: "inherit !important",
+        },
+        "& .ps-menu-button.ps-active": {
+          color: "#868dfb !important",
+        },
       }}
     >
       <ProSidebar collapsed={isCollapsed}>

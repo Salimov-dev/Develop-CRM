@@ -1,4 +1,4 @@
-import { Box, Typography, styled } from "@mui/material";
+import { Typography } from "@mui/material";
 import Item from "./item";
 // icons
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
@@ -9,28 +9,11 @@ import BusinessCenterOutlinedIcon from "@mui/icons-material/BusinessCenterOutlin
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
-
-const Component = styled(Box)`
-  height: 100vh;
-  overflow: hidden;
-
-  ::-webkit-scrollbar {
-    width: 0px;
-  }
-
-  ::-webkit-scrollbar-track {
-    border-radius: 100vw;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background-color: gray;
-    border-radius: 100vw;
-  }
-`;
+import { ItemsListContainer } from "../styled/styled";
 
 const ItemsList = ({ isCollapsed, selected, setSelected, colors }) => {
   return (
-    <Component>
+    <ItemsListContainer>
       <Item
         title="Главная"
         to="/"
@@ -124,7 +107,7 @@ const ItemsList = ({ isCollapsed, selected, setSelected, colors }) => {
         selected={selected}
         setSelected={setSelected}
       />
-    </Component>
+    </ItemsListContainer>
   );
 };
 

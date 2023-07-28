@@ -8,7 +8,7 @@ const Header = ({ isCollapsed, setIsCollapsed, colors }) => {
       onClick={() => setIsCollapsed(!isCollapsed)}
       icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
       style={{
-        margin: "10px 0 20px 0",
+        margin: "10px 0 10px 0",
         color: colors.grey[100],
       }}
     >
@@ -18,6 +18,7 @@ const Header = ({ isCollapsed, setIsCollapsed, colors }) => {
           justifyContent="space-between"
           alignItems="center"
           ml="15px"
+          sx={{ marginLeft: "8px" }}
         >
           <Typography variant="h3" color={colors.grey[100]}>
             CRM

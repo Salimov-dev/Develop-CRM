@@ -1,7 +1,5 @@
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import { Box } from "@mui/material";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import styled from "@emotion/styled";
+import { Routes, Route, Navigate } from "react-router-dom";
 import ScrollToTop from "./utils/scroll-to-top";
 import AppLoader from "./hoc/app-loader";
 import Main from "./layouts/main";
@@ -13,29 +11,10 @@ import Main from "./layouts/main";
 import { ColorModeContext, useMode } from "./theme";
 import TopBar from "./components/UI/topbar/topbar";
 import Sidebar from "./components/UI/sidebar/sidebar";
-
-const AppStyled = styled(Box)`
-  display: flex;
-  height: 100vh;
-  overflow: auto;
-
-  ::-webkit-scrollbar {
-    width: 5px;
-  }
-
-  ::-webkit-scrollbar-track {
-    border-radius: 100vw;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background-color: gray;
-    border-radius: 100vw;
-  }
-`;
-
-const RightSide = styled(Box)`
-  width: 100%;
-`;
+import Objects from "./layouts/objects";
+import { AppStyled, RightSide } from "./styled";
+import Login from "./layouts/login/login";
+import Signup from "./layouts/signup";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -51,6 +30,19 @@ function App() {
               <TopBar />
               <Routes>
                 <Route index path="" element={<Main />} />
+                <Route index path="objects" element={<Objects />} />
+
+                <Route path="auth" element={<Login />}>
+                  <Route index element={<Navigate to="/auth/login" />} />
+                  <Route path={"login"} element={<Login />} />
+                  <Route path="*" element={<Navigate to="" />} />
+                </Route>
+
+                <Route path="auth" element={<Signup />}>
+                  <Route index element={<Navigate to="/auth/SignUp" />} />
+                  <Route path={"signup"} element={<Signup />} />
+                  <Route path="*" element={<Navigate to="" />} />
+                </Route>
               </Routes>
             </RightSide>
           </AppStyled>
