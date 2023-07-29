@@ -6,11 +6,12 @@ import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import { Box, Button, Menu, MenuItem, Typography } from "@mui/material";
 // store
-// import { logOut } from "../../../entities/user/store/users-store";
+import { logOut } from "../../../../store/users-store";
 
 const Component = styled(Box)`
   display: flex;
   gap: 12px;
+  margin-left: 0px;
 `;
 
 const UserName = styled(Typography)`
@@ -44,22 +45,32 @@ const UserMenu = ({ currentUser }) => {
 
   const handleLogOut = () => {
     setAnchorEl(null);
-    // dispatch(logOut());
+    dispatch(logOut());
     navigate("/");
   };
 
   return (
     <Component>
-      <Box
+      <Button
         aria-controls={open ? "basic-menu" : undefined}
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
+        sx={{
+          "&:hover *": {
+            color: "white",
+          },
+        }}
       >
-        {/* <Avatar src={currentUser.image} /> */}
-        {/* <UserName>{currentUser.name}</UserName> */}
-        <UserName>Руслан</UserName>
-      </Box>
+        <Avatar src={currentUser.image} />
+        <UserName
+          sx={{
+            color: open ? "white !important" : "inherit",
+          }}
+        >
+          {currentUser.name}
+        </UserName>
+      </Button>
       <Menu
         id="basic-menu"
         anchorEl={anchorEl}

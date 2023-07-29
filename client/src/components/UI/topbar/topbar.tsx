@@ -9,14 +9,19 @@ import { Component, LeftSide, RightSide, SearchField } from "./styled/styled";
 import UserMenu from "./components/user-menu";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../common/loader";
+import { useSelector } from "react-redux";
+import {
+  getCurrentUserData,
+  getUsersLoadingStatus,
+} from "../../../store/users-store";
 
 const TopBar = () => {
   const theme = useTheme();
   const colorMode = useContext(ColorModeContext);
-
-  const currentUser = false;
-  const isLoading = false;
+  const currentUser = useSelector(getCurrentUserData());
+  const isLoading = useSelector(getUsersLoadingStatus());
   const navigate = useNavigate();
+
   const handleGoToLogin = () => {
     navigate("auth/login");
   };

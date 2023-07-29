@@ -37,7 +37,8 @@ const schema = new Schema(
     location: {
       city: { type: String, required: true },
       district: { type: String, required: true },
-      adress: { type: String, required: true },
+      address: { type: String, required: true },
+      metro: { type: String, required: true },
       latitude: { type: Number, required: true },
       longitude: { type: Number, required: true },
       zoom: { type: Number, required: true },

@@ -1,7 +1,7 @@
 import { createAction, createSlice } from "@reduxjs/toolkit";
 import localStorageService from "../services/local-storage-service";
 import authService from "../services/auth-service";
-import { generetaAuthError } from "../utils/generate-auth-error"; 
+import { generetaAuthError } from "../utils/generate-auth-error";
 import userService from "../services/user-service";
 
 const initialState = localStorageService.getAccessToken()
@@ -87,6 +87,7 @@ export const login =
     try {
       const data = await authService.login({ email, password });
       localStorageService.setTokens(data);
+
       dispatch(authRequestSuccess({ userId: data.userId }));
       dispatch(loadUsersList());
     } catch (error) {
@@ -120,9 +121,8 @@ export const loadUsersList = () => async (dispatch) => {
   dispatch(usersRequested());
   try {
     const { content } = await userService.get();
-    setTimeout(() => {
-      dispatch(usersReceived(content));
-    }, 500);
+
+    dispatch(usersReceived(content));
   } catch (error) {
     dispatch(usersFailed(error.message));
   }
@@ -139,19 +139,13 @@ export const updateUser = (payload) => async (dispatch) => {
   }
 };
 
-export const getNoteAuthor = (id) => (state) => {
-  if (state.users.entities) {
-    return state.users.entities.find((u) => u._id === id);
-  }
-};
-
 export const getCurrentUserData = () => (state) => {
   return state?.users?.entities
     ? state?.users?.entities?.find((u) => u?._id === state?.users?.auth?.userId)
     : null;
 };
 
-export const getUsersList = () => (state) => state.users.entities;
+export const getUsersList = () => (state) => state?.users?.entities;
 
 export const getIsLoggedIn = () => (state) => state.users.isLoggedIn;
 export const getDataStatus = () => (state) => state.users.dataLoaded;

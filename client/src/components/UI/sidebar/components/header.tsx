@@ -17,8 +17,7 @@ const Header = ({ isCollapsed, setIsCollapsed, colors }) => {
           display="flex"
           justifyContent="space-between"
           alignItems="center"
-          ml="15px"
-          sx={{ marginLeft: "8px" }}
+          sx={{ margin: "0 20px 0 8px" }}
         >
           <Typography variant="h3" color={colors.grey[100]}>
             CRM

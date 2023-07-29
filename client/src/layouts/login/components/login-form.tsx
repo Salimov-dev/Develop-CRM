@@ -1,13 +1,8 @@
 import AccountLogin from "./account-info";
-import styled from "@emotion/styled";
 import { useState } from "react";
 import { Button, TextField, InputAdornment, IconButton } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-
-const Enter = styled(Button)`
-  margin-top: 20px;
-`;
 
 const LoginForm = ({
   data,
@@ -71,14 +66,14 @@ const LoginForm = ({
           ),
         }}
       />
-      <Enter
+      <Button
         type="submit"
         variant="outlined"
         disabled={!isFormValid}
-        sx={{ color: "inherit", borderColor: "inherit" }}
+        sx={{ color: "inherit", borderColor: "inherit", mt: "20px" }}
       >
         Войти
-      </Enter>
+      </Button>
       <AccountLogin />
     </form>
   );

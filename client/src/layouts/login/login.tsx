@@ -2,28 +2,16 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 // MUI
-import { Button, Typography } from "@mui/material";
-import KeyboardArrowLeftOutlinedIcon from "@mui/icons-material/KeyboardArrowLeftOutlined";
+import { Typography } from "@mui/material";
 // store
 import { login } from "../../store/users-store";
 // components
 import LoginForm from "./components/login-form";
 import { Component, AuthForm, Title } from "./styled/styled";
-
-const schema = yup.object().shape({
-  email: yup
-    .string()
-    .email("Введите email корректно")
-    .required("Email обязателен для заполнения"),
-  password: yup
-    .string()
-    .min(8, "Слишком короткий пароль - введите не менее 8 символов")
-    .required("Пароль обязателен для заполнения"),
-});
+import { loginSchema } from "../../schemas/schemas";
 
 const Login = () => {
   const {
@@ -35,7 +23,7 @@ const Login = () => {
       password: "",
     },
     mode: "onBlur",
-    resolver: yupResolver(schema),
+    resolver: yupResolver(loginSchema),
   });
 
   const [data, setData] = useState({ email: "", password: "" });
@@ -45,10 +33,6 @@ const Login = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setData((prevState) => ({ ...prevState, [name]: value }));
-  };
-
-  const handleNavigate = () => {
-    navigate("/");
   };
 
   const handleSubmit = (e) => {

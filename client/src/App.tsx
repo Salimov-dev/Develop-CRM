@@ -11,7 +11,7 @@ import Main from "./layouts/main";
 import { ColorModeContext, useMode } from "./theme";
 import TopBar from "./components/UI/topbar/topbar";
 import Sidebar from "./components/UI/sidebar/sidebar";
-import Objects from "./layouts/objects";
+import Objects from "./layouts/objects/objects";
 import { AppStyled, RightSide } from "./styled";
 import Login from "./layouts/login/login";
 import Signup from "./layouts/signup";

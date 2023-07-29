@@ -1,5 +1,6 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import objectsReducer from "./objects.store";
+import usersListReducer from "./users-store";
 // import notesListReducer from "../../../entities/note/store/notes-store";
 // import usersListReducer from "../../../entities/user/store/users-store";
 // import commentsListReducer from "../../../entities/comment/store/comments-store";
@@ -10,7 +11,7 @@ import objectsReducer from "./objects.store";
 const rootReducer = combineReducers({
   objects: objectsReducer,
   // notes: notesListReducer,
-  // users: usersListReducer,
+  users: usersListReducer,
   // comments: commentsListReducer,
   // categories: categoriesListReducer,
   // selectedNote: selectedNoteReducer,

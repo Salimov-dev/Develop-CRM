@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
-import { Box, Typography, Link } from "@mui/material";
+import { Box, Typography, Link, useTheme } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { tokens } from "../../../theme";
 
 const Account = styled(Box)`
   display: flex;
@@ -13,6 +14,8 @@ const LinkStyled = styled(Link)`
 `;
 
 const AccountLogin = () => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   const navigate = useNavigate();
   const handleClick = () => {
     navigate("signup");

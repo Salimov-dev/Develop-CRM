@@ -2,15 +2,15 @@ const express = require("express");
 const mongoose = require("mongoose");
 const config = require("config");
 const chalk = require("chalk");
-const cors = require("cors")
+const cors = require("cors");
 const initDatabase = require("./startUp/initDatabase");
 const routes = require("./routes");
 
-const corsOptions ={
-  origin:'http://localhost:5173',
-  credentials:true,
-  optionSuccessStatus:200
-}
+const corsOptions = {
+  origin: "http://localhost:5173",
+  credentials: true,
+  optionSuccessStatus: 200,
+};
 
 const app = express();
 

@@ -24,7 +24,10 @@ const ItemsList = ({ isCollapsed, selected, setSelected, colors }) => {
       <Typography
         variant="h6"
         color={colors.grey[300]}
-        sx={{ m: !isCollapsed ? "15px 0 5px 20px" : "15px 0 5px 10px" }}
+        sx={{
+          m: !isCollapsed ? "15px 0 5px 20px" : "15px 0 5px 12px",
+          fontSize: !isCollapsed ? "inherit" : "12px",
+        }}
       >
         Объекты
       </Typography>
@@ -45,7 +48,10 @@ const ItemsList = ({ isCollapsed, selected, setSelected, colors }) => {
       <Typography
         variant="h6"
         color={colors.grey[300]}
-        sx={{ m: !isCollapsed ? "15px 0 5px 20px" : "15px 0 5px 4px" }}
+        sx={{
+          m: !isCollapsed ? "15px 0 5px 20px" : "15px 0 5px 6px",
+          fontSize: !isCollapsed ? "inherit" : "12px",
+        }}
       >
         Активность
       </Typography>
@@ -74,7 +80,10 @@ const ItemsList = ({ isCollapsed, selected, setSelected, colors }) => {
       <Typography
         variant="h6"
         color={colors.grey[300]}
-        sx={{ m: !isCollapsed ? "15px 0 5px 20px" : "15px 0 5px 10px" }}
+        sx={{
+          m: !isCollapsed ? "15px 0 5px 20px" : "15px 0 5px 12px",
+          fontSize: !isCollapsed ? "inherit" : "12px",
+        }}
       >
         Команда
       </Typography>
@@ -96,7 +105,10 @@ const ItemsList = ({ isCollapsed, selected, setSelected, colors }) => {
       <Typography
         variant="h6"
         color={colors.grey[300]}
-        sx={{ m: !isCollapsed ? "15px 0 5px 20px" : "15px 0 5px 18px" }}
+        sx={{
+          m: !isCollapsed ? "15px 0 5px 20px" : "15px 0 5px 18px",
+          fontSize: !isCollapsed ? "inherit" : "12px",
+        }}
       >
         Другое
       </Typography>
