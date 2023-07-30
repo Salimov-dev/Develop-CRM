@@ -5,18 +5,19 @@ import dayjs from "dayjs";
 import { Button } from "@mui/material";
 // store
 import { getMetroName } from "../../../store/metro-store";
-import { FormatDate } from "./helpers/helpers";
+import {
+  FormatDate,
+  FormatDistrict,
+  FormatManagerName,
+  FormatMetro,
+  FormatObjectStatus,
+} from "./helpers/helpers";
+import { getUserById } from "../../../store/users-store";
 
 export const groupedColumns = [
   {
     header: "Основная информация",
     columns: [
-      //   {
-      //     accessorKey: "",
-      //     header: "№",
-      //     cell: (info) => info.getValue(),
-      //     footer: "№",
-      //   },
       {
         accessorKey: "created_at",
         header: "Дата",
@@ -28,7 +29,9 @@ export const groupedColumns = [
       {
         accessorKey: "userId",
         header: "Менеджер",
-        cell: (info) => info.getValue(),
+        cell: (info) => {
+          return FormatManagerName(info.getValue());
+        },
         footer: "Менеджер",
       },
     ],
@@ -45,15 +48,17 @@ export const groupedColumns = [
       {
         accessorKey: "location.district",
         header: "Район",
-        cell: (info) => info.getValue(),
+        // cell: (info) => info.getValue(),
+        cell: (info) => {
+          return FormatDistrict(info.getValue());
+        },
         footer: "Дата",
       },
       {
         accessorKey: "location.metro",
         header: "Метро",
-
         cell: (info) => {
-          return useSelector(getMetroName(info.getValue()));
+          return FormatMetro(info.getValue());
         },
         footer: "Дата",
       },
@@ -101,7 +106,9 @@ export const groupedColumns = [
       {
         accessorKey: "status",
         header: "Статус",
-        cell: (info) => info.getValue(),
+        cell: (info) => {
+          return FormatObjectStatus(info.getValue());
+        },
         footer: "Статус",
       },
       //   {

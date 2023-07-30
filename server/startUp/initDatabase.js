@@ -5,6 +5,7 @@ const WorkingPosition = require("../models/Working-position");
 const ObjectStatus = require("../models/Object-status");
 const Company = require("../models/Company");
 const Metro = require("../models/Metro");
+const District = require("../models/District");
 // mock
 const usersMock = require("../mock/users.json");
 const objectsMock = require("../mock/objects.json");
@@ -12,6 +13,7 @@ const workingPositionsMock = require("../mock/working-positions.json");
 const objectStatusMock = require("../mock/objects-status.json");
 const companiesMock = require("../mock/companies.json");
 const metrosMock = require("../mock/metro.json");
+const districtsMock = require("../mock/districts.json");
 
 module.exports = async () => {
   
@@ -43,6 +45,11 @@ module.exports = async () => {
   const metros = await Metro.find();
   if (metros.length !== metrosMock.length) {
     await createInitialEntity(Metro, metrosMock);
+  }
+
+  const districts = await District.find();
+  if (districts.length !== districtsMock.length) {
+    await createInitialEntity(District, districtsMock);
   }
 };
 

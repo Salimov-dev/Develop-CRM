@@ -145,6 +145,15 @@ export const getCurrentUserData = () => (state) => {
     : null;
 };
 
+export const getUserById = (id) => (state) => {
+  if (state?.users?.entities) {
+    const user = state.users.entities.find((user) => user._id === id);
+    const result = user?.name;
+
+    return result;
+  }
+};
+
 export const getUsersList = () => (state) => state?.users?.entities;
 
 export const getIsLoggedIn = () => (state) => state.users.isLoggedIn;

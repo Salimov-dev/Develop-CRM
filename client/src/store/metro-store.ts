@@ -1,6 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import objectService from "../services/object-service";
-import isOutDated from "../utils/isOutDate";
 import metroService from "../services/metro-service";
 
 const metroSlice = createSlice({
@@ -8,6 +6,7 @@ const metroSlice = createSlice({
   initialState: {
     entities: [],
     isLoading: false,
+    error: null,
   },
   reducers: {
     metroRequested: (state) => {
@@ -27,16 +26,14 @@ const metroSlice = createSlice({
 const { reducer: metroReducer, actions } = metroSlice;
 const { metroRequested, metroReceived, metroFailed } = actions;
 
-export const loadMetroList = () => async (dispatch, getState) => {
-  const { lastFetch } = getState().objects;
-  if (isOutDated(lastFetch)) {
-    dispatch(metroRequested());
-    try {
-      const { content } = await metroService.get();
-      dispatch(metroReceived(content));
-    } catch (error) {
-      metroFailed(error.message);
-    }
+export const loadMetroList = () => async (dispatch) => {
+  dispatch(metroRequested());
+  s;
+  try {
+    const { content } = await metroService.get();
+    dispatch(metroReceived(content));
+  } catch (error) {
+    metroFailed(error.message);
   }
 };
 
