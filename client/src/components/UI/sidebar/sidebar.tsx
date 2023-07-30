@@ -16,13 +16,14 @@ const Sidebar = () => {
   return (
     <Component
       sx={{
-        width: !isCollapsed ? "265px" : "inherit",
+        height: "inherit",
+        minWidth: !isCollapsed ? "220px" : "inherit",
         "& .ps-sidebar-container": {
           overflow: "hidden",
           background: `${colors.primary[400]} !important`,
         },
         "& .ps-sidebar-root": {
-          height: "100vh",
+          height: "100%",
           border: "none",
         },
         "& .pro-icon-wrapper": {

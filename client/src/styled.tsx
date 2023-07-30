@@ -5,10 +5,6 @@ export const AppStyled = styled(Box)`
   display: flex;
   height: 100vh;
   overflow: auto;
-  
-  // a {
-  //   color: white;
-  // }
 
   ::-webkit-scrollbar {
     width: 5px;
