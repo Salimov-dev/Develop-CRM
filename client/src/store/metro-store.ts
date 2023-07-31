@@ -28,7 +28,6 @@ const { metroRequested, metroReceived, metroFailed } = actions;
 
 export const loadMetroList = () => async (dispatch) => {
   dispatch(metroRequested());
-  s;
   try {
     const { content } = await metroService.get();
     dispatch(metroReceived(content));

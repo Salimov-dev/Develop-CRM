@@ -2,20 +2,21 @@
 import { useMemo, useState, useEffect } from "react";
 // MUI
 import { Box, useTheme } from "@mui/material";
-import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
-import KeyboardArrowUpOutlinedIcon from "@mui/icons-material/KeyboardArrowUpOutlined";
 // styles
 import "./styles/table.css";
 // other
 import { tokens } from "../../../theme";
 // react-table
 import {
-  flexRender,
   getCoreRowModel,
   getSortedRowModel,
+  getPaginationRowModel,
   useReactTable,
   SortingState,
 } from "@tanstack/react-table";
+import Pagination from "./components/pagination";
+import Thead from "./components/thead";
+import Tbody from "./components/tbody";
 
 const BasicTable = ({ items, itemsColumns }) => {
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -33,6 +34,7 @@ const BasicTable = ({ items, itemsColumns }) => {
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
   });
 
   useEffect(() => {
@@ -42,101 +44,11 @@ const BasicTable = ({ items, itemsColumns }) => {
   return (
     <Box sx={{ paddingBottom: "80px !important" }}>
       <table>
-        <thead>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id}>
-              {headerGroup.headers.map((header) => {
-                return (
-                  <th
-                    key={header.id}
-                    colSpan={header.colSpan}
-                    style={{
-                      cursor: "pointer",
-                      background: `${colors.primary[400]}`,
-                    }}
-                  >
-                    {header.isPlaceholder ? null : (
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                        {...{
-                          className: header.column.getCanSort()
-                            ? "cursor-pointer select-none"
-                            : "",
-                          onClick: header.column.getToggleSortingHandler(),
-                        }}
-                      >
-                        {flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                        {header.column.getIsSorted() === "asc" && (
-                          <KeyboardArrowDownOutlinedIcon />
-                        )}
-                        {header.column.getIsSorted() === "desc" && (
-                          <KeyboardArrowUpOutlinedIcon />
-                        )}
-                      </div>
-                    )}
-                  </th>
-                );
-              })}
-            </tr>
-          ))}
-        </thead>
-        <tbody>
-          {table.getRowModel().rows.map((row) => {
-            return (
-              <tr key={row.id}>
-                {row.getVisibleCells().map((cell) => {
-                  return (
-                    <td
-                      {...{
-                        key: cell.id,
-                      }}
-                    >
-                      {cell.getIsGrouped() ? (
-                        <>
-                          <button
-                            {...{
-                              onClick: row.getToggleExpandedHandler(),
-                              style: {
-                                cursor: row.getCanExpand()
-                                  ? "pointer"
-                                  : "normal",
-                              },
-                            }}
-                          >
-                            {flexRender(
-                              cell.column.columnDef.cell,
-                              cell.getContext()
-                            )}
-                            ({row.subRows.length})
-                          </button>
-                        </>
-                      ) : cell.getIsAggregated() ? (
-                        flexRender(
-                          cell.column.columnDef.aggregatedCell ??
-                            cell.column.columnDef.cell,
-                          cell.getContext()
-                        )
-                      ) : cell.getIsPlaceholder() ? null : (
-                        flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )
-                      )}
-                    </td>
-                  );
-                })}
-              </tr>
-            );
-          })}
-        </tbody>
+        <Thead table={table} colors={colors} />
+        <Tbody table={table} />
       </table>
+
+      <Pagination table={table} colors={colors} />
     </Box>
   );
 };
