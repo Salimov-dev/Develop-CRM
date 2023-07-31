@@ -9,6 +9,9 @@ import BusinessCenterOutlinedIcon from "@mui/icons-material/BusinessCenterOutlin
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
+import Person4OutlinedIcon from "@mui/icons-material/Person4Outlined";
+import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
+// styled
 import { ItemsListContainer } from "../styled/styled";
 
 const ItemsList = ({ isCollapsed, selected, setSelected, colors }) => {
@@ -95,13 +98,19 @@ const ItemsList = ({ isCollapsed, selected, setSelected, colors }) => {
         setSelected={setSelected}
       />
       <Item
+        title="Презентации"
+        to="/presentations"
+        icon={<AssignmentOutlinedIcon />}
+        selected={selected}
+        setSelected={setSelected}
+      />
+      <Item
         title="Результаты"
         to="/results"
         icon={<PeopleOutlinedIcon />}
         selected={selected}
         setSelected={setSelected}
       />
-
       <Typography
         variant="h6"
         color={colors.grey[300]}

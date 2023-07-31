@@ -3,7 +3,7 @@ import { useMemo, useState, useEffect } from "react";
 // MUI
 import { Box, useTheme } from "@mui/material";
 // styles
-import "./styles/table.css";
+import "./styles/styles.css";
 // other
 import { tokens } from "../../../theme";
 // react-table

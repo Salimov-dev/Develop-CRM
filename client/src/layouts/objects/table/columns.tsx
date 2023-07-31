@@ -121,7 +121,7 @@ export const groupedColumns = [
         accessorKey: "",
         header: "Открыть",
         cell: () => (
-          <Button variant="text" color="success">
+          <Button variant="text" color="secondary">
             Открыть
           </Button>
         ),

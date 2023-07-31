@@ -70,7 +70,8 @@ const LoginForm = ({
         type="submit"
         variant="outlined"
         disabled={!isFormValid}
-        sx={{ color: "inherit", borderColor: "inherit", mt: "20px" }}
+        color="success"
+        // sx={{ color: "inherit", borderColor: "inherit", mt: "20px" }}
       >
         Войти
       </Button>

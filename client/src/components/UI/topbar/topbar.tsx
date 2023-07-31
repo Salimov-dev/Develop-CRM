@@ -50,9 +50,10 @@ const TopBar = () => {
               <UserMenu currentUser={currentUser} />
             ) : (
               <Button
-                variant="outlined"
+                variant="contained"
                 onClick={handleGoToLogin}
-                sx={{ color: "inherit", borderColor: "inherit" }}
+                color="success"
+                // sx={{ color: "inherit", borderColor: "inherit" }}
               >
                 Войти
               </Button>

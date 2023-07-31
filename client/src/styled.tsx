@@ -3,8 +3,8 @@ import styled from "@emotion/styled";
 
 export const AppStyled = styled(Box)`
   display: flex;
-  height: 100vh;
-  overflow: auto;
+  // height: 100vh;
+  // overflow: auto;
 
   ::-webkit-scrollbar {
     width: 5px;
