@@ -77,7 +77,7 @@ export const tokens = (mode) => ({
           100: "#040509",
           200: "#080b12",
           300: "#0c101b",
-          400: "#f2f0f0", 
+          400: "#f2f0f0",
           500: "#141b2d",
           600: "#1F2A40",
           700: "#727681",
@@ -163,7 +163,7 @@ export const themeSettings = (mode) => {
           }),
     },
     a: {
-      color: 'white',
+      color: "white",
     },
     typography: {
       fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
@@ -191,6 +191,35 @@ export const themeSettings = (mode) => {
       h6: {
         fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
         fontSize: 14,
+      },
+    },
+    overrides: {
+      MuiOutlinedInput: {
+        root: {
+          "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+            borderColor: "orange",
+            color: "white",
+          },
+        },
+        notchedOutline: {
+          borderColor: "gray",
+          "&.Mui-focused": {
+            borderColor: "orange",
+          },
+        },
+      },
+      MuiInputLabel: {
+        root: {
+          color: "gray",
+          "&.Mui-focused": {
+            color: "white",
+          },
+        },
+        outlined: {
+          transform: "translate(14px, -6px) scale(0.75)",
+          backgroundColor: colors.grey[100],
+          padding: "0 5px",
+        },
       },
     },
   };
