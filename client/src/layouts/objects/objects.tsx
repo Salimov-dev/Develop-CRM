@@ -5,6 +5,7 @@ import BasicTable from "../../components/common/table/basic-table";
 import { groupedColumns } from "./table/columns";
 import { useForm } from "react-hook-form";
 import { orderBy } from "lodash";
+import "dayjs/locale/ru";
 // MUI
 import {
   Box,
@@ -28,6 +29,10 @@ import SimpleSelectField from "../../components/common/form/simple-select-field"
 import { getObjectsStatusList } from "../../store/object-status.store";
 import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
 import { getUsersList } from "../../store/users-store";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import dayjs from "dayjs";
 
 const Form = styled(`form`)({
   display: "flex",
@@ -47,6 +52,8 @@ const Objects = () => {
   const [selectedCities, setSelectedCities] = useState<string[]>([]);
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
   const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
+  const [startDateSelected, setStartDateSelected] = useState(false);
+  const [endDateSelected, setEndDateSelected] = useState(false);
   const users = useSelector(getUsersList());
   const objects = useSelector(getObjectsList());
   const objectStatuses = useSelector(getObjectsStatusList());
@@ -57,45 +64,68 @@ const Objects = () => {
     address: "",
     phone: "",
     name: "",
+    startDate: null,
+    endDate: null,
   });
+  console.log("data", data);
 
   const searchedObjects = useMemo(() => {
     let array = objects;
 
-    if (data?.address.length > 0) {
+    if (data?.address.length) {
       array = array?.filter((obj) =>
         obj.location.address.toLowerCase().includes(data.address.toLowerCase())
       );
     }
 
-    if (data?.phone.length > 0) {
+    if (data?.phone.length) {
       array = array.filter((obj) => obj.contact.phone.includes(data.phone));
     }
 
-    if (data?.name.length > 0) {
+    if (data?.name.length) {
       array = array.filter((obj) =>
         obj.contact.name.toLowerCase().includes(data.name.toLowerCase())
       );
     }
 
-    if (selectedStatuses?.length > 0) {
+    if (selectedStatuses?.length) {
       array = array?.filter((obj) => selectedStatuses.includes(obj.status));
     }
 
-    if (selectedDistricts?.length > 0) {
+    if (selectedDistricts?.length) {
       return array.filter((item) =>
         selectedDistricts.includes(item.location.district)
       );
     }
 
-    if (selectedCities?.length > 0) {
+    if (selectedCities?.length) {
       return array.filter((item) =>
         selectedCities.includes(item.location.city)
       );
     }
 
-    if (selectedUsers?.length > 0) {
+    if (selectedUsers?.length) {
       return array.filter((item) => selectedUsers.includes(item.userId));
+    }
+
+    if (startDateSelected && endDateSelected) {
+      const startDate = dayjs(data.startDate);
+      const endDate = dayjs(data.endDate).endOf("day");
+
+      return array?.filter((item) => {
+        const itemDate = dayjs(item.created_at);
+        return itemDate.isBetween(startDate, endDate, null, "[]");
+      });
+    }
+
+    if (startDateSelected) {
+      const selectedDate = dayjs(data.startDate);
+      return array?.filter((item) => dayjs(item.created_at) >= selectedDate);
+    }
+
+    if (endDateSelected) {
+      const endDate = dayjs(data.endDate).endOf("day");
+      array = array.filter((item) => dayjs(item.created_at) <= endDate);
     }
 
     return array;
@@ -106,6 +136,8 @@ const Objects = () => {
     selectedCities,
     selectedUsers,
     selectedStatuses,
+    startDateSelected,
+    endDateSelected,
   ]);
 
   const hasNonEmptyValue = (data) => {
@@ -122,19 +154,30 @@ const Objects = () => {
     selectedDistricts.length ||
     selectedUsers.length ||
     selectedStatuses?.length ||
-    hasNonEmptyValue(data);
+    hasNonEmptyValue(data) ||
+    startDateSelected ||
+    endDateSelected;
 
   const handleCLearForm = () => {
     setSelectedCities([]);
     setSelectedDistricts([]);
     setSelectedUsers([]);
     setSelectedStatuses([]);
+    setStartDateSelected(null);
+    setEndDateSelected(null);
 
     for (const key in data) {
-      setData((prevState) => ({
-        ...prevState,
-        [key]: "",
-      }));
+      if (key === "startDate" || key === "endDate") {
+        setData((prevState) => ({
+          ...prevState,
+          [key]: null,
+        }));
+      } else {
+        setData((prevState) => ({
+          ...prevState,
+          [key]: "",
+        }));
+      }
     }
   };
 
@@ -194,13 +237,19 @@ const Objects = () => {
     return sortedDistricts;
   };
 
-  const [isInputFilled, setIsInputFilled] = useState(false);
-  console.log("isInputFilled", isInputFilled);
-
   const handleChange = ({ target }) => {
     const { name, value } = target;
     setData((prevState) => ({ ...prevState, [name]: value }));
-    setIsInputFilled(value.trim().length > 0);
+  };
+
+  const handleStartDateChange = (newValue) => {
+    setData((prevState) => ({ ...prevState, startDate: newValue }));
+    setStartDateSelected(true);
+  };
+
+  const handleEndDateChange = (newValue) => {
+    setData((prevState) => ({ ...prevState, endDate: newValue }));
+    setEndDateSelected(true);
   };
 
   const handleChangeStatuses = ({ target }) => {
@@ -322,6 +371,54 @@ const Objects = () => {
       </Form>
 
       <Form>
+        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
+          <DatePicker
+            views={["year", "month", "day"]}
+            value={data.startDate}
+            onChange={handleStartDateChange}
+            label="Начало периода"
+            renderInput={(params) => (
+              <>
+                <InputLabel
+                  htmlFor={params.inputProps.id}
+                  style={{
+                    color: params.inputProps.focused ? "white" : "gray",
+                  }}
+                >
+                  {params.label}
+                </InputLabel>
+                {renderCustomInput(params)}
+              </>
+            )}
+            sx={{
+              width: "400px",
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  borderColor: data.startDate ? "green" : "gray",
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: "green",
+                },
+              },
+            }}
+          />
+          <DatePicker
+            value={data.endDate}
+            onChange={handleEndDateChange}
+            label="Конец периода"
+            sx={{
+              width: "400px",
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  borderColor: data.endDate ? "green" : "gray",
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: "green",
+                },
+              },
+            }}
+          />
+        </LocalizationProvider>
         <MultiSelectField
           itemsList={getActualCitiesList()}
           selectedItems={selectedCities}

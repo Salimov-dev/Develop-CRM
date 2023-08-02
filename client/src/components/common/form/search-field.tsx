@@ -44,7 +44,6 @@ const SearchField = ({
   value,
   inputProps,
 }) => {
-  console.log("value", value.length);
 
   return (
     <StyledTextField
