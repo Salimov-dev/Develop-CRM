@@ -69,9 +69,8 @@ const LoginForm = ({
       <Button
         type="submit"
         variant="outlined"
-        disabled={!isFormValid}
         color="success"
-        // sx={{ color: "inherit", borderColor: "inherit", mt: "20px" }}
+        disabled={!isFormValid}
       >
         Войти
       </Button>

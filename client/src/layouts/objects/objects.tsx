@@ -13,6 +13,7 @@ import {
   FormControl,
   InputLabel,
   Select,
+  Typography,
   MenuItem,
   Checkbox,
   Button,
@@ -25,114 +26,133 @@ import SearchField from "../../components/common/form/search-field";
 import MultiSelectField from "../../components/common/form/multi-select-field";
 import SimpleSelectField from "../../components/common/form/simple-select-field";
 import { getObjectsStatusList } from "../../store/object-status.store";
+import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
+import { getUsersList } from "../../store/users-store";
 
 const Form = styled(`form`)({
   display: "flex",
   alignItems: "center",
   marginBottom: "10px",
-  gap: "10px",
+  gap: "4px",
 });
 
 const ButtonsBlock = styled(Box)`
   display: flex;
   margin-bottom: 10px;
+  gap: 4px;
 `;
 
-const StyledTSimpleSelectField = styled(Select)(({ theme }) => ({
-  minWidth: "30px",
-  width: "100%",
-  "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-    borderColor: "green", // Green border color when focused
-    color: "white",
-  },
-  "& .MuiInputLabel-root": {
-    color: "gray",
-    "&.Mui-focused": {
-      color: "white",
-    },
-    borderColor: "blue !important",
-  },
-  "& .MuiInputLabel-outlined.MuiInputLabel-shrink": {
-    transform: "translate(14px, -6px) scale(0.75)",
-    backgroundColor: theme.palette.background.default,
-    padding: "0 5px",
-  },
-  "& .MuiSelect-root:focus": {
-    backgroundColor: "transparent", // Optional: To remove background color when focused
-  },
-}));
-
 const Objects = () => {
-  //  const user =  useSelector(getUserById("64c4d8922b4d5baa91ae583c"))
   const [selectedDistricts, setSelectedDistricts] = useState<string[]>([]);
   const [selectedCities, setSelectedCities] = useState<string[]>([]);
+  const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
+  const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
+  const users = useSelector(getUsersList());
   const objects = useSelector(getObjectsList());
   const objectStatuses = useSelector(getObjectsStatusList());
   const columns = groupedColumns;
   const districts = useSelector(getDistrictsList());
+  const { register } = useForm();
   const [data, setData] = useState({
     address: "",
     phone: "",
     name: "",
-    status: "",
-  });
-  const { register } = useForm({
-    defaultValues: {
-      address: "",
-      phone: "",
-      name: "",
-      status: "",
-    },
   });
 
   const searchedObjects = useMemo(() => {
     let array = objects;
 
-    if (data.address.length > 0) {
-      array = array.filter((obj) =>
+    if (data?.address.length > 0) {
+      array = array?.filter((obj) =>
         obj.location.address.toLowerCase().includes(data.address.toLowerCase())
       );
     }
 
-    if (data.phone.length > 0) {
+    if (data?.phone.length > 0) {
       array = array.filter((obj) => obj.contact.phone.includes(data.phone));
     }
 
-    if (data.name.length > 0) {
+    if (data?.name.length > 0) {
       array = array.filter((obj) =>
         obj.contact.name.toLowerCase().includes(data.name.toLowerCase())
       );
     }
 
-    if (data.status.length > 0) {
-      array = array.filter((obj) =>
-        obj.status.toLowerCase().includes(data.status.toLowerCase())
-      );
+    if (selectedStatuses?.length > 0) {
+      array = array?.filter((obj) => selectedStatuses.includes(obj.status));
     }
 
-    if (selectedDistricts.length > 0) {
+    if (selectedDistricts?.length > 0) {
       return array.filter((item) =>
         selectedDistricts.includes(item.location.district)
       );
     }
 
-    if (selectedCities.length > 0) {
+    if (selectedCities?.length > 0) {
       return array.filter((item) =>
         selectedCities.includes(item.location.city)
       );
     }
 
-    return array;
-  }, [data, objects, selectedDistricts, selectedCities]);
+    if (selectedUsers?.length > 0) {
+      return array.filter((item) => selectedUsers.includes(item.userId));
+    }
 
-  // console.log("objectStatuses", objectStatuses);
-  // console.log("selectedCities", selectedCities);
-  // console.log("selectedDistricts", selectedDistricts);
-  // console.log("searchedObjects", searchedObjects);
-  // console.log("districts", districts);
-  console.log("data", data);
-  // console.log("objects", objects);
-  // console.log("user", user);
+    return array;
+  }, [
+    data,
+    objects,
+    selectedDistricts,
+    selectedCities,
+    selectedUsers,
+    selectedStatuses,
+  ]);
+
+  const hasNonEmptyValue = (data) => {
+    for (const key in data) {
+      if (typeof data[key] === "string" && data[key].trim().length > 0) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  const isInputEmpty =
+    selectedCities.length ||
+    selectedDistricts.length ||
+    selectedUsers.length ||
+    selectedStatuses?.length ||
+    hasNonEmptyValue(data);
+
+  const handleCLearForm = () => {
+    setSelectedCities([]);
+    setSelectedDistricts([]);
+    setSelectedUsers([]);
+    setSelectedStatuses([]);
+
+    for (const key in data) {
+      setData((prevState) => ({
+        ...prevState,
+        [key]: "",
+      }));
+    }
+  };
+
+  const getActualStatusesList = () => {
+    const filteredStatuses = objects?.map((obj) => obj.status);
+    const uniqueStatuses = [...new Set(filteredStatuses)];
+
+    const actualStatuesArray = uniqueStatuses?.map((id) => {
+      const foundObject = objectStatuses?.find((status) => status._id === id);
+      return foundObject
+        ? { _id: foundObject._id, name: foundObject.name }
+        : null;
+    });
+
+    const sortedStatuses = orderBy(actualStatuesArray, ["name"], ["asc"]);
+
+    return sortedStatuses;
+  };
 
   const getActualCitiesList = () => {
     const filteredCities = objects?.map((dist) => dist.location.city);
@@ -140,6 +160,22 @@ const Objects = () => {
     const sortedCities = orderBy(uniqueCities, ["name"], ["asc"]);
 
     return sortedCities;
+  };
+
+  const getActualUsersList = () => {
+    const filteredUsers = objects?.map((obj) => obj.userId);
+    const uniqueUsers = [...new Set(filteredUsers)];
+
+    const actualUsersArray = uniqueUsers?.map((id) => {
+      const foundObject = users?.find((user) => user._id === id);
+      return foundObject
+        ? { _id: foundObject._id, name: foundObject.name }
+        : null;
+    });
+
+    const sortedUsers = orderBy(actualUsersArray, ["name"], ["asc"]);
+
+    return sortedUsers;
   };
 
   const getActualDistrictsList = () => {
@@ -158,27 +194,32 @@ const Objects = () => {
     return sortedDistricts;
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const [isInputFilled, setIsInputFilled] = useState(false);
+  console.log("isInputFilled", isInputFilled);
 
+  const handleChange = ({ target }) => {
+    const { name, value } = target;
     setData((prevState) => ({ ...prevState, [name]: value }));
+    setIsInputFilled(value.trim().length > 0);
   };
 
-  const handleChangeCities = (
-    event: SelectChangeEvent<typeof searchedObjects>
-  ) => {
-    const {
-      target: { value },
-    } = event;
+  const handleChangeStatuses = ({ target }) => {
+    const { value } = target;
+    setSelectedStatuses(typeof value === "string" ? value.split(",") : value);
+  };
+
+  const handleChangeUsers = ({ target }) => {
+    const { value } = target;
+    setSelectedUsers(typeof value === "string" ? value.split(",") : value);
+  };
+
+  const handleChangeCities = ({ target }) => {
+    const { value } = target;
     setSelectedCities(typeof value === "string" ? value.split(",") : value);
   };
 
-  const handleChangeDistricts = (
-    event: SelectChangeEvent<typeof selectedDistricts>
-  ) => {
-    const {
-      target: { value },
-    } = event;
+  const handleChangeDistricts = ({ target }) => {
+    const { value } = target;
     setSelectedDistricts(typeof value === "string" ? value.split(",") : value);
   };
 
@@ -219,8 +260,19 @@ const Objects = () => {
       <h1>Таблица объектов</h1>
       <ButtonsBlock>
         <Button variant="contained" color="success">
-          Создать объект
+          <Typography>Создать объект</Typography>
         </Button>
+        {isInputEmpty && (
+          <Button
+            variant="outlined"
+            color="success"
+            onClick={handleCLearForm}
+            sx={{ display: "flex", alignItems: "center", gap: "3px" }}
+          >
+            <Typography> Очистить фильтры</Typography>
+            <ClearOutlinedIcon />
+          </Button>
+        )}
       </ButtonsBlock>
 
       <Form>
@@ -252,6 +304,25 @@ const Objects = () => {
           inputProps={{ maxLength: 30 }}
         />
         <MultiSelectField
+          itemsList={getActualStatusesList()}
+          selectedItems={selectedStatuses}
+          onChange={handleChangeStatuses}
+          id="status"
+          labelId="status-label"
+          label="Выбор по статусу"
+        />
+        <MultiSelectField
+          itemsList={getActualUsersList()}
+          selectedItems={selectedUsers}
+          onChange={handleChangeUsers}
+          id="users"
+          labelId="users-label"
+          label="Выбор по менеджеру"
+        />
+      </Form>
+
+      <Form>
+        <MultiSelectField
           itemsList={getActualCitiesList()}
           selectedItems={selectedCities}
           onChange={handleChangeCities}
@@ -266,17 +337,6 @@ const Objects = () => {
           id="districts"
           labelId="districts-label"
           label="Выбор по району"
-        />
-      </Form>
-
-      <Form>
-        <SimpleSelectField
-          itemsList={objectStatuses}
-          onChange={handleChange}
-          value={data.status}
-          id="status"
-          labelId="status-label"
-          label="Выбор по статусу"
         />
       </Form>
 

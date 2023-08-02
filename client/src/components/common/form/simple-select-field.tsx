@@ -59,8 +59,8 @@ const SimpleSelectField = ({
         MenuProps={MenuProps}
       >
         {itemsList?.map((item) => (
-          <MenuItem key={item._id} value={item._id}>
-            <ListItemText primary={item.name} />
+          <MenuItem key={item?._id} value={item?._id}>
+            <ListItemText primary={item?.name} />
           </MenuItem>
         ))}
       </StyledSelect>

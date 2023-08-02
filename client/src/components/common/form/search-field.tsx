@@ -27,7 +27,6 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
     "&.Mui-focused": {
       color: "white",
     },
-    borderColor: "blue !important",
   },
   "& .MuiInputLabel-outlined.MuiInputLabel-shrink": {
     transform: "translate(14px, -6px) scale(0.75)",
@@ -45,6 +44,8 @@ const SearchField = ({
   value,
   inputProps,
 }) => {
+  console.log("value", value.length);
+
   return (
     <StyledTextField
       {...register(name)}
@@ -57,6 +58,14 @@ const SearchField = ({
       value={value}
       onChange={onChange}
       inputProps={inputProps}
+      sx={{
+        "& .MuiOutlinedInput-notchedOutline": {
+          borderColor: value.length ? "green" : "gray",
+        },
+        "& .MuiInputLabel-root": {
+          color: value.length ? "white" : "gray",
+        },
+      }}
     />
   );
 };

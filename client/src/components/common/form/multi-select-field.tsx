@@ -79,6 +79,14 @@ const MultiSelectField = ({
             : uniqueSelected.join(", ");
         }}
         MenuProps={MenuProps}
+        sx={{
+          "& .MuiOutlinedInput-notchedOutline": {
+            borderColor: selectedItems.length ? "green" : "gray",
+          },
+          "& .MuiInputLabel-root": {
+            color: selectedItems.length ? "white" : "gray",
+          },
+        }}
       >
         {itemsList?.map((item, index) =>
           itemsWithId ? (
