@@ -15,6 +15,7 @@ import {
   Select,
   MenuItem,
   Checkbox,
+  Button,
   OutlinedInput,
   ListItemText,
 } from "@mui/material";
@@ -22,6 +23,8 @@ import { useNavigate } from "react-router-dom";
 import { getDistrictsList } from "../../store/districts-store";
 import SearchField from "../../components/common/form/search-field";
 import MultiSelectField from "../../components/common/form/multi-select-field";
+import SimpleSelectField from "../../components/common/form/simple-select-field";
+import { getObjectsStatusList } from "../../store/object-status.store";
 
 const Form = styled(`form`)({
   display: "flex",
@@ -30,25 +33,55 @@ const Form = styled(`form`)({
   gap: "10px",
 });
 
+const ButtonsBlock = styled(Box)`
+  display: flex;
+  margin-bottom: 10px;
+`;
+
+const StyledTSimpleSelectField = styled(Select)(({ theme }) => ({
+  minWidth: "30px",
+  width: "100%",
+  "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+    borderColor: "green", // Green border color when focused
+    color: "white",
+  },
+  "& .MuiInputLabel-root": {
+    color: "gray",
+    "&.Mui-focused": {
+      color: "white",
+    },
+    borderColor: "blue !important",
+  },
+  "& .MuiInputLabel-outlined.MuiInputLabel-shrink": {
+    transform: "translate(14px, -6px) scale(0.75)",
+    backgroundColor: theme.palette.background.default,
+    padding: "0 5px",
+  },
+  "& .MuiSelect-root:focus": {
+    backgroundColor: "transparent", // Optional: To remove background color when focused
+  },
+}));
+
 const Objects = () => {
   //  const user =  useSelector(getUserById("64c4d8922b4d5baa91ae583c"))
   const [selectedDistricts, setSelectedDistricts] = useState<string[]>([]);
   const [selectedCities, setSelectedCities] = useState<string[]>([]);
   const objects = useSelector(getObjectsList());
+  const objectStatuses = useSelector(getObjectsStatusList());
   const columns = groupedColumns;
   const districts = useSelector(getDistrictsList());
   const [data, setData] = useState({
     address: "",
     phone: "",
     name: "",
-    districts: [],
+    status: "",
   });
   const { register } = useForm({
     defaultValues: {
       address: "",
       phone: "",
       name: "",
-      districts: [],
+      status: "",
     },
   });
 
@@ -71,6 +104,12 @@ const Objects = () => {
       );
     }
 
+    if (data.status.length > 0) {
+      array = array.filter((obj) =>
+        obj.status.toLowerCase().includes(data.status.toLowerCase())
+      );
+    }
+
     if (selectedDistricts.length > 0) {
       return array.filter((item) =>
         selectedDistricts.includes(item.location.district)
@@ -86,17 +125,14 @@ const Objects = () => {
     return array;
   }, [data, objects, selectedDistricts, selectedCities]);
 
+  // console.log("objectStatuses", objectStatuses);
   // console.log("selectedCities", selectedCities);
   // console.log("selectedDistricts", selectedDistricts);
   // console.log("searchedObjects", searchedObjects);
   // console.log("districts", districts);
-  // console.log("data", data);
+  console.log("data", data);
   // console.log("objects", objects);
   // console.log("user", user);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
 
   const getActualCitiesList = () => {
     const filteredCities = objects?.map((dist) => dist.location.city);
@@ -124,6 +160,7 @@ const Objects = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
     setData((prevState) => ({ ...prevState, [name]: value }));
   };
 
@@ -180,7 +217,13 @@ const Objects = () => {
   return (
     <>
       <h1>Таблица объектов</h1>
-      <Form onSubmit={handleSubmit}>
+      <ButtonsBlock>
+        <Button variant="contained" color="success">
+          Создать объект
+        </Button>
+      </ButtonsBlock>
+
+      <Form>
         <SearchField
           register={register}
           label="Найти по адресу"
@@ -225,6 +268,18 @@ const Objects = () => {
           label="Выбор по району"
         />
       </Form>
+
+      <Form>
+        <SimpleSelectField
+          itemsList={objectStatuses}
+          onChange={handleChange}
+          value={data.status}
+          id="status"
+          labelId="status-label"
+          label="Выбор по статусу"
+        />
+      </Form>
+
       <BasicTable items={searchedObjects} itemsColumns={columns} />
     </>
   );

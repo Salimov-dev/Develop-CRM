@@ -27,7 +27,7 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
     "&.Mui-focused": {
       color: "white",
     },
-    borderColor: "blue !important"
+    borderColor: "blue !important",
   },
   "& .MuiInputLabel-outlined.MuiInputLabel-shrink": {
     transform: "translate(14px, -6px) scale(0.75)",
