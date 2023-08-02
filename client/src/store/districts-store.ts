@@ -47,4 +47,5 @@ export const getDistrictById = (id) => (state) => {
   return result;
 };
 
+
 export default districtsReducer;

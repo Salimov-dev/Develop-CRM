@@ -48,7 +48,7 @@ const BasicTable = ({ items, itemsColumns }) => {
         <Tbody table={table} />
       </table>
 
-      <Pagination table={table} colors={colors} />
+      <Pagination table={table} colors={colors} quantity={items?.length} />
     </Box>
   );
 };

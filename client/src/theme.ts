@@ -193,35 +193,6 @@ export const themeSettings = (mode) => {
         fontSize: 14,
       },
     },
-    overrides: {
-      MuiOutlinedInput: {
-        root: {
-          "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-            borderColor: "orange",
-            color: "white",
-          },
-        },
-        notchedOutline: {
-          borderColor: "gray",
-          "&.Mui-focused": {
-            borderColor: "orange",
-          },
-        },
-      },
-      MuiInputLabel: {
-        root: {
-          color: "gray",
-          "&.Mui-focused": {
-            color: "white",
-          },
-        },
-        outlined: {
-          transform: "translate(14px, -6px) scale(0.75)",
-          backgroundColor: colors.grey[100],
-          padding: "0 5px",
-        },
-      },
-    },
   };
 };
 
