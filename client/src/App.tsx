@@ -15,6 +15,7 @@ import Objects from "./layouts/objects/objects";
 import { AppStyled, RightSide } from "./styled";
 import Login from "./layouts/login/login";
 import Signup from "./layouts/signup";
+import { Scrollbar } from "react-scrollbars-custom";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -22,31 +23,33 @@ function App() {
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <AppLoader>
-          <ScrollToTop />
-          <AppStyled>
-            <Sidebar />
-            <RightSide>
-              <TopBar />
-              <Routes>
-                <Route index path="" element={<Main />} />
-                <Route index path="objects" element={<Objects />} />
+        <Scrollbar style={{ width: "100%", height: "100vh" }}>
+          <AppLoader>
+            <ScrollToTop />
+            <AppStyled>
+              <Sidebar />
+              <RightSide>
+                <TopBar />
+                <Routes>
+                  <Route index path="" element={<Main />} />
+                  <Route index path="objects" element={<Objects />} />
 
-                <Route path="auth" element={<Login />}>
-                  <Route index element={<Navigate to="/auth/login" />} />
-                  <Route path={"login"} element={<Login />} />
-                  <Route path="*" element={<Navigate to="" />} />
-                </Route>
+                  <Route path="auth" element={<Login />}>
+                    <Route index element={<Navigate to="/auth/login" />} />
+                    <Route path={"login"} element={<Login />} />
+                    <Route path="*" element={<Navigate to="" />} />
+                  </Route>
 
-                <Route path="auth" element={<Signup />}>
-                  <Route index element={<Navigate to="/auth/SignUp" />} />
-                  <Route path={"signup"} element={<Signup />} />
-                  <Route path="*" element={<Navigate to="" />} />
-                </Route>
-              </Routes>
-            </RightSide>
-          </AppStyled>
-        </AppLoader>
+                  <Route path="auth" element={<Signup />}>
+                    <Route index element={<Navigate to="/auth/SignUp" />} />
+                    <Route path={"signup"} element={<Signup />} />
+                    <Route path="*" element={<Navigate to="" />} />
+                  </Route>
+                </Routes>
+              </RightSide>
+            </AppStyled>
+          </AppLoader>
+        </Scrollbar>
       </ThemeProvider>
     </ColorModeContext.Provider>
   );

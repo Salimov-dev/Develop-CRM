@@ -3,7 +3,6 @@ import { useState, useMemo } from "react";
 import { getObjectsList } from "../../store/objects.store";
 import BasicTable from "../../components/common/table/basic-table";
 import { groupedColumns } from "./table/columns";
-import { getUserById } from "../../store/users-store";
 import { useForm } from "react-hook-form";
 import { orderBy } from "lodash";
 // MUI
@@ -20,33 +19,9 @@ import {
   ListItemText,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { getDistrictById, getDistrictsList } from "../../store/districts-store";
-
-const StyledTextField = styled(TextField)(({ theme }) => ({
-  "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-    borderColor: "green",
-    color: "white",
-  },
-  "& .MuiInputLabel-root": {
-    color: "gray",
-    "&.Mui-focused": {
-      color: "white",
-    },
-  },
-  "& .MuiInputLabel-outlined.MuiInputLabel-shrink": {
-    transform: "translate(14px, -6px) scale(0.75)",
-    backgroundColor: theme.palette.background.default,
-    padding: "0 5px",
-  },
-}));
-
-const StyledSelect = styled(Select)(({ theme }) => ({
-  "&.Mui-focused": {
-    "& .MuiOutlinedInput-notchedOutline": {
-      borderColor: "green",
-    },
-  },
-}));
+import { getDistrictsList } from "../../store/districts-store";
+import SearchField from "../../components/common/form/search-field";
+import MultiSelectField from "../../components/common/form/multi-select-field";
 
 const Form = styled(`form`)({
   display: "flex",
@@ -55,20 +30,10 @@ const Form = styled(`form`)({
   gap: "10px",
 });
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
-
 const Objects = () => {
   //  const user =  useSelector(getUserById("64c4d8922b4d5baa91ae583c"))
   const [selectedDistricts, setSelectedDistricts] = useState<string[]>([]);
+  const [selectedCities, setSelectedCities] = useState<string[]>([]);
   const objects = useSelector(getObjectsList());
   const columns = groupedColumns;
   const districts = useSelector(getDistrictsList());
@@ -86,11 +51,6 @@ const Objects = () => {
       districts: [],
     },
   });
-  // console.log("districts", districts);
-  console.log("selectedDistricts", selectedDistricts);
-  // console.log("data", data);
-  // console.log("objects", objects);
-  // console.log("user", user);
 
   const searchedObjects = useMemo(() => {
     let array = objects;
@@ -117,31 +77,66 @@ const Objects = () => {
       );
     }
 
+    if (selectedCities.length > 0) {
+      return array.filter((item) =>
+        selectedCities.includes(item.location.city)
+      );
+    }
+
     return array;
-  }, [data, objects, selectedDistricts]);
-  console.log("searchedObjects", searchedObjects);
+  }, [data, objects, selectedDistricts, selectedCities]);
+
+  // console.log("selectedCities", selectedCities);
+  // console.log("selectedDistricts", selectedDistricts);
+  // console.log("searchedObjects", searchedObjects);
+  // console.log("districts", districts);
+  // console.log("data", data);
+  // console.log("objects", objects);
+  // console.log("user", user);
 
   const handleSubmit = (e) => {
     e.preventDefault();
   };
 
-  const filteredDistricts = objects?.map((dist) => dist.location.district);
-  const uniqueDistricts = [...new Set(filteredDistricts)];
-  const actualDistrictsArray = uniqueDistricts?.map((id) => {
-    const foundObject = districts?.find((obj) => obj._id === id);
-    return foundObject
-      ? { _id: foundObject._id, name: foundObject.name }
-      : null;
-  });
+  const getActualCitiesList = () => {
+    const filteredCities = objects?.map((dist) => dist.location.city);
+    const uniqueCities = [...new Set(filteredCities)];
+    const sortedCities = orderBy(uniqueCities, ["name"], ["asc"]);
 
-  const sortedDistricts = orderBy(actualDistrictsArray, ["name"], ["asc"]);
+    return sortedCities;
+  };
+
+  const getActualDistrictsList = () => {
+    const filteredDistricts = objects?.map((dist) => dist.location.district);
+    const uniqueDistricts = [...new Set(filteredDistricts)];
+
+    const actualDistrictsArray = uniqueDistricts?.map((id) => {
+      const foundObject = districts?.find((obj) => obj._id === id);
+      return foundObject
+        ? { _id: foundObject._id, name: foundObject.name }
+        : null;
+    });
+
+    const sortedDistricts = orderBy(actualDistrictsArray, ["name"], ["asc"]);
+
+    return sortedDistricts;
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setData((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  const handleChangeMulti = (
+  const handleChangeCities = (
+    event: SelectChangeEvent<typeof searchedObjects>
+  ) => {
+    const {
+      target: { value },
+    } = event;
+    setSelectedCities(typeof value === "string" ? value.split(",") : value);
+  };
+
+  const handleChangeDistricts = (
     event: SelectChangeEvent<typeof selectedDistricts>
   ) => {
     const {
@@ -186,86 +181,49 @@ const Objects = () => {
     <>
       <h1>Таблица объектов</h1>
       <Form onSubmit={handleSubmit}>
-        <StyledTextField
-          {...register("address")}
+        <SearchField
+          register={register}
           label="Найти по адресу"
-          type="search"
-          variant="outlined"
-          // size="small"
-          id="address"
           name="address"
           onKeyDown={handleAddressKeyDown}
           value={data.address}
           onChange={handleChange}
           inputProps={{ maxLength: 30 }}
         />
-        <StyledTextField
-          {...register("phone")}
+        <SearchField
+          register={register}
           label="Найти по телефону"
-          type="search"
-          variant="outlined"
-          // size="small"
-          id="phone"
           name="phone"
           onKeyDown={handlePhoneKeyDown}
           value={data.phone}
           onChange={handleChange}
           inputProps={{ maxLength: 12 }}
         />
-        <StyledTextField
-          {...register("name")}
+        <SearchField
+          register={register}
           label="Найти по имени"
-          type="search"
-          variant="outlined"
-          // size="small"
-          id="name"
           name="name"
           onKeyDown={handleNameKeyDown}
           value={data.name}
           onChange={handleChange}
           inputProps={{ maxLength: 30 }}
         />
-        <FormControl sx={{ width: 300 }}>
-          <InputLabel
-            id="districts-label"
-            sx={{
-              color: "gray !important",
-              "&.Mui-focused": {
-                color: "white !important",
-              },
-            }}
-          >
-            Выбрать по району
-          </InputLabel>
-          <StyledSelect
-            labelId="districts-label"
-            id="districts"
-            multiple
-            value={selectedDistricts}
-            onChange={handleChangeMulti}
-            input={<OutlinedInput label="Выбор по району" />}
-            renderValue={(selected) => {
-              const selectedDistrictNames = selected.map((districtId) => {
-                const district = sortedDistricts.find(
-                  (dist) => dist._id === districtId
-                );
-                return district ? district.name : "";
-              });
-              return selectedDistrictNames.join(", ");
-            }}
-            MenuProps={MenuProps}
-          >
-            {sortedDistricts?.map((dist) => (
-              <MenuItem key={dist._id} value={dist._id}>
-                <Checkbox
-                  checked={selectedDistricts.indexOf(dist._id) > -1}
-                  sx={{ color: "white !important" }}
-                />
-                <ListItemText primary={dist.name} />
-              </MenuItem>
-            ))}
-          </StyledSelect>
-        </FormControl>
+        <MultiSelectField
+          itemsList={getActualCitiesList()}
+          selectedItems={selectedCities}
+          onChange={handleChangeCities}
+          id="cities"
+          labelId="cities-label"
+          label="Выбор по городу"
+        />
+        <MultiSelectField
+          itemsList={getActualDistrictsList()}
+          selectedItems={selectedDistricts}
+          onChange={handleChangeDistricts}
+          id="districts"
+          labelId="districts-label"
+          label="Выбор по району"
+        />
       </Form>
       <BasicTable items={searchedObjects} itemsColumns={columns} />
     </>
