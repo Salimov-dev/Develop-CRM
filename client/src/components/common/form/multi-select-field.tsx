@@ -69,32 +69,41 @@ const MultiSelectField = ({
         onChange={onChange}
         input={<OutlinedInput label={label} />}
         renderValue={(selected) => {
-          const selectedItemsNames = selected?.map((elementID) => {
+          const uniqueSelected = [...new Set(selected)];
+          const selectedItemsNames = uniqueSelected?.map((elementID) => {
             const item = itemsList?.find((item) => item._id === elementID);
             return item ? item.name : "";
           });
           return itemsWithId
             ? selectedItemsNames.join(", ")
-            : selected.join(", ");
+            : uniqueSelected.join(", ");
         }}
         MenuProps={MenuProps}
       >
-        {itemsList?.map((item) =>
+        {itemsList?.map((item, index) =>
           itemsWithId ? (
-            <MenuItem key={item._id} value={item._id}>
+            <MenuItem key={`item-${item?._id}`} value={item?._id}>
               <Checkbox
-                checked={selectedItems?.indexOf(item._id) > -1}
+                key={`checkbox-${item?._id}`} // Ensure a unique key for the Checkbox
+                checked={selectedItems?.indexOf(item?._id) > -1}
                 sx={{ color: "white !important" }}
               />
-              <ListItemText primary={item.name} />
+              <ListItemText
+                key={`text-${item?._id}`} // Ensure a unique key for the ListItemText
+                primary={item?.name}
+              />
             </MenuItem>
           ) : (
-            <MenuItem key={item} value={item}>
+            <MenuItem key={`item-${index}`} value={item}>
               <Checkbox
+                key={`checkbox-${index}`} // Ensure a unique key for the Checkbox
                 checked={selectedItems?.indexOf(item) > -1}
                 sx={{ color: "white !important" }}
               />
-              <ListItemText primary={item} />
+              <ListItemText
+                key={`text-${index}`} // Ensure a unique key for the ListItemText
+                primary={item}
+              />
             </MenuItem>
           )
         )}
