@@ -1,6 +1,6 @@
 import { createAction, createSlice } from "@reduxjs/toolkit";
-import localStorageService from "../services/local-storage-service";
-import objectService from "../services/object-service";
+import localStorageService from "../services/local.storage-service";
+import objectService from "../services/object.service";
 import isOutDated from "../utils/isOutDate";
 
 const initialState = localStorageService.getAccessToken()
@@ -79,8 +79,9 @@ export const loadObjectsList = () => async (dispatch, getState) => {
     dispatch(objectsRequested());
     try {
       const { content } = await objectService.get();
-      setTimeout(()=>{dispatch(objectsReceived(content));}, 0)
-      
+      setTimeout(() => {
+        dispatch(objectsReceived(content));
+      }, 0);
     } catch (error) {
       objectsFailed(error.message);
     }

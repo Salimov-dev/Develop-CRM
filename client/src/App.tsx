@@ -17,6 +17,8 @@ import Login from "./layouts/login/login";
 import Signup from "./layouts/signup";
 import { Scrollbar } from "react-scrollbars-custom";
 import ObjectPage from "./components/pages/object/object-page";
+import EditObject from "./components/pages/edit-object/edit-object";
+import CreateObject from "./components/pages/create-object/create-object";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -50,7 +52,7 @@ function App() {
                   <Route path="objects">
                     <Route index element={<Objects />} />
                     <Route path={":objectId/"} element={<ObjectPage />} />
-                    {/* <Route path={"create"} element={<NoteCreate />} /> */}
+                    <Route path={"create"} element={<CreateObject />} />
                     {/* <Route path={":objectId/edit"} element={<NoteEdit />} /> */}
                     <Route path="*" element={<Navigate to="" />} />
                   </Route>

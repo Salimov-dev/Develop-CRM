@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import metroService from "../services/metro-service";
+import metroService from "../services/metro.service";
 
 const metroSlice = createSlice({
   name: "metro",

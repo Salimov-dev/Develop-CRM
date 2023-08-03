@@ -12,9 +12,10 @@ import SearchField from "../../../components/common/form/search-field";
 import MultiSelectField from "../../../components/common/form/multi-select-field";
 import { Box, styled, Typography, Button } from "@mui/material";
 // store
-import { getUsersList } from "../../../store/users-store";
+import { getUsersList } from "../../../store/users.store";
 import { getObjectsStatusList } from "../../../store/object-status.store";
-import { getDistrictsList } from "../../../store/districts-store";
+import { getDistrictsList } from "../../../store/districts.store";
+import { useNavigate } from "react-router-dom";
 
 const Form = styled(`form`)({
   display: "flex",
@@ -207,10 +208,19 @@ const FiltersPanel = ({
     }
   };
 
+  const navigate = useNavigate();
+  const handleCreateObject = () => {
+    navigate("create");
+  };
+
   return (
     <>
       <ButtonsBlock>
-        <Button variant="contained" color="success">
+        <Button
+          variant="contained"
+          color="success"
+          onClick={handleCreateObject}
+        >
           <Typography>Создать объект</Typography>
         </Button>
         {isInputEmpty && (

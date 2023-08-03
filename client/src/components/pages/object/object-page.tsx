@@ -3,15 +3,19 @@ import { useNavigate, useParams } from "react-router-dom";
 import {
   getObjectById,
   getObjectsLoadingStatus,
-} from "../../../store/objects-store";
-import { getDistrictById } from "../../../store/districts-store";
+} from "../../../store/objects.store";
+import { getDistrictById } from "../../../store/districts.store";
 import Loader from "../../common/loader/loader";
 import { Box, Button, Typography, Paper, styled, Divider } from "@mui/material";
 import { makeSeparatorDigit } from "../../../utils/makeSeparatorDigit";
-import { getMetroName } from "../../../store/metro-store";
+import { getMetroName } from "../../../store/metro.store";
 import { FormatDate } from "../../../utils/format-date";
-import { getUserNameById } from "../../../store/users-store";
+import { getUserNameById } from "../../../store/users.store";
 import { getObjectStatusNameById } from "../../../store/object-status.store";
+import ObjectsOnMap from "../../common/elements-on-map/objects-on-map";
+import { getWorkingPositionNameById } from "../../../store/working-position.store";
+import dotenv from "dotenv";
+// dotenv.config();
 
 const TitleContainer = styled(Box)``;
 
@@ -26,40 +30,38 @@ const AboutObject = styled(Box)`
   display: flex;
 `;
 
+const PageButtonsPanel = styled(Box)`
+  display: flex;
+  gap: 4px;
+`;
+
 const Info = styled(Box)`
-  width: 450px;
+  flex: 2;
   display: flex;
   flex-direction: column;
   gap: 4px;
   paddingright: 20px;
 `;
 
-const PageButtonsPanel = styled(Box)`
-  display: flex;
-  gap: 4px;
-`;
-
 const Map = styled(Box)`
+  flex: 5;
   display: flex;
-  width: 100%;
   background: gray;
 `;
 
 const ObjectPage = () => {
   const objectId = useParams().objectId;
-  const currentObject = useSelector(getObjectById(objectId));
+  const object = useSelector(getObjectById(objectId));
   const isObjectsLoading = useSelector(getObjectsLoadingStatus());
-  const city = currentObject?.location.city;
-  const address = currentObject?.location.address;
+  const city = object?.location.city;
+  const address = object?.location.address;
   const navigate = useNavigate();
-  const district = useSelector(
-    getDistrictById(currentObject?.location.district)
-  );
+  const district = useSelector(getDistrictById(object?.location.district));
+  console.log("object", object);
 
   const getRentForMetrPrice = () => {
     const costForMetr = Math.round(
-      currentObject?.estateOptions.rentPrice /
-        currentObject?.estateOptions.rentSquare
+      object?.estateOptions.rentPrice / object?.estateOptions.rentSquare
     );
     const costForMetrString = String(costForMetr);
     const withSeparator = makeSeparatorDigit(costForMetrString);
@@ -70,7 +72,6 @@ const ObjectPage = () => {
     navigate("/objects");
   };
 
-  console.log("currentObject", currentObject);
   return (
     <Box>
       <TitleContainer>
@@ -105,36 +106,36 @@ const ObjectPage = () => {
       <AboutObject>
         <Info>
           <Typography>
-            Метро: {useSelector(getMetroName(currentObject?.location.metro))}
+            Метро: {useSelector(getMetroName(object?.location.metro))}
           </Typography>
           <h3>Информация:</h3>
+          <Typography>Создан: {FormatDate(object?.created_at)}</Typography>
           <Typography>
-            Создан: {FormatDate(currentObject?.created_at)}
+            Менеджер: {useSelector(getUserNameById(object?.userId))}
           </Typography>
           <Typography>
-            Менеджер: {useSelector(getUserNameById(currentObject?.userId))}
-          </Typography>
-          <Typography>
-            Статус:{" "}
-            {useSelector(getObjectStatusNameById(currentObject?.status))}
+            Статус: {useSelector(getObjectStatusNameById(object?.status))}
           </Typography>
           <h3>Контакты:</h3>
-          <Typography>Контакт: {currentObject?.contact.name}</Typography>
-          {/* <Typography>Должность: {useSelector(getWor currentObject?.contact.position}</Typography> */}
-          <Typography>Телефон: {currentObject?.contact.phone}</Typography>
-          <Typography>E-mail: {currentObject?.contact.email}</Typography>
+          <Typography>Контакт: {object?.contact.name}</Typography>
+          <Typography>
+            Должность:{" "}
+            {useSelector(getWorkingPositionNameById(object?.contact.position))}
+          </Typography>
+          <Typography>Телефон: {object?.contact.phone}</Typography>
+          <Typography>E-mail: {object?.contact.email}</Typography>
           <h3>Объект:</h3>
           <Typography>
             Площадь (общая):{" "}
-            {makeSeparatorDigit(currentObject?.estateOptions.totalSquare)}м²
+            {makeSeparatorDigit(object?.estateOptions.totalSquare)}м²
           </Typography>
           <Typography>
             Площадь (аренда):{" "}
-            {makeSeparatorDigit(currentObject?.estateOptions.rentSquare)}м²
+            {makeSeparatorDigit(object?.estateOptions.rentSquare)}м²
           </Typography>
           <Typography>
             Стоимость (аренда общая):{" "}
-            {makeSeparatorDigit(currentObject?.estateOptions.rentPrice)}
+            {makeSeparatorDigit(object?.estateOptions.rentPrice)}
             руб
           </Typography>
           <Typography>
@@ -142,16 +143,18 @@ const ObjectPage = () => {
             руб/м²
           </Typography>
           <Typography>
-            Высота потолков: {currentObject?.estateOptions.premisesHeight}
+            Высота потолков: {object?.estateOptions.premisesHeight}
           </Typography>
           <Typography>
-            Состояние полов: {currentObject?.estateOptions.premisesFloor}
+            Состояние полов: {object?.estateOptions.premisesFloor}
           </Typography>
         </Info>
-        <Map>карта тут быть ей</Map>
+        <Map>
+          <ObjectsOnMap object={object} />
+        </Map>
       </AboutObject>
       <h3>Описание объекта:</h3>
-      <Typography>{currentObject?.description.comment}</Typography>
+      <Typography>{object?.description.comment}</Typography>
     </Box>
   );
 };

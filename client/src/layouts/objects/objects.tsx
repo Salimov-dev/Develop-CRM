@@ -9,7 +9,7 @@ import { groupedColumns } from "./table/columns";
 import {
   getObjectsList,
   getObjectsLoadingStatus,
-} from "../../store/objects-store";
+} from "../../store/objects.store";
 import useSearchObject from "../../hooks/useSearchObject";
 
 const initialState = {

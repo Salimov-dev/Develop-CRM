@@ -1,9 +1,9 @@
 import dayjs from "dayjs";
 import { useSelector } from "react-redux";
-import { getUserNameById } from "../../../../store/users-store";
-import { getDistrictById } from "../../../../store/districts-store";
+import { getUserNameById } from "../../../../store/users.store";
+import { getDistrictById } from "../../../../store/districts.store";
 import { getObjectStatusNameById } from "../../../../store/object-status.store";
-import { getMetroName } from "../../../../store/metro-store";
+import { getMetroName } from "../../../../store/metro.store";
 
 export const FormatDate = (date) => {
   return dayjs(date).format("DD.MM.YY");

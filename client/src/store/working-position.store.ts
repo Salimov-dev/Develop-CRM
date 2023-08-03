@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import workingPositionService from "../services/workingPosition.service";
+import workingPositionService from "../services/working-position.service";
 import isOutDated from "../utils/isOutDate";
 
 const workingPositionSlice = createSlice({
@@ -54,6 +54,12 @@ export const getWorkingPositionStatus = () => (state) =>
 export const getWorkingPositionById = (id) => (state) => {
   if (state.workingPosition.entities) {
     return state.workingPosition.entities.find((prof) => prof._id === id);
+  }
+};
+
+export const getWorkingPositionNameById = (id) => (state) => {
+  if (state?.workingPosition.entities) {
+    return state?.workingPosition?.entities.find((prof) => prof._id === id)?.name;
   }
 };
 

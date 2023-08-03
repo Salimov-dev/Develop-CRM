@@ -79,12 +79,6 @@ export const groupedColumns = [
         cell: (info) => info.getValue(),
         footer: "Имя",
       },
-      //   {
-      //     accessorKey: "",
-      //     header: "Последний контакт",
-      //     cell: (info) => info.getValue(),
-      //     footer: "Последний контакт",
-      //   },
       {
         accessorKey: "",
         header: "Последний контакт",
@@ -104,15 +98,9 @@ export const groupedColumns = [
         },
         footer: "Статус",
       },
-      //   {
-      //     accessorKey: "description.comment",
-      //     header: "Описание",
-      //     cell: (info) => info.getValue(),
-      //     footer: "Описание",
-      //   },
       {
         accessorKey: "_id",
-        header: "Смотреть",
+        header: "Ссылка",
         enableSorting: false,
         cell: (info) => <OpenButton objectId={info.getValue()} />,
         footer: "Открыть",

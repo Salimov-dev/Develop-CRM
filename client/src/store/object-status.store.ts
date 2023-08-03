@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import objectStatusService from "../services/object-status-service.ts";
+import objectStatusService from "../services/object-status.service.ts";
 
 const objectStatusSlice = createSlice({
   name: "objectStatus",

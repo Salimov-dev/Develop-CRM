@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import { Box, Button, Menu, MenuItem, Typography } from "@mui/material";
 // store
-import { logOut } from "../../../../store/users-store";
+import { logOut } from "../../../../store/users.store";
 
 const Component = styled(Box)`
   display: flex;

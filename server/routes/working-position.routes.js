@@ -1,5 +1,5 @@
 const express = require('express')
-const WorkingPosition = require('../models/WorkingPosition')
+const WorkingPosition = require('../models/Working-position')
 const router = express.Router({ mergeParams: true })
 
 router.get('/', async (req, res) => {

@@ -13,7 +13,7 @@ import { useSelector } from "react-redux";
 import {
   getCurrentUserData,
   getUsersLoadingStatus,
-} from "../../../store/users-store";
+} from "../../../store/users.store";
 
 const TopBar = () => {
   const theme = useTheme();

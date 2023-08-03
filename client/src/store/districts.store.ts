@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import districtsService from "../services/districts-service";
+import districtsService from "../services/districts.service";
 
 const districtsSlice = createSlice({
   name: "districts",

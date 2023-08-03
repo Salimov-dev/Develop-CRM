@@ -10,7 +10,7 @@ import styled from "@emotion/styled";
 import { Box, Button, Typography, Paper } from "@mui/material";
 import KeyboardArrowLeftOutlinedIcon from "@mui/icons-material/KeyboardArrowLeftOutlined";
 // store
-import { login, signUp } from "../store/users-store";
+import { login, signUp } from "../store/users.store";
 // components
 import SignUpForm from "../components/UI/signup/signup-form";
 
@@ -96,7 +96,10 @@ const SignUp = () => {
   return (
     <>
       <BackButton>
-        <Button onClick={handleNavigate}><KeyboardArrowLeftOutlinedIcon sx={{ paddingBottom: "2px" }} />На главную</Button>
+        <Button onClick={handleNavigate}>
+          <KeyboardArrowLeftOutlinedIcon sx={{ paddingBottom: "2px" }} />
+          На главную
+        </Button>
       </BackButton>
       <Component>
         <AuthForm>
