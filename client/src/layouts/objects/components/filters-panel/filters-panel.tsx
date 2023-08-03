@@ -8,13 +8,13 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 // components
-import SearchField from "../../../components/common/form/search-field";
-import MultiSelectField from "../../../components/common/form/multi-select-field";
+import SearchField from "../../../../components/common/form/search-field";
+import MultiSelectField from "../../../../components/common/form/multi-select-field";
 import { Box, styled, Typography, Button } from "@mui/material";
 // store
-import { getUsersList } from "../../../store/users-store";
-import { getObjectsStatusList } from "../../../store/object-status.store";
-import { getDistrictsList } from "../../../store/districts-store";
+import { getUsersList } from "../../../../store/users-store";
+import { getObjectsStatusList } from "../../../../store/object-status.store";
+import { getDistrictsList } from "../../../../store/districts-store";
 
 const Form = styled(`form`)({
   display: "flex",
@@ -37,14 +37,10 @@ const FiltersPanel = ({
   selectedDistricts,
   selectedUsers,
   selectedStatuses,
-  startDateSelected,
-  endDateSelected,
   setSelectedDistricts,
   setSelectedCities,
   setSelectedUsers,
   setSelectedStatuses,
-  setStartDateSelected,
-  setEndDateSelected,
 }) => {
   const users = useSelector(getUsersList());
   const objectStatuses = useSelector(getObjectsStatusList());
@@ -66,16 +62,14 @@ const FiltersPanel = ({
     selectedUsers.length ||
     selectedStatuses?.length ||
     hasNonEmptyValue(data) ||
-    startDateSelected ||
-    endDateSelected;
+    data.startDate ||
+    data.endDate;
 
   const handleCLearForm = () => {
     setSelectedCities([]);
     setSelectedDistricts([]);
     setSelectedUsers([]);
     setSelectedStatuses([]);
-    setStartDateSelected(null);
-    setEndDateSelected(null);
 
     for (const key in data) {
       if (key === "startDate" || key === "endDate") {
@@ -155,12 +149,10 @@ const FiltersPanel = ({
 
   const handleStartDateChange = (newValue) => {
     setData((prevState) => ({ ...prevState, startDate: newValue }));
-    setStartDateSelected(true);
   };
 
   const handleEndDateChange = (newValue) => {
     setData((prevState) => ({ ...prevState, endDate: newValue }));
-    setEndDateSelected(true);
   };
 
   const handleChangeStatuses = ({ target }) => {
@@ -217,7 +209,6 @@ const FiltersPanel = ({
 
   return (
     <>
-      {" "}
       <ButtonsBlock>
         <Button variant="contained" color="success">
           <Typography>Создать объект</Typography>

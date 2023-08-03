@@ -59,10 +59,10 @@ const SearchField = ({
       inputProps={inputProps}
       sx={{
         "& .MuiOutlinedInput-notchedOutline": {
-          borderColor: value.length ? "green" : "gray",
+          borderColor: value?.length ? "green" : "gray",
         },
         "& .MuiInputLabel-root": {
-          color: value.length ? "white" : "gray",
+          color: value?.length ? "white" : "gray",
         },
       }}
     />
