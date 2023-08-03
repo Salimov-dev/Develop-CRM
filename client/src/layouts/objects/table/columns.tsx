@@ -1,10 +1,3 @@
-import { useSelector } from "react-redux";
-// libraries
-import dayjs from "dayjs";
-// MUI
-import { Button } from "@mui/material";
-// store
-import { getMetroName } from "../../../store/metro-store";
 import {
   FormatDate,
   FormatDistrict,
@@ -12,7 +5,7 @@ import {
   FormatMetro,
   FormatObjectStatus,
 } from "./helpers/helpers";
-import { getUserById } from "../../../store/users-store";
+import OpenButton from "./helpers/open-button";
 
 export const groupedColumns = [
   {
@@ -118,13 +111,10 @@ export const groupedColumns = [
       //     footer: "Описание",
       //   },
       {
-        accessorKey: "",
-        header: "Открыть",
-        cell: () => (
-          <Button variant="text" color="secondary">
-            Открыть
-          </Button>
-        ),
+        accessorKey: "_id",
+        header: "Смотреть",
+        enableSorting: false,
+        cell: (info) => <OpenButton objectId={info.getValue()} />,
         footer: "Открыть",
       },
     ],

@@ -8,7 +8,7 @@ import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import { Component, LeftSide, RightSide, SearchField } from "./styled/styled";
 import UserMenu from "./components/user-menu";
 import { useNavigate } from "react-router-dom";
-import Loader from "../../common/loader";
+import Loader from "../../common/loader/loader";
 import { useSelector } from "react-redux";
 import {
   getCurrentUserData,

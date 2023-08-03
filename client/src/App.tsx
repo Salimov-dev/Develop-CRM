@@ -16,6 +16,7 @@ import { AppStyled, RightSide } from "./styled";
 import Login from "./layouts/login/login";
 import Signup from "./layouts/signup";
 import { Scrollbar } from "react-scrollbars-custom";
+import ObjectPage from "./components/pages/object/object-page";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -43,6 +44,14 @@ function App() {
                   <Route path="auth" element={<Signup />}>
                     <Route index element={<Navigate to="/auth/SignUp" />} />
                     <Route path={"signup"} element={<Signup />} />
+                    <Route path="*" element={<Navigate to="" />} />
+                  </Route>
+
+                  <Route path="objects">
+                    <Route index element={<Objects />} />
+                    <Route path={":objectId/"} element={<ObjectPage />} />
+                    {/* <Route path={"create"} element={<NoteCreate />} /> */}
+                    {/* <Route path={":objectId/edit"} element={<NoteEdit />} /> */}
                     <Route path="*" element={<Navigate to="" />} />
                   </Route>
                 </Routes>
