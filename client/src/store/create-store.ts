@@ -1,5 +1,5 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import objectsReducer from "./objects.store";
+import objectsReducer from "./objects-store";
 import usersListReducer from "./users-store";
 import metroReducer from "./metro-store";
 import districtsReducer from "./districts-store";

@@ -1,17 +1,15 @@
 // libraries
 import { useSelector } from "react-redux";
-import { useState, useMemo } from "react";
-import "dayjs/locale/ru";
-import dayjs from "dayjs";
+import { useState } from "react";
 // components
 import BasicTable from "../../components/common/table/basic-table";
-import FiltersPanel from "./components/filters-panel/filters-panel";
+import FiltersPanel from "./components/filters-panel";
 import { groupedColumns } from "./table/columns";
 // store
 import {
   getObjectsList,
   getObjectsLoadingStatus,
-} from "../../store/objects.store";
+} from "../../store/objects-store";
 import useSearchObject from "../../hooks/useSearchObject";
 
 const initialState = {
@@ -29,9 +27,9 @@ const Objects = () => {
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
   const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
 
-  const objects = useSelector(getObjectsList());
   const columns = groupedColumns;
   const isObjectsLoading = useSelector(getObjectsLoadingStatus());
+  const objects = useSelector(getObjectsList());
   const searchedObjects = useSearchObject({
     objects,
     data,

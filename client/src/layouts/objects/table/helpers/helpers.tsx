@@ -1,8 +1,8 @@
 import dayjs from "dayjs";
 import { useSelector } from "react-redux";
-import { getUserById } from "../../../../store/users-store";
+import { getUserNameById } from "../../../../store/users-store";
 import { getDistrictById } from "../../../../store/districts-store";
-import { getObjectStatusById } from "../../../../store/object-status.store";
+import { getObjectStatusNameById } from "../../../../store/object-status.store";
 import { getMetroName } from "../../../../store/metro-store";
 
 export const FormatDate = (date) => {
@@ -10,7 +10,7 @@ export const FormatDate = (date) => {
 };
 
 export const FormatManagerName = (id) => {
-  return useSelector(getUserById(id));
+  return useSelector(getUserNameById(id));
 };
 
 export const FormatDistrict = (id) => {
@@ -18,7 +18,7 @@ export const FormatDistrict = (id) => {
 };
 
 export const FormatObjectStatus = (id) => {
-  return useSelector(getObjectStatusById(id));
+  return useSelector(getObjectStatusNameById(id));
 };
 
 export const FormatMetro = (id) => {

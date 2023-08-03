@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 // store
-import { loadObjectsList } from "../store/objects.store";
+import { loadObjectsList } from "../store/objects-store";
 import { loadUsersList } from "../store/users-store";
 import { loadMetroList } from "../store/metro-store";
 import { loadDistrictsList } from "../store/districts-store";

@@ -145,7 +145,7 @@ export const getCurrentUserData = () => (state) => {
     : null;
 };
 
-export const getUserById = (id) => (state) => {
+export const getUserNameById = (id) => (state) => {
   if (state?.users?.entities) {
     const user = state.users.entities.find((user) => user._id === id);
     const result = user?.name;

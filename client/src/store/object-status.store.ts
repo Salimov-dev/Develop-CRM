@@ -44,8 +44,8 @@ export const getObjectsStatusList = () => (state) =>
 export const getObjectStatusLoading = () => (state) =>
   state.objectStatus.isLoading;
 
-export const getObjectStatusById = (id) => (state) => {
-  if (state.objectStatus.entities) {
+export const getObjectStatusNameById = (id) => (state) => {
+  if (state?.objectStatus.entities) {
     const obj = state.objectStatus.entities.filter(
       (status) => status?._id === id
     );

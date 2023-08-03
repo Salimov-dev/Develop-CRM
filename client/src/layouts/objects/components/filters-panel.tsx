@@ -8,13 +8,13 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 // components
-import SearchField from "../../../../components/common/form/search-field";
-import MultiSelectField from "../../../../components/common/form/multi-select-field";
+import SearchField from "../../../components/common/form/search-field";
+import MultiSelectField from "../../../components/common/form/multi-select-field";
 import { Box, styled, Typography, Button } from "@mui/material";
 // store
-import { getUsersList } from "../../../../store/users-store";
-import { getObjectsStatusList } from "../../../../store/object-status.store";
-import { getDistrictsList } from "../../../../store/districts-store";
+import { getUsersList } from "../../../store/users-store";
+import { getObjectsStatusList } from "../../../store/object-status.store";
+import { getDistrictsList } from "../../../store/districts-store";
 
 const Form = styled(`form`)({
   display: "flex",
@@ -289,6 +289,9 @@ const FiltersPanel = ({
               "& label.Mui-focused": {
                 color: "white", // Изменение цвета label на белый при фокусе
               },
+              "& .MuiButtonBase-root": {
+                color: data.startDate ? "white" : "gray",
+              },
             }}
           />
           <DatePicker
@@ -307,6 +310,9 @@ const FiltersPanel = ({
               },
               "& label.Mui-focused": {
                 color: "white", // Изменение цвета label на белый при фокусе
+              },
+              "& .MuiButtonBase-root": {
+                color: data.endDate ? "white" : "gray",
               },
             }}
           />
