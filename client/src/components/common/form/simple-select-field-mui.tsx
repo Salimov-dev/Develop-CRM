@@ -25,15 +25,18 @@ const StyledSelect = styled(Select)(() => ({
       borderColor: "green",
     },
   },
+  "& .MuiSelect-select": {
+    marginTop: "-5px",
+    height: "25px !important",
+  },
 }));
 
-const SimpleSelectField = ({
-  onChange,
-  value,
+const SimpleSelectFieldMUI = ({
   itemsList,
   name,
   labelId,
   label,
+  register,
 }) => {
   return (
     <FormControl sx={{ minWidth: "300px", width: "100%" }}>
@@ -50,11 +53,11 @@ const SimpleSelectField = ({
       </InputLabel>
 
       <StyledSelect
+        {...register(name)}
         labelId={labelId}
+        defaultValue=""
         id={name}
         name={name}
-        value={value}
-        onChange={onChange}
         input={<OutlinedInput label={label} />}
         MenuProps={MenuProps}
       >
@@ -68,4 +71,4 @@ const SimpleSelectField = ({
   );
 };
 
-export default SimpleSelectField;
+export default SimpleSelectFieldMUI;

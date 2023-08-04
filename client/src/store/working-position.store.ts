@@ -45,7 +45,7 @@ export const loadWorkingPositionList = () => async (dispatch, getState) => {
   }
 };
 
-export const getWorkingPosition = () => (state) =>
+export const getWorkingPositionsList = () => (state) =>
   state.workingPosition.entities;
 
 export const getWorkingPositionStatus = () => (state) =>
@@ -59,7 +59,8 @@ export const getWorkingPositionById = (id) => (state) => {
 
 export const getWorkingPositionNameById = (id) => (state) => {
   if (state?.workingPosition.entities) {
-    return state?.workingPosition?.entities.find((prof) => prof._id === id)?.name;
+    return state?.workingPosition?.entities.find((prof) => prof._id === id)
+      ?.name;
   }
 };
 

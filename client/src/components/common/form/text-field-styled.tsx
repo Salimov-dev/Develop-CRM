@@ -20,32 +20,37 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
   },
 }));
 
-const SearchField = ({
+const TextFieldStyled = ({
+  errors,
   register,
   label,
   name,
   onKeyDown,
   onChange,
   value,
-  inputProps,
+  InputProps,
+  type="text",
+  rows="1",
 }) => {
-
   return (
     <StyledTextField
       {...register(name)}
       label={label}
-      type="search"
+      type={type}
       variant="outlined"
       id={name}
-      name={name}
+      rows={rows}
+      multiline={true}
       onKeyDown={onKeyDown}
       value={value}
       onChange={onChange}
-      inputProps={inputProps}
+      InputProps={InputProps}
+      error={!!errors}
+            helperText={errors?.message}
       sx={{
-        "& .MuiOutlinedInput-notchedOutline": {
-          borderColor: value?.length ? "green" : "gray",
-        },
+        // "& .MuiOutlinedInput-notchedOutline": {
+        //   borderColor: value?.length ? "green" : "gray",
+        // },
         "& .MuiInputLabel-root": {
           color: value?.length ? "white" : "gray",
         },
@@ -54,4 +59,4 @@ const SearchField = ({
   );
 };
 
-export default SearchField;
+export default TextFieldStyled;
