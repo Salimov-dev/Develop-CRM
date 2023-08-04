@@ -1,5 +1,5 @@
 // libraries
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -14,6 +14,10 @@ import {
   styled,
   Divider,
   InputAdornment,
+  FormGroup,
+  TextField,
+  FormControlLabel,
+  Switch,
 } from "@mui/material";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import PhoneIphoneOutlinedIcon from "@mui/icons-material/PhoneIphoneOutlined";
@@ -24,6 +28,10 @@ import SimpleSelectFieldMUI from "../../common/form/simple-select-field-mui";
 import { getDistrictsList } from "../../../store/districts.store";
 import { getMetroList } from "../../../store/metro.store";
 import { getWorkingPositionsList } from "../../../store/working-position.store";
+import { getObjectsStatusList } from "../../../store/object-status.store";
+import SwitchStyled from "../../common/form/switch-styled";
+import useFindObject from "../../../hoc/useFindObject";
+import FindObjectOnMap from "./components/FindObjectOnMap";
 
 const Form = styled(`form`)({
   display: "flex",
@@ -97,9 +105,9 @@ const initialState = {
     premisesFloor: "",
   },
   accordTerms: {
-    readyToRent: "",
-    readyToContract: "",
-    readyToRenovation: "",
+    readyToRent: false,
+    readyToContract: false,
+    readyToRenovation: false,
   },
   lastContact: {
     result: "",
@@ -112,6 +120,8 @@ const initialState = {
 const CreateObject = () => {
   const {
     register,
+    watch,
+    control,
     handleSubmit,
     formState: { errors },
   } = useForm({
@@ -127,17 +137,42 @@ const CreateObject = () => {
   };
 
   const districts = useSelector(getDistrictsList());
-  const metros = useSelector(getMetroList())
-  const workingPositions = useSelector(getWorkingPositionsList())
-  // console.log("district", district);
-  // console.log("district", district);
-  // console.log("district", district);
+  const metros = useSelector(getMetroList());
+  const workingPositions = useSelector(getWorkingPositionsList());
+  const objectStatuses = useSelector(getObjectsStatusList());
+
+  const {
+    findLocality,
+    getLatitudeCoordinates,
+    getLongitudeCoordinates,
+    findedObject,
+  } = useFindObject();
+
+  // console.log("watch", watch("contact.name"));
+
+  // console.log(Object.keys(findedObject).length > 0 && findLocality());
+  // console.log(Object.keys(findedObject).length > 0 && getLatitudeCoordinates());
+  // console.log(Object.keys(findedObject).length > 0 && getLongitudeCoordinates());
+  const city = findedObject?.description;
+  const address = findedObject?.name;
+
+  console.log(watch("contact.name"));
+
+  useEffect(() => {
+    const subscription = watch((value, { name, type }) =>
+      console.log(value, name, type)
+    );
+    return () => subscription.unsubscribe();
+  }, [watch]);
 
   return (
     <Box>
       <h1>Создать новый объект</h1>
+
       <Form onSubmit={handleSubmit(onSubmit)} noValidate>
-        <Map></Map>
+        <Map>
+          <FindObjectOnMap />
+        </Map>
         <Box sx={{ marginRight: "auto" }}>
           <h3>Адрес</h3>
         </Box>
@@ -200,6 +235,7 @@ const CreateObject = () => {
             type="number"
             name="contact.phone"
             errors={errors?.contact?.phone}
+            valueAsNumber={true}
             InputProps={{
               maxLength: 70,
               endAdornment: (
@@ -233,6 +269,7 @@ const CreateObject = () => {
             label="Общая площадь"
             type="number"
             name="estateOptions.totalSquare"
+            valueAsNumber={true}
             InputProps={{
               maxLength: 5,
               endAdornment: <InputAdornment position="end">м²</InputAdornment>,
@@ -243,6 +280,7 @@ const CreateObject = () => {
             label="Площадь аренды"
             type="number"
             name="estateOptions.rentSquare"
+            valueAsNumber={true}
             InputProps={{
               maxLength: 4,
               endAdornment: <InputAdornment position="end">м²</InputAdornment>,
@@ -253,6 +291,7 @@ const CreateObject = () => {
             label="Стоимость аренды"
             type="number"
             name="estateOptions.rentPrice"
+            valueAsNumber={true}
             InputProps={{
               maxLength: 7,
               endAdornment: <InputAdornment position="end">₽</InputAdornment>,
@@ -263,6 +302,7 @@ const CreateObject = () => {
             label="Стоимость 1м²"
             type="number"
             name="estateOptions.rentPriceForMetr"
+            valueAsNumber={true}
             InputProps={{
               maxLength: 5,
               endAdornment: (
@@ -275,6 +315,7 @@ const CreateObject = () => {
             label="Каникулы"
             type="number"
             name="estateOptions.rentalHolidays"
+            valueAsNumber={true}
             InputProps={{
               maxLength: 3,
               endAdornment: (
@@ -287,6 +328,7 @@ const CreateObject = () => {
             label="Обеспечительный платёж"
             type="number"
             name="estateOptions.securityDeposit"
+            valueAsNumber={true}
             InputProps={{
               maxLength: 7,
               endAdornment: <InputAdornment position="end">₽</InputAdornment>,
@@ -296,23 +338,50 @@ const CreateObject = () => {
         <Box sx={{ marginRight: "auto" }}>
           <h3>Другие параметры</h3>
         </Box>
-        <FieldsContainer>
-          <TextFieldStyled
-            register={register}
-            label="Высота потолков"
-            type="number"
-            name="estateOptions.premisesHeight"
-            InputProps={{
-              maxLength: 3,
-              endAdornment: <InputAdornment position="end">м</InputAdornment>,
-            }}
-          />
-          <TextFieldStyled
-            register={register}
-            label="Состояние полов"
-            name="estateOptions.premisesFloor"
-            inputProps={{ maxLength: 100 }}
-          />
+        <FieldsContainer sx={{ flexDirection: "column" }}>
+          <Box sx={{ display: "flex", gap: "4px" }}>
+            <SimpleSelectFieldMUI
+              itemsList={objectStatuses}
+              name="status"
+              labelId="status"
+              label="Статус объекта"
+              register={register}
+            />
+            <TextFieldStyled
+              register={register}
+              label="Высота потолков"
+              type="number"
+              name="estateOptions.premisesHeight"
+              valueAsNumber={true}
+              InputProps={{
+                maxLength: 3,
+                endAdornment: <InputAdornment position="end">м</InputAdornment>,
+              }}
+            />
+            <TextFieldStyled
+              register={register}
+              label="Состояние полов"
+              name="estateOptions.premisesFloor"
+              inputProps={{ maxLength: 100 }}
+            />
+          </Box>
+          <FormGroup sx={{ paddingTop: "10px" }}>
+            <SwitchStyled
+              register={register}
+              name="accordTerms.readyToContract"
+              label="Собственник согласен на нашу форму договора"
+            />
+            <SwitchStyled
+              register={register}
+              name="accordTerms.readyToRent"
+              label="Готов сдавать под нашу деятельность"
+            />
+            <SwitchStyled
+              register={register}
+              name="accordTerms.readyToRenovation"
+              label="Собственник готов сделать ремонт за свой счёт"
+            />
+          </FormGroup>
         </FieldsContainer>
         <Box sx={{ marginRight: "auto" }}>
           <h3>Описание объекта</h3>
