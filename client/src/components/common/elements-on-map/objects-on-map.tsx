@@ -74,7 +74,7 @@ const ObjectsOnMap = ({ object }) => {
         mapObjOnPage = null;
       }
     };
-  }, [latitude, longitude, mapZoom, date, city, address, status]);
+  }, [latitude, longitude]);
 
   return <div id="map-obj" className="mapObject__container"></div>;
 };

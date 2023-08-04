@@ -43,8 +43,7 @@ const BasicTable = ({ items, itemsColumns, isLoading }) => {
   }, []);
 
   return (
-    <Box sx={{ paddingBottom: "80px !important" }}>
-      {/* <Loader/> */}
+    <Box>
       <table>
         <Thead table={table} colors={colors} />
         {!isLoading && <Tbody table={table} />}

@@ -4,7 +4,6 @@ export const PaginationContainer = styled(Box)`
   width: 100%;
   display: flex;
   justify-content: space-between;
-
   padding: 10px 0;
 `;
 
