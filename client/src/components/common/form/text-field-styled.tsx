@@ -1,4 +1,5 @@
-import { TextField, styled } from "@mui/material";
+import { TextField, styled, FormHelperText } from "@mui/material";
+import { enterPhoneFormat } from "../../../utils/enter-phone-format";
 
 const StyledTextField = styled(TextField)(({ theme }) => ({
   minWidth: "30px",
@@ -28,16 +29,17 @@ const TextFieldStyled = ({
   onKeyDown,
   value,
   InputProps,
-  type = "text",
+  type,
   rows = "1",
   valueAsNumber = false,
-  disabled=false
+  disabled = false,
 }) => {
   return (
     <StyledTextField
       type={type}
       {...register(name, {
         valueAsNumber: valueAsNumber,
+        // value:
       })}
       label={label}
       variant="outlined"

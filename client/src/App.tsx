@@ -54,7 +54,7 @@ function App() {
                     <Route path={":objectId/"} element={<ObjectPage />} />
                     <Route path={"create"} element={<CreateObject />} />
                     {/* <Route path={":objectId/edit"} element={<NoteEdit />} /> */}
-                    <Route path="*" element={<Navigate to="" />} />
+                    <Route path="*" element={<Navigate to="/objects" />} />
                   </Route>
                 </Routes>
               </RightSide>

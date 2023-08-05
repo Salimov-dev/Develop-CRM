@@ -6,18 +6,8 @@ import {
   MenuItem,
   OutlinedInput,
   ListItemText,
+  FormHelperText,
 } from "@mui/material";
-
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
 
 const StyledSelect = styled(Select)(() => ({
   "&.Mui-focused": {
@@ -37,8 +27,21 @@ const SimpleSelectFieldMUI = ({
   labelId,
   label,
   register,
-  disabled=false
+  disabled = false,
+  isHelperText = false,
+  helperText,
 }) => {
+  const ITEM_HEIGHT = 48;
+  const ITEM_PADDING_TOP = 8;
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+        width: 250,
+      },
+    },
+  };
+
   return (
     <FormControl sx={{ minWidth: "300px", width: "100%" }}>
       <InputLabel
@@ -63,12 +66,16 @@ const SimpleSelectFieldMUI = ({
         MenuProps={MenuProps}
         disabled={disabled}
       >
+        <MenuItem value="">
+          <em>Отмена</em>
+        </MenuItem>
         {itemsList?.map((item) => (
           <MenuItem key={item?._id} value={item?._id}>
             <ListItemText primary={item?.name} />
           </MenuItem>
         ))}
       </StyledSelect>
+      {isHelperText ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormControl>
   );
 };

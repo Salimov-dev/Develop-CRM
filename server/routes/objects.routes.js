@@ -54,7 +54,7 @@ router.post("/create", auth, async (req, res) => {
     res.status(201).send(newObject);
   } catch (e) {
     res.status(500).json({
-      message: "На сервере произошла ошибка, попробуйте позже",
+      message: "An error occurred on the server, please try again later",
     });
   }
 });

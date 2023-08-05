@@ -18,6 +18,7 @@ import {
   TextField,
   FormControlLabel,
   Switch,
+  Autocomplete,
 } from "@mui/material";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import PhoneIphoneOutlinedIcon from "@mui/icons-material/PhoneIphoneOutlined";
@@ -32,6 +33,8 @@ import { getObjectsStatusList } from "../../../store/object-status.store";
 import SwitchStyled from "../../common/form/switch-styled";
 import useFindObject from "../../../hoc/useFindObject";
 import FindObjectOnMap from "./components/FindObjectOnMap";
+import { createObject } from "../../../store/objects.store";
+import { getCurrentUserId } from "../../../store/users.store";
 
 const Form = styled(`form`)({
   display: "flex",
@@ -61,29 +64,26 @@ const FooterButtons = styled(Box)`
 `;
 
 const objectSchema = yup.object().shape({
-  // status: yup.string().required("Статус обязателен для заполнения"),
+  status: yup.string().required("Статус обязателен для заполнения"),
   contact: yup.object().shape({
     // phone: yup.string().required("Телефон обязателен для заполнения"),
-    name: yup
-      .string()
-      .transform((value) => (value === undefined ? null : value.trim()))
-      .matches(/^([^0-9]*$)/, "Имя не должно содержать цифры")
-      .matches(/[^a-zA-Z]+/g, "Вводите только русские буквы"),
+    name: yup.string().matches(/^([^0-9]*$)/, "Имя не должно содержать цифры"),
     email: yup.string().email("Некорректный адрес электронной почты"),
   }),
   location: yup.object().shape({
-    // city: yup.string().required("Город обязателен для заполнения"),
-    // address: yup.string().required("Адрес обязателен для заполнения"),
     district: yup.string().required("Район обязателен для заполнения"),
     metro: yup.string(),
   }),
-  lastContact: yup.object().shape({
-    // result: yup.string().required("Результат обязателен для заполнения"),
+  estateOptions: yup.object().shape({
+    // totalSquare: yup
+    // .number()
+    // .min(2, "Минимум 2 символа")
+    // .max(4, "Максимум 4 символа"),
+    // .matches(/\d+/g, "Вводите только цифры"),
   }),
   description: yup.object().shape({
-    fullDescription: yup
-      .string()
-      .required("Полное описание обязательно для заполнения"),
+    fullDescription: yup.string(),
+    // .required("Полное описание обязательно для заполнения"),
   }),
 });
 
@@ -116,38 +116,28 @@ const initialState = {
     readyToContract: false,
     readyToRenovation: false,
   },
-  lastContact: {
-    result: "",
-  },
   description: {
     fullDescription: "",
   },
 };
 
 const CreateObject = () => {
+  const districts = useSelector(getDistrictsList());
+  const metros = useSelector(getMetroList());
+  const workingPositions = useSelector(getWorkingPositionsList());
+  const objectStatuses = useSelector(getObjectsStatusList());
   const {
     register,
     watch,
     handleSubmit,
     setValue,
-    formState: { errors },
+    formState: { errors, isValid, isDirty },
+    reset,
   } = useForm({
     defaultValues: initialState,
     mode: "onBlur",
-    // resolver: yupResolver(objectSchema),
+    resolver: yupResolver(objectSchema),
   });
-
-  const isFormValid = !Object.keys(errors).length;
-
-  const onSubmit = (data) => {
-    console.log("data", data);
-  };
-
-  const districts = useSelector(getDistrictsList());
-  const metros = useSelector(getMetroList());
-  const workingPositions = useSelector(getWorkingPositionsList());
-  const objectStatuses = useSelector(getObjectsStatusList());
-
   const {
     getCity,
     getAddress,
@@ -155,9 +145,28 @@ const CreateObject = () => {
     getLongitudeCoordinates,
     findedObject,
   } = useFindObject();
-
+  const dispatch = useDispatch();
+  const isEmptyFindedObject = Object.keys(findedObject).length;
   const watchName = watch("contact.name");
   const watchDistrict = watch("location.district");
+  const currentUser = useSelector(getCurrentUserId());
+  const company = "64c140eb8d214a0532377114"
+
+  const onSubmit = (data) => {
+    console.log("data", data);
+    const newData = {
+      ...data,
+      userId: currentUser,
+      company: company,
+      location: {
+        ...data.location,
+        zoom: 16,
+      },
+    };
+    console.log("newData", newData);
+
+    dispatch(createObject(newData));
+  };
 
   useEffect(() => {
     setValue("location.city", getCity());
@@ -166,8 +175,9 @@ const CreateObject = () => {
     setValue("location.longitude", getLongitudeCoordinates());
   }, [findedObject]);
 
-  const isEmptyFindedObject = Object.keys(findedObject).length;
-  console.log("isEmptyFindedObject", isEmptyFindedObject);
+  const handleClearForm = () => {
+    reset();
+  };
 
   return (
     <Box>
@@ -189,7 +199,6 @@ const CreateObject = () => {
           </Typography>
         )}
       </Box>
-      {/* getCity(), getAddress() */}
       <Form onSubmit={handleSubmit(onSubmit)} noValidate>
         <Map>
           <FindObjectOnMap />
@@ -198,24 +207,14 @@ const CreateObject = () => {
           <h3>Адрес</h3>
         </Box>
         <FieldsContainer>
-          <TextFieldStyled
-            register={register}
-            label="Населеленный пункт"
-            name="location.city"
-            errors={errors?.location?.city}
-          />
-          <TextFieldStyled
-            register={register}
-            label="Адрес"
-            name="location.address"
-            errors={errors?.location?.address}
-          />
           <SimpleSelectFieldMUI
             itemsList={districts}
             name="location.district"
             labelId="district"
             label="Район"
             register={register}
+            isHelperText={true}
+            helperText="Обязательно"
           />
           <SimpleSelectFieldMUI
             itemsList={metros}
@@ -251,6 +250,8 @@ const CreateObject = () => {
             label="Позиция"
             register={register}
             disabled={!watchName.length && true}
+            helperText={!watchName.length && "Сначала введите имя"}
+            isHelperText={true}
           />
           <TextFieldStyled
             register={register}
@@ -293,6 +294,7 @@ const CreateObject = () => {
             type="number"
             name="estateOptions.totalSquare"
             valueAsNumber={true}
+            errors={errors?.estateOptions?.totalSquare}
             InputProps={{
               maxLength: 5,
               endAdornment: <InputAdornment position="end">м²</InputAdornment>,
@@ -369,6 +371,8 @@ const CreateObject = () => {
               labelId="status"
               label="Статус объекта"
               register={register}
+              isHelperText={true}
+              helperText="Обязательно"
             />
             <TextFieldStyled
               register={register}
@@ -415,14 +419,24 @@ const CreateObject = () => {
           name="description.fullDescription"
           rows="3"
           errors={errors?.description?.fullDescription}
-          inputProps={{ maxLength: 3500 }}
+          InputProps={{ maxLength: 3500 }}
         />
         <FooterButtons>
-          <Button type="submit" variant="outlined" color="success">
+          <Button
+            type="submit"
+            variant="outlined"
+            color="success"
+            disabled={!isValid || !isDirty}
+          >
             Создать
           </Button>
           <Box sx={{ display: "flex", gap: "4px" }}>
-            <Button type="submit" variant="outlined" color="success">
+            <Button
+              type="submit"
+              variant="outlined"
+              color="success"
+              onClick={handleClearForm}
+            >
               Очистить форму
             </Button>
             <Button type="submit" variant="outlined" color="success">

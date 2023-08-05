@@ -92,6 +92,8 @@ const useFindObject = () => {
     let objectToFind =
       findedObject?.metaDataProperty?.GeocoderMetaData?.Address?.Components;
     const localityObject = objectToFind?.filter((item) => {
+      // console.log("findedObject", findedObject);
+      
       if (item.kind === "locality") return item.name;
     });
 
