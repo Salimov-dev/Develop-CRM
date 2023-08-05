@@ -31,6 +31,7 @@ const TextFieldStyled = ({
   type = "text",
   rows = "1",
   valueAsNumber = false,
+  disabled=false
 }) => {
   return (
     <StyledTextField
@@ -48,6 +49,7 @@ const TextFieldStyled = ({
       InputProps={InputProps}
       error={!!errors}
       helperText={errors?.message}
+      disabled={disabled}
       sx={{
         "& .MuiInputLabel-root": {
           color: value?.length ? "white" : "gray",

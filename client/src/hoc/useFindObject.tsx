@@ -5,6 +5,7 @@ const useFindObject = () => {
   /* eslint-disable no-undef */
   /* eslint-disable no-unused-vars */
   const [findedObject, setFindedObject] = useState({});
+
   function init() {
     var myPlacemark,
       myMap = new ymaps.Map(
@@ -81,25 +82,46 @@ const useFindObject = () => {
     ymaps.ready(init);
   }, []);
 
-  const findLocality = () => {
+  const isEmptyFindedObject = Object.keys(findedObject).length;
+
+  const getCity = () => {
+    if (!isEmptyFindedObject) {
+      return null;
+    }
+
     let objectToFind =
-      findedObject.metaDataProperty.GeocoderMetaData.Address.Components;
-    const localityObject = objectToFind.filter((item) => {
+      findedObject?.metaDataProperty?.GeocoderMetaData?.Address?.Components;
+    const localityObject = objectToFind?.filter((item) => {
       if (item.kind === "locality") return item.name;
     });
-    return localityObject[0].name;
+
+    const result = Object.assign({}, ...localityObject);
+
+    return result?.name;
   };
-  
+
+  const getAddress = () => {
+    if (!isEmptyFindedObject) {
+      return null;
+    }
+    return findedObject.name;
+  };
+
   const getLatitudeCoordinates = () => {
-    return (findedObject.boundedBy[0][0] + findedObject.boundedBy[1][0]) / 2;
+    const [firstPoint, secondPoint] = findedObject?.boundedBy || [];
+    const latitudeSum = (firstPoint?.[0] || 0) + (secondPoint?.[0] || 0);
+    return latitudeSum / 2;
   };
 
   const getLongitudeCoordinates = () => {
-    return (findedObject.boundedBy[0][1] + findedObject.boundedBy[1][1]) / 2;
+    const [firstPoint, secondPoint] = findedObject?.boundedBy || [];
+    const longitudeSum = (firstPoint?.[1] || 0) + (secondPoint?.[1] || 0);
+    return longitudeSum / 2;
   };
 
   return {
-    findLocality,
+    getCity,
+    getAddress,
     getLatitudeCoordinates,
     getLongitudeCoordinates,
     findedObject,

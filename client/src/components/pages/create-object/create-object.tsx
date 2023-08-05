@@ -53,6 +53,13 @@ const Map = styled(Box)`
   background-color: gray;
 `;
 
+const FooterButtons = styled(Box)`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+`;
+
 const objectSchema = yup.object().shape({
   // status: yup.string().required("Статус обязателен для заполнения"),
   contact: yup.object().shape({
@@ -121,8 +128,8 @@ const CreateObject = () => {
   const {
     register,
     watch,
-    control,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm({
     defaultValues: initialState,
@@ -142,33 +149,47 @@ const CreateObject = () => {
   const objectStatuses = useSelector(getObjectsStatusList());
 
   const {
-    findLocality,
+    getCity,
+    getAddress,
     getLatitudeCoordinates,
     getLongitudeCoordinates,
     findedObject,
   } = useFindObject();
 
-  // console.log("watch", watch("contact.name"));
-
-  // console.log(Object.keys(findedObject).length > 0 && findLocality());
-  // console.log(Object.keys(findedObject).length > 0 && getLatitudeCoordinates());
-  // console.log(Object.keys(findedObject).length > 0 && getLongitudeCoordinates());
-  const city = findedObject?.description;
-  const address = findedObject?.name;
-
-  console.log(watch("contact.name"));
+  const watchName = watch("contact.name");
+  const watchDistrict = watch("location.district");
 
   useEffect(() => {
-    const subscription = watch((value, { name, type }) =>
-      console.log(value, name, type)
-    );
-    return () => subscription.unsubscribe();
-  }, [watch]);
+    setValue("location.city", getCity());
+    setValue("location.address", getAddress());
+    setValue("location.latitude", getLatitudeCoordinates());
+    setValue("location.longitude", getLongitudeCoordinates());
+  }, [findedObject]);
+
+  const isEmptyFindedObject = Object.keys(findedObject).length;
+  console.log("isEmptyFindedObject", isEmptyFindedObject);
 
   return (
     <Box>
-      <h1>Создать новый объект</h1>
-
+      <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
+        <h1>Создать новый объект:</h1>
+        {isEmptyFindedObject ? (
+          <Typography
+            variant="h3"
+            sx={{ background: "yellow", color: "black" }}
+          >
+            {getCity()}, {getAddress()}
+          </Typography>
+        ) : (
+          <Typography
+            variant="h3"
+            sx={{ background: "yellow", color: "black" }}
+          >
+            Выберите объект на карте
+          </Typography>
+        )}
+      </Box>
+      {/* getCity(), getAddress() */}
       <Form onSubmit={handleSubmit(onSubmit)} noValidate>
         <Map>
           <FindObjectOnMap />
@@ -202,6 +223,7 @@ const CreateObject = () => {
             labelId="district"
             label="Метро"
             register={register}
+            disabled={!watchDistrict && true}
           />
         </FieldsContainer>
         <Box sx={{ marginRight: "auto" }}>
@@ -228,6 +250,7 @@ const CreateObject = () => {
             labelId="position"
             label="Позиция"
             register={register}
+            disabled={!watchName.length && true}
           />
           <TextFieldStyled
             register={register}
@@ -368,13 +391,13 @@ const CreateObject = () => {
           <FormGroup sx={{ paddingTop: "10px" }}>
             <SwitchStyled
               register={register}
-              name="accordTerms.readyToContract"
-              label="Собственник согласен на нашу форму договора"
+              name="accordTerms.readyToRent"
+              label="Готов сдавать под нашу деятельность"
             />
             <SwitchStyled
               register={register}
-              name="accordTerms.readyToRent"
-              label="Готов сдавать под нашу деятельность"
+              name="accordTerms.readyToContract"
+              label="Собственник согласен на нашу форму договора"
             />
             <SwitchStyled
               register={register}
@@ -394,9 +417,19 @@ const CreateObject = () => {
           errors={errors?.description?.fullDescription}
           inputProps={{ maxLength: 3500 }}
         />
-        <Button type="submit" color="success">
-          Создать
-        </Button>
+        <FooterButtons>
+          <Button type="submit" variant="outlined" color="success">
+            Создать
+          </Button>
+          <Box sx={{ display: "flex", gap: "4px" }}>
+            <Button type="submit" variant="outlined" color="success">
+              Очистить форму
+            </Button>
+            <Button type="submit" variant="outlined" color="success">
+              Отмена
+            </Button>
+          </Box>
+        </FooterButtons>
       </Form>
     </Box>
   );

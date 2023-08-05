@@ -37,6 +37,7 @@ const SimpleSelectFieldMUI = ({
   labelId,
   label,
   register,
+  disabled=false
 }) => {
   return (
     <FormControl sx={{ minWidth: "300px", width: "100%" }}>
@@ -60,6 +61,7 @@ const SimpleSelectFieldMUI = ({
         name={name}
         input={<OutlinedInput label={label} />}
         MenuProps={MenuProps}
+        disabled={disabled}
       >
         {itemsList?.map((item) => (
           <MenuItem key={item?._id} value={item?._id}>
