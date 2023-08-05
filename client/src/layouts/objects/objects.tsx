@@ -30,6 +30,7 @@ const Objects = () => {
   const columns = groupedColumns;
   const isObjectsLoading = useSelector(getObjectsLoadingStatus());
   const objects = useSelector(getObjectsList());
+  console.log("objects", objects);
   const searchedObjects = useSearchObject({
     objects,
     data,

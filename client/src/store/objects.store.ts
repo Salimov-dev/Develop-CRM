@@ -79,9 +79,7 @@ export const loadObjectsList = () => async (dispatch, getState) => {
     dispatch(objectsRequested());
     try {
       const { content } = await objectService.get();
-      setTimeout(() => {
-        dispatch(objectsReceived(content));
-      }, 0);
+      dispatch(objectsReceived(content));
     } catch (error) {
       objectsFailed(error.message);
     }
@@ -89,7 +87,6 @@ export const loadObjectsList = () => async (dispatch, getState) => {
 };
 
 export const createObject = (payload) => async (dispatch) => {
-  
   dispatch(objectCreateRequested);
   try {
     const { content } = await objectService.create(payload);

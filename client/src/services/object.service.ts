@@ -8,13 +8,10 @@ const objectService = {
     return data;
   },
   create: async (payload) => {
-    console.log("payload", payload);
-    
     const { data } = await httpService.post(
       objectEndpoint + "create",
       payload
     );
-    console.log("data", data);
     return data;
   },
   remove: async (objectId) => {
