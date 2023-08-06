@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router-dom";
 // MUI
-import { Box } from "@mui/material";
+import { Box, styled } from "@mui/material";
 // components
 import Header from "./components/header";
 import CreateObjectForm from "./components/create-object-form";
@@ -19,6 +19,7 @@ import { getCurrentUserId } from "../../../store/users.store";
 // other
 import useFindObject from "../../../hoc/useFindObject";
 import { objectSchema } from "../../../schemas/schemas";
+import FindObjectOnMap from "./components/find-object-on-map";
 
 const initialState = {
   status: "",
@@ -54,6 +55,12 @@ const initialState = {
   },
 };
 
+const Map = styled(Box)`
+  width: 100%;
+  height: 250px;
+  background-color: gray;
+`;
+
 const CreateObject = () => {
   const districts = useSelector(getDistrictsList());
   const metros = useSelector(getMetroList());
@@ -61,7 +68,7 @@ const CreateObject = () => {
   const objectStatuses = useSelector(getObjectsStatusList());
   const currentUser = useSelector(getCurrentUserId());
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const {
     register,
@@ -98,7 +105,7 @@ const CreateObject = () => {
         zoom: 16,
       },
     };
-    dispatch(createObject(newData)).then(navigate("/objects"))
+    dispatch(createObject(newData)).then(navigate("/objects"));
   };
 
   useEffect(() => {
@@ -119,6 +126,11 @@ const CreateObject = () => {
         getCity={getCity}
         getAddress={getAddress}
       />
+
+      <Map>
+        <FindObjectOnMap />
+      </Map>
+
       <CreateObjectForm
         handleSubmit={handleSubmit}
         onSubmit={onSubmit}

@@ -1,6 +1,6 @@
 export const enterPhoneFormat = (number) => {
   
-  const startsWith = "+7";
+  const startsWith = "7";
   let phone = String( number).replace(/[^0-9]/g, "");
   if (phone.startsWith("7")) {
     phone = phone.substr(1);

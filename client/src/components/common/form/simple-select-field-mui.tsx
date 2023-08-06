@@ -8,6 +8,7 @@ import {
   ListItemText,
   FormHelperText,
 } from "@mui/material";
+import { useState } from "react";
 
 const StyledSelect = styled(Select)(() => ({
   "&.Mui-focused": {
@@ -30,6 +31,7 @@ const SimpleSelectFieldMUI = ({
   disabled = false,
   isHelperText = false,
   helperText,
+  value,
 }) => {
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
@@ -59,21 +61,23 @@ const SimpleSelectFieldMUI = ({
       <StyledSelect
         {...register(name)}
         labelId={labelId}
-        defaultValue=""
         id={name}
         name={name}
         input={<OutlinedInput label={label} />}
         MenuProps={MenuProps}
         disabled={disabled}
+        value={itemsList?.length ? value : ""}
+        defaultValue=""
       >
         <MenuItem value="">
           <em>Отмена</em>
         </MenuItem>
-        {itemsList?.map((item) => (
-          <MenuItem key={item?._id} value={item?._id}>
-            <ListItemText primary={item?.name} />
-          </MenuItem>
-        ))}
+        {itemsList &&
+          itemsList?.map((item) => (
+            <MenuItem key={item?._id} value={item?._id}>
+              <ListItemText primary={item?.name} />
+            </MenuItem>
+          ))}
       </StyledSelect>
       {isHelperText ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormControl>

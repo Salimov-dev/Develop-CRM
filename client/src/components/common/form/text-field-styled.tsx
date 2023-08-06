@@ -1,4 +1,4 @@
-import { TextField, styled } from "@mui/material";
+import {Box, TextField, styled, FormHelperText } from "@mui/material";
 const StyledTextField = styled(TextField)(({ theme }) => ({
   minWidth: "30px",
   width: "100%",
@@ -34,6 +34,8 @@ const TextFieldStyled = ({
   valueAsNumber = false,
   disabled = false,
   multiline = false,
+  isHelperText = false,
+  helperText,
 }) => {
   const handleInputCrop = (e, num) => {
     const maxLength = num;
@@ -41,13 +43,13 @@ const TextFieldStyled = ({
       e.target.value = e.target.value.slice(0, maxLength);
     }
   };
-
   return (
+    <Box sx={{width: '100%'}}>
     <StyledTextField
-      type={type}
       {...register(name, {
         valueAsNumber: valueAsNumber,
       })}
+      type={type}
       label={label}
       variant="outlined"
       id={name}
@@ -67,6 +69,9 @@ const TextFieldStyled = ({
         },
       }}
     />
+    {isHelperText ? <FormHelperText>{helperText}</FormHelperText> : null}
+    </Box>
+    
   );
 };
 

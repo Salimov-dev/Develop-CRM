@@ -10,7 +10,6 @@ import { getObjectById } from "../../../store/objects.store";
 const ObjectPage = () => {
   const objectId = useParams().objectId;
   const object = useSelector(getObjectById(objectId));
-  console.log("object", object);
 
   return (
     <Box>

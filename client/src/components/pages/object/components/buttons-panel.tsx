@@ -31,6 +31,11 @@ const ButtonsPanel = ({ city, district, address }) => {
   const handleBackPage = () => {
     navigate("/objects");
   };
+
+  const handleUpdateObject = () => {
+    navigate(`/objects/${objectId}/edit`);
+  };
+
   const handleRemoveObject = () => {
     confirm({
       title: "Подтвердите удаление объекта",
@@ -61,7 +66,12 @@ const ButtonsPanel = ({ city, district, address }) => {
       >
         Назад к объектам
       </Button>
-      <Button color="secondary" variant="contained" sx={{ height: "50px" }}>
+      <Button
+        color="secondary"
+        variant="contained"
+        sx={{ height: "50px" }}
+        onClick={handleUpdateObject}
+      >
         Редактировать
       </Button>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>

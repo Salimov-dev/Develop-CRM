@@ -20,22 +20,13 @@ const Header = ({ object }) => {
   const city = object?.location.city;
   const address = object?.location.address;
   const district = useSelector(getDistrictById(object?.location.district));
-  console.log("city", city);
 
   return (
     <Component>
       {!isObjectsLoading ? (
         <HeaderContainer>
-          <ObjectName
-            city={city}
-            district={district}
-            address={address}
-          />
-          <ButtonsPanel
-            city={city}
-            district={district}
-            address={address}
-          />
+          <ObjectName city={city} district={district} address={address} />
+          <ButtonsPanel city={city} district={district} address={address} />
         </HeaderContainer>
       ) : (
         <Loader />
