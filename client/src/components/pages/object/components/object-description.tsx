@@ -4,7 +4,7 @@ const ObjectDescription = ({ object }) => {
   return (
     <Box>
       <h3>Описание объекта:</h3>
-      <Typography>{object?.description.comment}</Typography>
+      <Typography>{object?.description.fullDescription}</Typography>
     </Box>
   );
 };

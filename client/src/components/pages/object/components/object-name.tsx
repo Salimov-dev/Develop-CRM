@@ -1,4 +1,5 @@
 const ObjectName = ({ city, district, address }) => {
+  
   return (
     <h1>
       {city}, {district}

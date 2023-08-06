@@ -24,7 +24,6 @@ const schema = new Schema(
       premisesFloor: String,
       premisesHeight: Number,
       rentPrice: Number,
-      rentPriceForMetr: Number,
       rentSquare: Number,
       rentalHolidays: Number,
       securityDeposit: Number,

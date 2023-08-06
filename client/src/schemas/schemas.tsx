@@ -22,13 +22,13 @@ export const objectSchema = yup.object().shape({
     district: yup.string().required("Район обязателен для заполнения"),
     metro: yup.string(),
   }),
-  estateOptions: yup.object().shape({
+  // estateOptions: yup.object().shape({
     // totalSquare: yup
     // .number()
     // .min(2, "Минимум 2 символа")
-    // .max(4, "Максимум 4 символа"),
-    // .matches(/\d+/g, "Вводите только цифры"),
-  }),
+    // .max(4, "Максимум 4 символа")
+    // .matches(/\d+/g, "Вводите только цифры")
+  // }),
   description: yup.object().shape({
     fullDescription: yup.string(),
     // .required("Полное описание обязательно для заполнения"),

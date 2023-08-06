@@ -1,6 +1,4 @@
-import { TextField, styled, FormHelperText } from "@mui/material";
-import { enterPhoneFormat } from "../../../utils/enter-phone-format";
-
+import { TextField, styled } from "@mui/material";
 const StyledTextField = styled(TextField)(({ theme }) => ({
   minWidth: "30px",
   width: "100%",
@@ -29,29 +27,40 @@ const TextFieldStyled = ({
   onKeyDown,
   value,
   InputProps,
+  inputProps,
   type,
   rows = "1",
+  onInputQuantities,
   valueAsNumber = false,
   disabled = false,
+  multiline = false,
 }) => {
+  const handleInputCrop = (e, num) => {
+    const maxLength = num;
+    if (e.target.value.length > maxLength) {
+      e.target.value = e.target.value.slice(0, maxLength);
+    }
+  };
+
   return (
     <StyledTextField
       type={type}
       {...register(name, {
         valueAsNumber: valueAsNumber,
-        // value:
       })}
       label={label}
       variant="outlined"
       id={name}
       rows={rows}
-      multiline={true}
       onKeyDown={onKeyDown}
       value={value}
       InputProps={InputProps}
+      inputProps={inputProps}
+      multiline={multiline}
       error={!!errors}
       helperText={errors?.message}
       disabled={disabled}
+      onInput={(e) => handleInputCrop(e, onInputQuantities)}
       sx={{
         "& .MuiInputLabel-root": {
           color: value?.length ? "white" : "gray",

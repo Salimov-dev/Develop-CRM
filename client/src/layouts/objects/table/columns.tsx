@@ -1,9 +1,11 @@
+import { enterPhoneFormat } from "../../../utils/enter-phone-format";
 import {
   FormatDate,
   FormatDistrict,
   FormatManagerName,
   FormatMetro,
   FormatObjectStatus,
+  FormatPhone,
 } from "./helpers/helpers";
 import OpenButton from "./helpers/open-button";
 
@@ -70,7 +72,7 @@ export const groupedColumns = [
       {
         accessorKey: "contact.phone",
         header: "Телефон",
-        cell: (info) => info.getValue(),
+        cell: (info) => FormatPhone(info.getValue()) ,
         footer: "Телефон",
       },
       {

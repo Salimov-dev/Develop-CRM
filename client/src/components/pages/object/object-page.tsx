@@ -5,30 +5,16 @@ import { Box } from "@mui/material";
 import ObjectInfo from "./components/object-info";
 import ObjectDescription from "./components/object-description";
 import Header from "./components/header";
-// store
-import { getDistrictById } from "../../../store/districts.store";
-import {
-  getObjectById,
-  getObjectsLoadingStatus,
-} from "../../../store/objects.store";
+import { getObjectById } from "../../../store/objects.store";
 
 const ObjectPage = () => {
   const objectId = useParams().objectId;
   const object = useSelector(getObjectById(objectId));
-
-  const isObjectsLoading = useSelector(getObjectsLoadingStatus());
-  const city = object?.location.city;
-  const address = object?.location.address;
-  const district = useSelector(getDistrictById(object?.location.district));
+  console.log("object", object);
 
   return (
     <Box>
-      <Header
-        isLoading={isObjectsLoading}
-        city={city}
-        district={district}
-        address={address}
-      />
+      <Header object={object} />
       <ObjectInfo object={object} />
       <ObjectDescription object={object} />
     </Box>

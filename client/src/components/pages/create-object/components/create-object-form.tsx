@@ -89,8 +89,8 @@ const CreateObjectForm = ({
           label="Контакт"
           name="contact.name"
           errors={errors?.contact?.name}
+          onInputQuantities={50}
           InputProps={{
-            maxLength: 70,
             endAdornment: (
               <InputAdornment position="end">
                 <AccountCircleOutlinedIcon />
@@ -113,10 +113,10 @@ const CreateObjectForm = ({
           label="Телефон"
           type="number"
           name="contact.phone"
+          onInputQuantities={12}
           errors={errors?.contact?.phone}
           valueAsNumber={true}
           InputProps={{
-            maxLength: 70,
             endAdornment: (
               <InputAdornment position="end">
                 <PhoneIphoneOutlinedIcon />
@@ -129,8 +129,8 @@ const CreateObjectForm = ({
           label="Email"
           name="contact.email"
           errors={errors?.contact?.email}
+          onInputQuantities={100}
           InputProps={{
-            maxLength: 70,
             endAdornment: (
               <InputAdornment position="end">
                 <AlternateEmailOutlinedIcon />
@@ -152,10 +152,11 @@ const CreateObjectForm = ({
           name="estateOptions.totalSquare"
           valueAsNumber={true}
           errors={errors?.estateOptions?.totalSquare}
+          onInputQuantities={5}
           InputProps={{
-            maxLength: 5,
             endAdornment: <InputAdornment position="end">м²</InputAdornment>,
           }}
+          inputProps={{ maxLength: 3 }}
         />
         <TextFieldStyled
           register={register}
@@ -163,8 +164,8 @@ const CreateObjectForm = ({
           type="number"
           name="estateOptions.rentSquare"
           valueAsNumber={true}
+          onInputQuantities={5}
           InputProps={{
-            maxLength: 4,
             endAdornment: <InputAdornment position="end">м²</InputAdornment>,
           }}
         />
@@ -174,20 +175,10 @@ const CreateObjectForm = ({
           type="number"
           name="estateOptions.rentPrice"
           valueAsNumber={true}
+          onInputQuantities={8}
           InputProps={{
             maxLength: 7,
             endAdornment: <InputAdornment position="end">₽</InputAdornment>,
-          }}
-        />
-        <TextFieldStyled
-          register={register}
-          label="Стоимость 1м²"
-          type="number"
-          name="estateOptions.rentPriceForMetr"
-          valueAsNumber={true}
-          InputProps={{
-            maxLength: 5,
-            endAdornment: <InputAdornment position="end">₽/м²</InputAdornment>,
           }}
         />
         <TextFieldStyled
@@ -196,6 +187,7 @@ const CreateObjectForm = ({
           type="number"
           name="estateOptions.rentalHolidays"
           valueAsNumber={true}
+          onInputQuantities={3}
           InputProps={{
             maxLength: 3,
             endAdornment: <InputAdornment position="end">дней</InputAdornment>,
@@ -207,6 +199,7 @@ const CreateObjectForm = ({
           type="number"
           name="estateOptions.securityDeposit"
           valueAsNumber={true}
+          onInputQuantities={8}
           InputProps={{
             maxLength: 7,
             endAdornment: <InputAdornment position="end">₽</InputAdornment>,
@@ -234,8 +227,8 @@ const CreateObjectForm = ({
             type="number"
             name="estateOptions.premisesHeight"
             valueAsNumber={true}
+            onInputQuantities={3}
             InputProps={{
-              maxLength: 3,
               endAdornment: <InputAdornment position="end">м</InputAdornment>,
             }}
           />
@@ -243,7 +236,7 @@ const CreateObjectForm = ({
             register={register}
             label="Состояние полов"
             name="estateOptions.premisesFloor"
-            inputProps={{ maxLength: 100 }}
+            onInputQuantities={100}
           />
         </Box>
         <FormGroup sx={{ paddingTop: "10px" }}>
@@ -273,8 +266,9 @@ const CreateObjectForm = ({
         label="Опишите объект"
         name="description.fullDescription"
         rows="3"
+        multiline={true}
         errors={errors?.description?.fullDescription}
-        InputProps={{ maxLength: 3500 }}
+        onInputQuantities={3500}
       />
 
       <FooterButtons>
