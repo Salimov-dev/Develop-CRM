@@ -151,7 +151,6 @@ const ObjectForm = ({
         <Box sx={{ marginRight: "auto" }}>
           <h3>Коммерческая информация</h3>
         </Box>
-
         <FieldsContainer>
           <TextFieldStyled
             register={register}
@@ -216,10 +215,10 @@ const ObjectForm = ({
             }}
           />
         </FieldsContainer>
+
         <Box sx={{ marginRight: "auto" }}>
           <h3>Другие параметры</h3>
         </Box>
-
         <FieldsContainer sx={{ flexDirection: "column" }}>
           <Box sx={{ display: "flex", gap: "4px" }}>
             <SimpleSelectFieldMUI

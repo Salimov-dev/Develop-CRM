@@ -74,6 +74,7 @@ const ButtonsPanel = ({ city, district, address }) => {
       >
         Редактировать
       </Button>
+      
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
           Объект удален успешно!

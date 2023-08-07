@@ -8,10 +8,7 @@ const objectService = {
     return data;
   },
   create: async (payload) => {
-    const { data } = await httpService.post(
-      objectEndpoint + "create",
-      payload
-    );
+    const { data } = await httpService.post(objectEndpoint + "create", payload);
     return data;
   },
   remove: async (objectId) => {
@@ -20,7 +17,7 @@ const objectService = {
   },
   update: async (payload) => {
     const { data } = await httpService.patch(
-      objectEndpoint + "/" + payload._id + "/edit",
+      objectEndpoint + payload._id + "/edit",
       payload
     );
     return data;

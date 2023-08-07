@@ -14,7 +14,7 @@ import { getDistrictsList } from "../../../store/districts.store";
 import { getMetroList } from "../../../store/metro.store";
 import { getWorkingPositionsList } from "../../../store/working-position.store";
 import { getObjectsStatusList } from "../../../store/object-status.store";
-import { getObjectById } from "../../../store/objects.store";
+import { getObjectById, updateObject } from "../../../store/objects.store";
 // other
 import { objectSchema } from "../../../schemas/schemas";
 
@@ -51,6 +51,8 @@ const UpdateObject = () => {
 
   const onSubmit = (data) => {
     console.log("data onSubmit", data);
+    dispatch(updateObject(data, objectId));
+    navigate(-1);
   };
 
   const handleClearForm = () => {
