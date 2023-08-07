@@ -296,6 +296,9 @@ const FiltersPanel = ({
                   borderColor: "green",
                 },
               },
+              "& .MuiInputLabel-root": {
+                color: "gray",
+              },
               "& label.Mui-focused": {
                 color: "white", // Изменение цвета label на белый при фокусе
               },
@@ -317,6 +320,9 @@ const FiltersPanel = ({
                 "&.Mui-focused fieldset": {
                   borderColor: "green",
                 },
+              },
+              "& .MuiInputLabel-root": {
+                color: "gray",
               },
               "& label.Mui-focused": {
                 color: "white", // Изменение цвета label на белый при фокусе

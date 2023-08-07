@@ -9,8 +9,9 @@ import BusinessCenterOutlinedIcon from "@mui/icons-material/BusinessCenterOutlin
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
-import Person4OutlinedIcon from "@mui/icons-material/Person4Outlined";
+import ContactPhoneOutlinedIcon from '@mui/icons-material/ContactPhoneOutlined';
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
+import TableChartOutlinedIcon from '@mui/icons-material/TableChartOutlined';
 // styled
 import { ItemsListContainer } from "../styled/styled";
 
@@ -45,6 +46,13 @@ const ItemsList = ({ isCollapsed, selected, setSelected, colors }) => {
         title="Объекты на карте"
         to="/map"
         icon={<MapOutlinedIcon />}
+        selected={selected}
+        setSelected={setSelected}
+      />
+      <Item
+        title="Контакты"
+        to="/contacts"
+        icon={<ContactPhoneOutlinedIcon />}
         selected={selected}
         setSelected={setSelected}
       />
@@ -107,7 +115,7 @@ const ItemsList = ({ isCollapsed, selected, setSelected, colors }) => {
       <Item
         title="Результаты"
         to="/results"
-        icon={<PeopleOutlinedIcon />}
+        icon={<TableChartOutlinedIcon />}
         selected={selected}
         setSelected={setSelected}
       />

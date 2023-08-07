@@ -14,7 +14,7 @@ const Map = styled(Box)`
   flex: 5;
   display: flex;
   background: gray;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 `;
 
 const ObjectPage = () => {
