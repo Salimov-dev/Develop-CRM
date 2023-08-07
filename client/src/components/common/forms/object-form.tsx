@@ -275,10 +275,10 @@ const ObjectForm = ({
           register={register}
           label="Опишите объект"
           name="description.fullDescription"
-          rows="3"
+          rows="8"
           multiline={true}
           errors={errors?.description?.fullDescription}
-          onInputQuantities={3500}
+          onInputQuantities={20000}
         />
 
         <FooterButtons>
