@@ -1,6 +1,6 @@
 // libraries
 import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useForm } from "react-hook-form";
 // components
 import BasicTable from "../../components/common/table/basic-table";
 import FiltersPanel from "./components/filters-panel";
@@ -10,17 +10,8 @@ import {
   getObjectsList,
   getObjectsLoadingStatus,
 } from "../../store/objects.store";
+// hooks
 import useSearchObject from "../../hooks/useSearchObject";
-import { styled } from "@mui/material";
-import { useForm } from "react-hook-form";
-
-const Form = styled(`form`)({
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  marginBottom: "10px",
-  gap: "4px",
-});
 
 const initialState = {
   address: "",
@@ -45,7 +36,6 @@ const Objects = () => {
   });
 
   const data = watch();
-  console.log("data", data);
 
   const searchedObjects = useSearchObject({
     objects,
@@ -59,7 +49,9 @@ const Objects = () => {
         register={register}
         objects={objects}
         data={data}
+        initialState={initialState}
         setValue={setValue}
+        reset={reset}
       />
 
       <BasicTable

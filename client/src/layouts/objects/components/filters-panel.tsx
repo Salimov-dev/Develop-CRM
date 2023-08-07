@@ -1,6 +1,7 @@
 // libraries
 import { orderBy } from "lodash";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 // MUI
 import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -14,7 +15,6 @@ import { Box, styled, Typography, Button } from "@mui/material";
 import { getUsersList } from "../../../store/users.store";
 import { getObjectsStatusList } from "../../../store/object-status.store";
 import { getDistrictsList } from "../../../store/districts.store";
-import { useNavigate } from "react-router-dom";
 
 const Form = styled(`form`)({
   display: "flex",
@@ -29,51 +29,46 @@ const ButtonsBlock = styled(Box)`
   gap: 4px;
 `;
 
-const FiltersPanel = ({ setValue, objects, data, register }) => {
-  const users = useSelector(getUsersList());
+const FiltersPanel = ({
+  setValue,
+  objects,
+  data,
+  initialState,
+  register,
+  reset,
+}) => {
+  const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
   const objectStatuses = useSelector(getObjectsStatusList());
   const districts = useSelector(getDistrictsList());
+  const users = useSelector(getUsersList());
   const navigate = useNavigate();
 
-  const hasNonEmptyValue = (data) => {
-    for (const key in data) {
-      if (typeof data[key] === "string" && data[key].trim().length > 0) {
-        return true;
-      }
-    }
-    return false;
-  };
-
-  const isInputEmpty =
-    data.selectedCities.length ||
-    data.selectedDistricts.length ||
-    data.selectedUsers.length ||
-    data.selectedStatuses?.length ||
-    hasNonEmptyValue(data) ||
-    data.startDate ||
-    data.endDate;
-
   const handleCLearForm = () => {
-    setSelectedCities([]);
-    setSelectedDistricts([]);
-    setSelectedUsers([]);
-    setSelectedStatuses([]);
+    reset();
+  };
 
-    for (const key in data) {
-      if (key === "startDate" || key === "endDate") {
-        setData((prevState) => ({
-          ...prevState,
-          [key]: null,
-        }));
-      } else {
-        setData((prevState) => ({
-          ...prevState,
-          [key]: "",
-        }));
-      }
+  const handleKeyDown = (e) => {
+    const keyValue = e.key;
+    const isRussianLetter = /^[А-ЯЁа-яё]$/.test(keyValue);
+    const isDigit = /^\d$/.test(keyValue);
+    const isBackspace = e.keyCode === 8;
+
+    if (!isRussianLetter && !isDigit && !isBackspace) {
+      e.preventDefault();
     }
   };
 
+  const handleCreateObject = () => {
+    navigate("create");
+  };
+
+  const getActualCitiesList = () => {
+    const filteredCities = objects?.map((dist) => dist.location.city);
+    const uniqueCities = [...new Set(filteredCities)];
+    const sortedCities = orderBy(uniqueCities, ["name"], ["asc"]);
+
+    return sortedCities;
+  };
   const getActualStatusesList = () => {
     const filteredStatuses = objects?.map((obj) => obj.status);
     const uniqueStatuses = [...new Set(filteredStatuses)];
@@ -89,15 +84,6 @@ const FiltersPanel = ({ setValue, objects, data, register }) => {
 
     return sortedStatuses;
   };
-
-  const getActualCitiesList = () => {
-    const filteredCities = objects?.map((dist) => dist.location.city);
-    const uniqueCities = [...new Set(filteredCities)];
-    const sortedCities = orderBy(uniqueCities, ["name"], ["asc"]);
-
-    return sortedCities;
-  };
-
   const getActualUsersList = () => {
     const filteredUsers = objects?.map((obj) => obj.userId);
     const uniqueUsers = [...new Set(filteredUsers)];
@@ -113,7 +99,6 @@ const FiltersPanel = ({ setValue, objects, data, register }) => {
 
     return sortedUsers;
   };
-
   const getActualDistrictsList = () => {
     const filteredDistricts = objects?.map((dist) => dist.location.district);
     const uniqueDistricts = [...new Set(filteredDistricts)];
@@ -128,42 +113,6 @@ const FiltersPanel = ({ setValue, objects, data, register }) => {
     const sortedDistricts = orderBy(actualDistrictsArray, ["name"], ["asc"]);
 
     return sortedDistricts;
-  };
-
-  const handleAddressKeyDown = (e) => {
-    const keyValue = e.key;
-    const isRussianLetter = /^[А-ЯЁа-яё]$/.test(keyValue);
-    const isDigit = /^\d$/.test(keyValue);
-    const isBackspace = e.keyCode === 8;
-
-    if (!isRussianLetter && !isDigit && !isBackspace) {
-      e.preventDefault();
-    }
-  };
-
-  const handlePhoneKeyDown = (e) => {
-    const keyCode = e.keyCode;
-    const keyValue = String.fromCharCode(keyCode);
-    const isDigit = /^\d$/.test(keyValue);
-    const isBackspace = keyCode === 8;
-
-    if (!isDigit && !isBackspace) {
-      e.preventDefault();
-    }
-  };
-
-  const handleNameKeyDown = (e) => {
-    const keyValue = e.key;
-    const isRussianLetter = /^[А-ЯЁа-яё]$/.test(keyValue);
-    const isBackspace = e.keyCode === 8;
-
-    if (!isRussianLetter && !isBackspace) {
-      e.preventDefault();
-    }
-  };
-
-  const handleCreateObject = () => {
-    navigate("create");
   };
 
   return (
@@ -193,7 +142,7 @@ const FiltersPanel = ({ setValue, objects, data, register }) => {
           register={register}
           label="Найти по адресу"
           name="address"
-          onKeyDown={handleAddressKeyDown}
+          onKeyDown={handleKeyDown}
           value={data.address}
           inputProps={{ maxLength: 30 }}
         />
@@ -201,7 +150,7 @@ const FiltersPanel = ({ setValue, objects, data, register }) => {
           register={register}
           label="Найти по телефону"
           name="phone"
-          onKeyDown={handlePhoneKeyDown}
+          onKeyDown={handleKeyDown}
           value={data.phone}
           inputProps={{ maxLength: 12 }}
         />
@@ -209,7 +158,7 @@ const FiltersPanel = ({ setValue, objects, data, register }) => {
           register={register}
           label="Найти по имени"
           name="name"
-          onKeyDown={handleNameKeyDown}
+          onKeyDown={handleKeyDown}
           value={data.name}
           inputProps={{ maxLength: 30 }}
         />

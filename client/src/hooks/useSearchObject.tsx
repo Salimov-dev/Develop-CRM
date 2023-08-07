@@ -6,7 +6,6 @@ const useSearchObject = ({
   objects,
   data,
 }) => {
-  console.log("data", data);
 
   const searchedObjects = useMemo(() => {
     let array = objects;
