@@ -267,7 +267,7 @@ const FiltersPanel = ({
           itemsList={getActualStatusesList()}
           selectedItems={selectedStatuses}
           onChange={handleChangeStatuses}
-          id="status"
+          name="status"
           labelId="status-label"
           label="Выбор по статусу"
         />
@@ -275,7 +275,7 @@ const FiltersPanel = ({
           itemsList={getActualUsersList()}
           selectedItems={selectedUsers}
           onChange={handleChangeUsers}
-          id="users"
+          name="users"
           labelId="users-label"
           label="Выбор по менеджеру"
         />
@@ -337,7 +337,7 @@ const FiltersPanel = ({
           itemsList={getActualCitiesList()}
           selectedItems={selectedCities}
           onChange={handleChangeCities}
-          id="cities"
+          name="cities"
           labelId="cities-label"
           label="Выбор по городу"
         />
@@ -345,7 +345,7 @@ const FiltersPanel = ({
           itemsList={getActualDistrictsList()}
           selectedItems={selectedDistricts}
           onChange={handleChangeDistricts}
-          id="districts"
+          name="districts"
           labelId="districts-label"
           label="Выбор по району"
         />

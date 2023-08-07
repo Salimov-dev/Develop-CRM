@@ -64,6 +64,7 @@ const ObjectsOnMap = ({ object }) => {
 
     mapObjOnPage.geoObjects.add(placeMark);
   }
+  
   useEffect(() => {
     if (latitude && longitude && zoom) {
       ymaps.ready(showObjOnMap);

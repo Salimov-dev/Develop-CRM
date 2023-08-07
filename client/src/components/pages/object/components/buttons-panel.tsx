@@ -29,7 +29,7 @@ const ButtonsPanel = ({ city, district, address }) => {
   };
 
   const handleBackPage = () => {
-    navigate("/objects");
+    navigate(-1);
   };
 
   const handleUpdateObject = () => {
@@ -74,7 +74,7 @@ const ButtonsPanel = ({ city, district, address }) => {
       >
         Редактировать
       </Button>
-      
+
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
           Объект удален успешно!

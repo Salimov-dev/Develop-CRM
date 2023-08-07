@@ -47,6 +47,7 @@ const ObjectForm = ({
   isValid,
   isEmptyFindedObject,
   isObjectHasAddress,
+  objectId,
 }) => {
   const isValidAndHasObject =
     (Boolean(isEmptyFindedObject) || isObjectHasAddress) && isValid;
@@ -54,7 +55,7 @@ const ObjectForm = ({
   const navigate = useNavigate();
 
   const handleBackPage = () => {
-    navigate(isEditMode ? -1 : "/objects");
+    navigate(isEditMode ? `/objects/${objectId}` : "/objects");
   };
 
   return (

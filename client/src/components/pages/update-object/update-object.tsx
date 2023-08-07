@@ -71,6 +71,7 @@ const UpdateObject = () => {
     <Box>
       <Header object={object} />
       <ObjectForm
+      objectId={objectId}
         handleSubmit={handleSubmit}
         onSubmit={onSubmit}
         register={register}

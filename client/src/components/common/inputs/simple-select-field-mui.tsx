@@ -8,7 +8,7 @@ import {
   ListItemText,
   FormHelperText,
 } from "@mui/material";
-import { useState } from "react";
+import { orderBy } from "lodash";
 
 const StyledSelect = styled(Select)(() => ({
   "&.Mui-focused": {
@@ -32,8 +32,9 @@ const SimpleSelectFieldMUI = ({
   isHelperText = false,
   helperText,
   defaultValue = "",
-  // value
 }) => {
+  const sortedItems = orderBy(itemsList, ["name"], ["asc"]);
+
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
   const MenuProps = {
@@ -67,15 +68,12 @@ const SimpleSelectFieldMUI = ({
         input={<OutlinedInput label={label} />}
         MenuProps={MenuProps}
         disabled={disabled}
-        // value={itemsList?.length ? value : ""}
-        // defaultValue={itemsList?.length ? "" : defaultValue}
         defaultValue={defaultValue}
-        // defaultValue=""
       >
         <MenuItem value="">
           <em>Отмена</em>
         </MenuItem>
-        {itemsList?.map((item) => (
+        {sortedItems?.map((item) => (
           <MenuItem key={item?._id} value={item?._id}>
             <ListItemText primary={item?.name} />
           </MenuItem>
