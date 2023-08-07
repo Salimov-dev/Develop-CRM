@@ -25,7 +25,6 @@ const SearchField = ({
   label,
   name,
   onKeyDown,
-  onChange,
   value,
   inputProps,
 }) => {
@@ -40,7 +39,6 @@ const SearchField = ({
       name={name}
       onKeyDown={onKeyDown}
       value={value}
-      onChange={onChange}
       inputProps={inputProps}
       sx={{
         "& .MuiOutlinedInput-notchedOutline": {

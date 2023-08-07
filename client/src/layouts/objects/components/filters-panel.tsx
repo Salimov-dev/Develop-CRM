@@ -1,7 +1,6 @@
 // libraries
 import { orderBy } from "lodash";
 import { useSelector } from "react-redux";
-import { useForm } from "react-hook-form";
 // MUI
 import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -30,23 +29,11 @@ const ButtonsBlock = styled(Box)`
   gap: 4px;
 `;
 
-const FiltersPanel = ({
-  objects,
-  data,
-  setData,
-  selectedCities,
-  selectedDistricts,
-  selectedUsers,
-  selectedStatuses,
-  setSelectedDistricts,
-  setSelectedCities,
-  setSelectedUsers,
-  setSelectedStatuses,
-}) => {
+const FiltersPanel = ({ setValue, objects, data, register }) => {
   const users = useSelector(getUsersList());
   const objectStatuses = useSelector(getObjectsStatusList());
   const districts = useSelector(getDistrictsList());
-  const { register } = useForm();
+  const navigate = useNavigate();
 
   const hasNonEmptyValue = (data) => {
     for (const key in data) {
@@ -58,10 +45,10 @@ const FiltersPanel = ({
   };
 
   const isInputEmpty =
-    selectedCities.length ||
-    selectedDistricts.length ||
-    selectedUsers.length ||
-    selectedStatuses?.length ||
+    data.selectedCities.length ||
+    data.selectedDistricts.length ||
+    data.selectedUsers.length ||
+    data.selectedStatuses?.length ||
     hasNonEmptyValue(data) ||
     data.startDate ||
     data.endDate;
@@ -143,39 +130,6 @@ const FiltersPanel = ({
     return sortedDistricts;
   };
 
-  const handleChange = ({ target }) => {
-    const { name, value } = target;
-    setData((prevState) => ({ ...prevState, [name]: value }));
-  };
-
-  const handleStartDateChange = (newValue) => {
-    setData((prevState) => ({ ...prevState, startDate: newValue }));
-  };
-
-  const handleEndDateChange = (newValue) => {
-    setData((prevState) => ({ ...prevState, endDate: newValue }));
-  };
-
-  const handleChangeStatuses = ({ target }) => {
-    const { value } = target;
-    setSelectedStatuses(typeof value === "string" ? value.split(",") : value);
-  };
-
-  const handleChangeUsers = ({ target }) => {
-    const { value } = target;
-    setSelectedUsers(typeof value === "string" ? value.split(",") : value);
-  };
-
-  const handleChangeCities = ({ target }) => {
-    const { value } = target;
-    setSelectedCities(typeof value === "string" ? value.split(",") : value);
-  };
-
-  const handleChangeDistricts = ({ target }) => {
-    const { value } = target;
-    setSelectedDistricts(typeof value === "string" ? value.split(",") : value);
-  };
-
   const handleAddressKeyDown = (e) => {
     const keyValue = e.key;
     const isRussianLetter = /^[А-ЯЁа-яё]$/.test(keyValue);
@@ -208,7 +162,6 @@ const FiltersPanel = ({
     }
   };
 
-  const navigate = useNavigate();
   const handleCreateObject = () => {
     navigate("create");
   };
@@ -242,7 +195,6 @@ const FiltersPanel = ({
           name="address"
           onKeyDown={handleAddressKeyDown}
           value={data.address}
-          onChange={handleChange}
           inputProps={{ maxLength: 30 }}
         />
         <SearchField
@@ -251,7 +203,6 @@ const FiltersPanel = ({
           name="phone"
           onKeyDown={handlePhoneKeyDown}
           value={data.phone}
-          onChange={handleChange}
           inputProps={{ maxLength: 12 }}
         />
         <SearchField
@@ -260,21 +211,20 @@ const FiltersPanel = ({
           name="name"
           onKeyDown={handleNameKeyDown}
           value={data.name}
-          onChange={handleChange}
           inputProps={{ maxLength: 30 }}
         />
         <MultiSelectField
           itemsList={getActualStatusesList()}
-          selectedItems={selectedStatuses}
-          onChange={handleChangeStatuses}
+          selectedItems={data.selectedStatuses}
+          onChange={(e) => setValue("selectedStatuses", e.target.value)}
           name="status"
           labelId="status-label"
           label="Выбор по статусу"
         />
         <MultiSelectField
           itemsList={getActualUsersList()}
-          selectedItems={selectedUsers}
-          onChange={handleChangeUsers}
+          selectedItems={data.selectedUsers}
+          onChange={(e) => setValue("selectedUsers", e.target.value)}
           name="users"
           labelId="users-label"
           label="Выбор по менеджеру"
@@ -283,8 +233,9 @@ const FiltersPanel = ({
       <Form>
         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
           <DatePicker
+            {...register("startDate")}
             value={data.startDate}
-            onChange={handleStartDateChange}
+            onChange={(value) => setValue("startDate", value)}
             label="Начало периода"
             sx={{
               width: "400px",
@@ -308,8 +259,9 @@ const FiltersPanel = ({
             }}
           />
           <DatePicker
+            {...register("endDate")}
             value={data.endDate}
-            onChange={handleEndDateChange}
+            onChange={(value) => setValue("endDate", value)}
             label="Конец периода"
             sx={{
               width: "400px",
@@ -335,16 +287,16 @@ const FiltersPanel = ({
         </LocalizationProvider>
         <MultiSelectField
           itemsList={getActualCitiesList()}
-          selectedItems={selectedCities}
-          onChange={handleChangeCities}
+          selectedItems={data.selectedCities}
+          onChange={(e) => setValue("selectedCities", e.target.value)}
           name="cities"
           labelId="cities-label"
           label="Выбор по городу"
         />
         <MultiSelectField
           itemsList={getActualDistrictsList()}
-          selectedItems={selectedDistricts}
-          onChange={handleChangeDistricts}
+          selectedItems={data.selectedDistricts}
+          onChange={(e) => setValue("selectedDistricts", e.target.value)}
           name="districts"
           labelId="districts-label"
           label="Выбор по району"

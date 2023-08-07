@@ -1,15 +1,13 @@
 import { useMemo } from "react";
-import "dayjs/locale/ru";
 import dayjs from "dayjs";
+import "dayjs/locale/ru";
 
 const useSearchObject = ({
   objects,
   data,
-  selectedStatuses,
-  selectedDistricts,
-  selectedCities,
-  selectedUsers,
 }) => {
+  console.log("data", data);
+
   const searchedObjects = useMemo(() => {
     let array = objects;
 
@@ -19,8 +17,10 @@ const useSearchObject = ({
       );
     }
 
-    if (data?.phone.length) {
-      array = array.filter((obj) => obj.contact.phone.includes(data.phone));
+    if (data?.phone?.length) {
+      array = array?.filter((obj) =>
+        String(obj.contact.phone).includes(data?.phone)
+      );
     }
 
     if (data?.name.length) {
@@ -29,43 +29,48 @@ const useSearchObject = ({
       );
     }
 
-    if (selectedStatuses?.length) {
-      array = array?.filter((obj) => selectedStatuses.includes(obj.status));
+    if (data.selectedStatuses?.length) {
+      array = array?.filter((obj) =>
+        data.selectedStatuses.includes(obj.status)
+      );
     }
 
     // Фильтр для выбранных районов и городов
-    if (selectedDistricts?.length) {
+    if (data.selectedDistricts?.length) {
       array = array.filter((item) =>
-        selectedDistricts.includes(item.location.district)
+        data.selectedDistricts.includes(item.location.district)
       );
 
       // Обновляем список выбранных городов на основе отфильтрованных районов
-      const filteredCities = selectedDistricts.reduce((cities, district) => {
-        return cities.concat(
-          array
-            .filter((item) => item.location.district === district)
-            .map((item) => item.location.city)
-        );
-      }, []);
+      const filteredCities = data.selectedDistricts.reduce(
+        (cities, district) => {
+          return cities.concat(
+            array
+              .filter((item) => item.location.district === district)
+              .map((item) => item.location.city)
+          );
+        },
+        []
+      );
 
       // Фильтруем города исходя из списка отфильтрованных городов
-      if (selectedCities?.length) {
+      if (data.selectedCities?.length) {
         array = array.filter((item) =>
           filteredCities.includes(item.location.city)
         );
       } else {
         array = array.filter((item) =>
-          selectedDistricts.includes(item.location.district)
+          data.selectedDistricts.includes(item.location.district)
         );
       }
-    } else if (selectedCities?.length) {
+    } else if (data.selectedCities?.length) {
       array = array.filter((item) =>
-        selectedCities.includes(item.location.city)
+        data.selectedCities.includes(item.location.city)
       );
     }
 
-    if (selectedUsers?.length) {
-      array = array.filter((item) => selectedUsers.includes(item.userId));
+    if (data.selectedUsers?.length) {
+      array = array.filter((item) => data.selectedUsers.includes(item.userId));
     }
 
     if (data.startDate && data.endDate) {
@@ -85,14 +90,7 @@ const useSearchObject = ({
     }
 
     return array;
-  }, [
-    data,
-    objects,
-    selectedDistricts,
-    selectedCities,
-    selectedUsers,
-    selectedStatuses,
-  ]);
+  }, [data, objects]);
 
   return searchedObjects;
 };
