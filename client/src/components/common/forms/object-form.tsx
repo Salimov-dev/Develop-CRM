@@ -4,9 +4,9 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import PhoneIphoneOutlinedIcon from "@mui/icons-material/PhoneIphoneOutlined";
 import AlternateEmailOutlinedIcon from "@mui/icons-material/AlternateEmailOutlined";
 // components
-import TextFieldStyled from "../../../common/form/text-field-styled";
-import SimpleSelectFieldMUI from "../../../common/form/simple-select-field-mui";
-import SwitchStyled from "../../../common/form/switch-styled";
+import TextFieldStyled from "../inputs/text-field-styled";
+import SimpleSelectFieldMUI from "../inputs/simple-select-field-mui";
+import SwitchStyled from "../inputs/switch-styled";
 import { useNavigate } from "react-router-dom";
 
 const Form = styled(`form`)({
@@ -30,7 +30,7 @@ const FooterButtons = styled(Box)`
   margin-top: 30px;
 `;
 
-const CreateObjectForm = ({
+const ObjectForm = ({
   handleSubmit,
   onSubmit,
   register,
@@ -41,12 +41,16 @@ const CreateObjectForm = ({
   watchName,
   workingPositions,
   objectStatuses,
-  isValid,
-  isDirty,
   handleClearForm,
-  isEditMode,
-  object={}
+  isEditMode = false,
+  object = {},
+  isValid,
+  isEmptyFindedObject,
+  isObjectHasAddress,
 }) => {
+  const isValidAndHasObject =
+    (Boolean(isEmptyFindedObject) || isObjectHasAddress) && isValid;
+
   const navigate = useNavigate();
 
   const handleBackPage = () => {
@@ -68,7 +72,7 @@ const CreateObjectForm = ({
             register={register}
             isHelperText={true}
             helperText="Обязательно"
-            value={object?.location?.district}
+            defaultValue={object?.location?.district}
           />
           <SimpleSelectFieldMUI
             itemsList={metros}
@@ -77,7 +81,7 @@ const CreateObjectForm = ({
             label="Метро"
             register={register}
             disabled={!watchDistrict && true}
-            value={object?.location?.metro}
+            defaultValue={object?.location?.metro}
           />
         </FieldsContainer>
 
@@ -108,7 +112,7 @@ const CreateObjectForm = ({
             disabled={!watchName?.length && true}
             helperText={!watchName?.length && "Сначала введите имя"}
             isHelperText={true}
-            value={object?.contact?.position}
+            defaultValue={object?.contact?.position}
           />
           <TextFieldStyled
             register={register}
@@ -226,7 +230,7 @@ const CreateObjectForm = ({
               register={register}
               isHelperText={true}
               helperText="Обязательно"
-              value={object?.status}
+              defaultValue={object?.status}
             />
             <TextFieldStyled
               register={register}
@@ -283,7 +287,7 @@ const CreateObjectForm = ({
             type="submit"
             variant="outlined"
             color="success"
-            disabled={!isValid || !isDirty}
+            disabled={!isValidAndHasObject}
           >
             {isEditMode ? "Сохранить" : "Создать"}
           </Button>
@@ -311,4 +315,4 @@ const CreateObjectForm = ({
   );
 };
 
-export default CreateObjectForm;
+export default ObjectForm;

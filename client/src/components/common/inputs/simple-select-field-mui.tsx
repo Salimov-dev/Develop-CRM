@@ -31,7 +31,8 @@ const SimpleSelectFieldMUI = ({
   disabled = false,
   isHelperText = false,
   helperText,
-  value,
+  defaultValue = "",
+  // value
 }) => {
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
@@ -66,18 +67,19 @@ const SimpleSelectFieldMUI = ({
         input={<OutlinedInput label={label} />}
         MenuProps={MenuProps}
         disabled={disabled}
-        value={itemsList?.length ? value : ""}
-        defaultValue=""
+        // value={itemsList?.length ? value : ""}
+        // defaultValue={itemsList?.length ? "" : defaultValue}
+        defaultValue={defaultValue}
+        // defaultValue=""
       >
         <MenuItem value="">
           <em>Отмена</em>
         </MenuItem>
-        {itemsList &&
-          itemsList?.map((item) => (
-            <MenuItem key={item?._id} value={item?._id}>
-              <ListItemText primary={item?.name} />
-            </MenuItem>
-          ))}
+        {itemsList?.map((item) => (
+          <MenuItem key={item?._id} value={item?._id}>
+            <ListItemText primary={item?.name} />
+          </MenuItem>
+        ))}
       </StyledSelect>
       {isHelperText ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormControl>

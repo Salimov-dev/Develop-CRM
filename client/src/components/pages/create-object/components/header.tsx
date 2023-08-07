@@ -9,7 +9,7 @@ const Component = styled(Box)`
 const Header = ({ isEmptyFindedObject, getCity, getAddress }) => {
   return (
     <Component>
-      <h1>Редактировать объект:</h1>
+      <h1>Создать объект:</h1>
       {isEmptyFindedObject ? (
         <Typography variant="h3" sx={{ background: "yellow", color: "black" }}>
           {getCity()}, {getAddress()}

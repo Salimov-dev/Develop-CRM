@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { Box, styled } from "@mui/material";
 // components
 import Header from "./components/header";
-import CreateObjectForm from "./components/create-object-form";
+import ObjectForm from "../../common/forms/object-form";
 // store
 import { getDistrictsList } from "../../../store/districts.store";
 import { getMetroList } from "../../../store/metro.store";
@@ -67,15 +67,18 @@ const CreateObject = () => {
   const workingPositions = useSelector(getWorkingPositionsList());
   const objectStatuses = useSelector(getObjectsStatusList());
   const currentUser = useSelector(getCurrentUserId());
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const company = "64c140eb8d214a0532377114";
 
   const {
     register,
     watch,
     handleSubmit,
     setValue,
-    formState: { errors, isValid, isDirty },
+    formState: { errors, isValid },
     reset,
   } = useForm({
     defaultValues: initialState,
@@ -90,10 +93,9 @@ const CreateObject = () => {
     findedObject,
   } = useFindObject();
 
-  const isEmptyFindedObject = Object.keys(findedObject).length;
+  const isEmptyFindedObject = Boolean(Object.keys(findedObject).length);
   const watchName = watch("contact.name");
   const watchDistrict = watch("location.district");
-  const company = "64c140eb8d214a0532377114";
 
   const onSubmit = (data) => {
     const newData = {
@@ -108,16 +110,16 @@ const CreateObject = () => {
     dispatch(createObject(newData)).then(navigate("/objects"));
   };
 
+  const handleClearForm = () => {
+    reset();
+  };
+
   useEffect(() => {
     setValue("location.city", getCity());
     setValue("location.address", getAddress());
     setValue("location.latitude", getLatitudeCoordinates());
     setValue("location.longitude", getLongitudeCoordinates());
   }, [findedObject]);
-
-  const handleClearForm = () => {
-    reset();
-  };
 
   return (
     <Box>
@@ -131,13 +133,11 @@ const CreateObject = () => {
         <FindObjectOnMap />
       </Map>
 
-      <CreateObjectForm
+      <ObjectForm
         handleSubmit={handleSubmit}
         onSubmit={onSubmit}
         register={register}
         errors={errors}
-        isValid={isValid}
-        isDirty={isDirty}
         districts={districts}
         metros={metros}
         watchDistrict={watchDistrict}
@@ -145,6 +145,8 @@ const CreateObject = () => {
         workingPositions={workingPositions}
         objectStatuses={objectStatuses}
         handleClearForm={handleClearForm}
+        isValid={isValid}
+        isEmptyFindedObject={isEmptyFindedObject}
       />
     </Box>
   );

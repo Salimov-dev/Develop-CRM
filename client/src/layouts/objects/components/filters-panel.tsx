@@ -8,8 +8,8 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 // components
-import SearchField from "../../../components/common/form/search-field";
-import MultiSelectField from "../../../components/common/form/multi-select-field";
+import SearchField from "../../../components/common/inputs/search-field";
+import MultiSelectField from "../../../components/common/inputs/multi-select-field";
 import { Box, styled, Typography, Button } from "@mui/material";
 // store
 import { getUsersList } from "../../../store/users.store";
