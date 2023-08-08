@@ -1,7 +1,8 @@
 // libraries
-import { useSelector } from "react-redux";
-import { useForm } from "react-hook-form";
 import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
+import dayjs from "dayjs";
 // components
 import BasicTable from "../../components/common/table/basic-table";
 import FiltersPanel from "./components/filters-panel";
@@ -13,7 +14,6 @@ import {
 } from "../../store/objects.store";
 // hooks
 import useSearchObject from "../../hooks/use-search-object";
-import dayjs from "dayjs";
 
 const initialState = {
   address: "",

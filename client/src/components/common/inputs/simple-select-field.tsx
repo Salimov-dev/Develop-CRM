@@ -1,3 +1,4 @@
+import { orderBy } from "lodash";
 import {
   styled,
   FormControl,
@@ -6,18 +7,8 @@ import {
   MenuItem,
   OutlinedInput,
   ListItemText,
+  FormHelperText,
 } from "@mui/material";
-
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
 
 const StyledSelect = styled(Select)(() => ({
   "&.Mui-focused": {
@@ -25,16 +16,36 @@ const StyledSelect = styled(Select)(() => ({
       borderColor: "green",
     },
   },
+  "& .MuiSelect-select": {
+    marginTop: "-5px",
+    height: "25px !important",
+  },
 }));
 
 const SimpleSelectField = ({
-  onChange,
-  value,
   itemsList,
   name,
   labelId,
   label,
+  register,
+  disabled = false,
+  isHelperText = false,
+  helperText,
+  defaultValue = "",
 }) => {
+  const sortedItems = orderBy(itemsList, ["name"], ["asc"]);
+
+  const ITEM_HEIGHT = 48;
+  const ITEM_PADDING_TOP = 8;
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+        width: 250,
+      },
+    },
+  };
+
   return (
     <FormControl sx={{ minWidth: "300px", width: "100%" }}>
       <InputLabel
@@ -50,20 +61,25 @@ const SimpleSelectField = ({
       </InputLabel>
 
       <StyledSelect
+        {...register(name)}
         labelId={labelId}
         id={name}
         name={name}
-        value={value}
-        onChange={onChange}
         input={<OutlinedInput label={label} />}
         MenuProps={MenuProps}
+        disabled={disabled}
+        defaultValue={defaultValue}
       >
-        {itemsList?.map((item) => (
+        <MenuItem value="">
+          <em>Отмена</em>
+        </MenuItem>
+        {sortedItems?.map((item) => (
           <MenuItem key={item?._id} value={item?._id}>
             <ListItemText primary={item?.name} />
           </MenuItem>
         ))}
       </StyledSelect>
+      {isHelperText ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormControl>
   );
 };

@@ -65,30 +65,31 @@ const UpdateObject = () => {
     } else {
       return;
     }
-    return () => {localStorage.removeItem("editingObject")}
+    return () => {
+      localStorage.removeItem("editingObject");
+    };
   }, [localStorageObject]);
 
   return (
     <Box>
       <Header object={object} />
       <ObjectForm
-      objectId={objectId}
         handleSubmit={handleSubmit}
         onSubmit={onSubmit}
         register={register}
         errors={errors}
-        isValid={isValid}
-        isDirty={isDirty}
         districts={districts}
         metros={metros}
         watchDistrict={watchDistrict}
         watchName={watchName}
         workingPositions={workingPositions}
         objectStatuses={objectStatuses}
-        handleClearForm={handleClearForm}
+        reset={reset}
         isEditMode={isEditMode}
         object={localStorageObject}
+        isValid={isValid}
         isObjectHasAddress={isObjectHasAddress}
+        objectId={objectId}
       />
     </Box>
   );

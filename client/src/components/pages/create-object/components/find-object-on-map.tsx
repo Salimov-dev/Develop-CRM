@@ -1,9 +1,11 @@
 import { Box, styled } from "@mui/material";
+
 const Map = styled(Box)`
   width: 100%;
   height: 250px;
   background-color: gray;
 `;
+
 const FindObjectOnMap = () => {
   return (
     <Map>

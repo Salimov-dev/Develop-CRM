@@ -12,7 +12,7 @@ const SwitchStyled = ({ register, label, name }) => {
           color: "yellow",
         },
         "& .MuiSwitch-track": {
-          backgroundColor: "lightgreen !important", // Change background color when switch is ON
+          backgroundColor: "lightgreen !important"
         },
       }}
     />

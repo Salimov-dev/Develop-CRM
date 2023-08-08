@@ -1,5 +1,7 @@
-import { Typography, Tooltip, Box } from "@mui/material";
+import { Typography, Tooltip } from "@mui/material";
 import Item from "./item";
+// styled
+import { ItemsListContainer } from "../styled/styled";
 // icons
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
@@ -9,11 +11,8 @@ import BusinessCenterOutlinedIcon from "@mui/icons-material/BusinessCenterOutlin
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
-import ContactPhoneOutlinedIcon from "@mui/icons-material/ContactPhoneOutlined";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import TableChartOutlinedIcon from "@mui/icons-material/TableChartOutlined";
-// styled
-import { ItemsListContainer } from "../styled/styled";
 
 const ItemsList = ({ isCollapsed, selected, setSelected, colors }) => {
   return (
@@ -62,13 +61,6 @@ const ItemsList = ({ isCollapsed, selected, setSelected, colors }) => {
         selected={selected}
         setSelected={setSelected}
       />
-      {/* <Item
-        title="Контакты"
-        to="/contacts"
-        icon={<ContactPhoneOutlinedIcon />}
-        selected={selected}
-        setSelected={setSelected}
-      /> */}
       <Typography
         variant="h6"
         color={colors.grey[300]}
@@ -121,7 +113,11 @@ const ItemsList = ({ isCollapsed, selected, setSelected, colors }) => {
       <Item
         title="Презентации"
         to="/presentations"
-        icon={<AssignmentOutlinedIcon />}
+        icon={
+          <Tooltip title="Презентации" placement="top-start" arrow>
+            <AssignmentOutlinedIcon />
+          </Tooltip>
+        }
         selected={selected}
         setSelected={setSelected}
       />

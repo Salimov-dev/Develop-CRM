@@ -1,10 +1,13 @@
-import { Box, Button, styled, Snackbar, Alert } from "@mui/material";
-import { useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
-import { removeObject } from "../../../../store/objects.store";
-import { useConfirm } from "material-ui-confirm";
+// libraries
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+// MUI
+import { Box, Button, styled, Snackbar, Alert } from "@mui/material";
+import { useNavigate, useParams } from "react-router-dom";
+import { useConfirm } from "material-ui-confirm";
 import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutlined";
+// store
+import { removeObject } from "../../../../store/objects.store";
 
 const Component = styled(Box)`
   display: flex;
@@ -40,7 +43,7 @@ const ButtonsPanel = ({ city, district, address }) => {
   const handleRemoveObject = () => {
     confirm({
       title: "Подтвердите удаление объекта",
-      description: `Точно удаляем объект: ${city}, ${district}р-н, ${address}?`,
+      description: `Точно удаляем объект: ${city}, ${district}р-н, ${address}?\nВернуть его будет невозможно`,
     })
       .then(() => {
         dispatch(removeObject(objectId));
@@ -87,7 +90,7 @@ const ButtonsPanel = ({ city, district, address }) => {
         sx={{ height: "50px" }}
         onClick={handleUpdateObject}
       >
-        Редактировать
+        ПРАВИТЬ
       </Button>
 
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>

@@ -1,19 +1,25 @@
-import { ColorModeContext, tokens } from "../../../theme";
-import { Box, IconButton, useTheme, Button } from "@mui/material";
+// libraries
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+// MUI
+import { Box, IconButton, useTheme, Button } from "@mui/material";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import { Component, LeftSide, RightSide, SearchField } from "./styled/styled";
+// styled
+import { Component, RightSide } from "./styled/styled";
+// components
 import UserMenu from "./components/user-menu";
-import { useNavigate } from "react-router-dom";
 import Loader from "../../common/loader/loader";
-import { useSelector } from "react-redux";
+// store
 import {
   getCurrentUserData,
   getUsersLoadingStatus,
 } from "../../../store/users.store";
+// other
+import { ColorModeContext } from "../../../theme";
 
 const TopBar = () => {
   const theme = useTheme();
@@ -53,7 +59,6 @@ const TopBar = () => {
                 variant="contained"
                 onClick={handleGoToLogin}
                 color="success"
-                // sx={{ color: "inherit", borderColor: "inherit" }}
               >
                 Войти
               </Button>

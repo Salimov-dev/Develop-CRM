@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 // MUI
 import { Box, Button, styled, InputAdornment, FormGroup } from "@mui/material";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
@@ -5,9 +6,8 @@ import PhoneIphoneOutlinedIcon from "@mui/icons-material/PhoneIphoneOutlined";
 import AlternateEmailOutlinedIcon from "@mui/icons-material/AlternateEmailOutlined";
 // components
 import TextFieldStyled from "../inputs/text-field-styled";
-import SimpleSelectFieldMUI from "../inputs/simple-select-field-mui";
+import SimpleSelectField from "../inputs/simple-select-field";
 import SwitchStyled from "../inputs/switch-styled";
-import { useNavigate } from "react-router-dom";
 
 const Form = styled(`form`)({
   display: "flex",
@@ -41,14 +41,15 @@ const ObjectForm = ({
   watchName,
   workingPositions,
   objectStatuses,
-  handleClearForm,
   isEditMode = false,
   object = {},
   isValid,
-  isEmptyFindedObject,
   isObjectHasAddress,
+  isEmptyFindedObject,
   objectId,
 }) => {
+  console.log("isEmptyFindedObject", isEmptyFindedObject);
+
   const isValidAndHasObject =
     (Boolean(isEmptyFindedObject) || isObjectHasAddress) && isValid;
 
@@ -65,7 +66,7 @@ const ObjectForm = ({
           <h3>Адрес</h3>
         </Box>
         <FieldsContainer>
-          <SimpleSelectFieldMUI
+          <SimpleSelectField
             itemsList={districts}
             name="location.district"
             labelId="district"
@@ -75,7 +76,7 @@ const ObjectForm = ({
             helperText="Обязательно"
             defaultValue={object?.location?.district}
           />
-          <SimpleSelectFieldMUI
+          <SimpleSelectField
             itemsList={metros}
             name="location.metro"
             labelId="district"
@@ -104,7 +105,7 @@ const ObjectForm = ({
               ),
             }}
           />
-          <SimpleSelectFieldMUI
+          <SimpleSelectField
             itemsList={workingPositions}
             name="contact.position"
             labelId="position"
@@ -222,7 +223,7 @@ const ObjectForm = ({
         </Box>
         <FieldsContainer sx={{ flexDirection: "column" }}>
           <Box sx={{ display: "flex", gap: "4px" }}>
-            <SimpleSelectFieldMUI
+            <SimpleSelectField
               itemsList={objectStatuses}
               name="status"
               labelId="status"
@@ -293,15 +294,7 @@ const ObjectForm = ({
           </Button>
           <Box sx={{ display: "flex", gap: "4px" }}>
             <Button
-              type="submit"
-              variant="outlined"
-              color="success"
-              onClick={handleClearForm}
-            >
-              Очистить форму
-            </Button>
-            <Button
-              type="submit"
+              type="button"
               variant="outlined"
               color="success"
               onClick={handleBackPage}

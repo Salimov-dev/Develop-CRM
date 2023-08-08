@@ -1,8 +1,8 @@
 // libraries
-import { orderBy } from "lodash";
-import { useSelector } from "react-redux";
-import { useForm } from "react-hook-form";
 import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
+import { orderBy } from "lodash";
 // MUI
 import { styled, Typography, Button } from "@mui/material";
 import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
@@ -109,7 +109,7 @@ const ObjectsOnMap = () => {
         <Button
           variant="outlined"
           color="success"
-          onClick={() => reset()}
+          onClick={() => reset(initialState)}
           disabled={!isInputEmpty && true}
           sx={{
             width: "450px",

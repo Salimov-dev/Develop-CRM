@@ -1,6 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
 import workingPositionService from "../services/working-position.service";
-import isOutDated from "../utils/isOutDate";
+import { createSlice } from "@reduxjs/toolkit";
+import isOutDated from "../utils/is-out-date";
 
 const workingPositionSlice = createSlice({
   name: "workingPosition",

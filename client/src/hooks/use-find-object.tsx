@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 
 const useFindObject = () => {
-  // ==== НАЙТИ ОБЪЕКТ НА КАРТЕ ==== //
-  /* eslint-disable no-undef */
-  /* eslint-disable no-unused-vars */
   const [findedObject, setFindedObject] = useState({});
+  const isEmptyFindedObject = Object.keys(findedObject).length;
 
   function init() {
     var myPlacemark,
@@ -78,27 +76,17 @@ const useFindObject = () => {
       });
     }
   }
-  useEffect(() => {
-    ymaps.ready(init);
-  }, []);
-
-  const isEmptyFindedObject = Object.keys(findedObject).length;
 
   const getCity = () => {
     if (!isEmptyFindedObject) {
       return null;
     }
-
     let objectToFind =
       findedObject?.metaDataProperty?.GeocoderMetaData?.Address?.Components;
     const localityObject = objectToFind?.filter((item) => {
-      // console.log("findedObject", findedObject);
-      
       if (item.kind === "locality") return item.name;
     });
-
     const result = Object.assign({}, ...localityObject);
-
     return result?.name;
   };
 
@@ -120,6 +108,10 @@ const useFindObject = () => {
     const longitudeSum = (firstPoint?.[1] || 0) + (secondPoint?.[1] || 0);
     return longitudeSum / 2;
   };
+
+  useEffect(() => {
+    ymaps.ready(init);
+  }, []);
 
   return {
     getCity,

@@ -1,8 +1,10 @@
-import Loader from "../../../common/loader/loader";
+import { useSelector } from "react-redux";
 import { Box, styled } from "@mui/material";
+// components
+import Loader from "../../../common/loader/loader";
 import ButtonsPanel from "./buttons-panel";
 import ObjectName from "./object-name";
-import { useSelector } from "react-redux";
+// store
 import { getObjectsLoadingStatus } from "../../../../store/objects.store";
 import { getDistrictById } from "../../../../store/districts.store";
 

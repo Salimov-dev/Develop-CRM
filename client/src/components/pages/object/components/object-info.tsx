@@ -3,14 +3,13 @@ import { Box, Typography, styled, Divider } from "@mui/material";
 // utils
 import { makeDigitSeparator } from "../../../../utils/make-digit-separator";
 import { FormatDate } from "../../../../utils/format-date";
+import { enterPhoneFormat } from "../../../../utils/enter-phone-format";
+import { getPriceForRentMetr } from "../../../../utils/get-price-rent-for-metr";
 // store
 import { getMetroName } from "../../../../store/metro.store";
 import { getUserNameById } from "../../../../store/users.store";
 import { getObjectStatusNameById } from "../../../../store/object-status.store";
 import { getWorkingPositionNameById } from "../../../../store/working-position.store";
-// components
-import { enterPhoneFormat } from "../../../../utils/enter-phone-format";
-import { getPriceForRentMetr } from "../../../../utils/get-price-rent-for-metr";
 
 const Component = styled(Box)`
   display: flex;

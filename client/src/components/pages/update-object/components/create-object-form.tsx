@@ -5,7 +5,7 @@ import PhoneIphoneOutlinedIcon from "@mui/icons-material/PhoneIphoneOutlined";
 import AlternateEmailOutlinedIcon from "@mui/icons-material/AlternateEmailOutlined";
 // components
 import TextFieldStyled from "../../../common/inputs/text-field-styled";
-import SimpleSelectFieldMUI from "../../../common/inputs/simple-select-field-mui";
+import SimpleSelectField from "../../../common/inputs/simple-select-field";
 import SwitchStyled from "../../../common/inputs/switch-styled";
 import FindObjectOnMap from "./find-object-on-map";
 import { useNavigate } from "react-router-dom";
@@ -68,7 +68,7 @@ const CreateObjectForm = ({
         <h3>Адрес</h3>
       </Box>
       <FieldsContainer>
-        <SimpleSelectFieldMUI
+        <SimpleSelectField
           itemsList={districts}
           name="location.district"
           labelId="district"
@@ -77,7 +77,7 @@ const CreateObjectForm = ({
           isHelperText={true}
           helperText="Обязательно"
         />
-        <SimpleSelectFieldMUI
+        <SimpleSelectField
           itemsList={metros}
           name="location.metro"
           labelId="district"
@@ -105,7 +105,7 @@ const CreateObjectForm = ({
             ),
           }}
         />
-        <SimpleSelectFieldMUI
+        <SimpleSelectField
           itemsList={workingPositions}
           name="contact.position"
           labelId="position"
@@ -221,7 +221,7 @@ const CreateObjectForm = ({
 
       <FieldsContainer sx={{ flexDirection: "column" }}>
         <Box sx={{ display: "flex", gap: "4px" }}>
-          <SimpleSelectFieldMUI
+          <SimpleSelectField
             itemsList={objectStatuses}
             name="status"
             labelId="status"

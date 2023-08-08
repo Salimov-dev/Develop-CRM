@@ -1,11 +1,14 @@
 // libraries
 import { useMemo, useState, useEffect } from "react";
 // MUI
-import { Box, useTheme, CircularProgress } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 // styles
 import "./styles/styles.css";
-// other
-import { tokens } from "../../../theme";
+// components
+import Pagination from "./components/pagination";
+import Thead from "./components/thead";
+import Tbody from "./components/tbody";
+import Loader from "../loader/loader";
 // react-table
 import {
   getCoreRowModel,
@@ -14,10 +17,8 @@ import {
   useReactTable,
   SortingState,
 } from "@tanstack/react-table";
-import Pagination from "./components/pagination";
-import Thead from "./components/thead";
-import Tbody from "./components/tbody";
-import Loader from "../loader/loader";
+// other
+import { tokens } from "../../../theme";
 
 const BasicTable = ({ items, itemsColumns, isLoading }) => {
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -43,7 +44,7 @@ const BasicTable = ({ items, itemsColumns, isLoading }) => {
   }, []);
 
   return (
-    <Box >
+    <Box>
       <table>
         <Thead table={table} colors={colors} />
         {!isLoading && <Tbody table={table} />}

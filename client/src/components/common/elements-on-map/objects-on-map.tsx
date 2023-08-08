@@ -6,6 +6,7 @@ import "./styles.css";
 // Icons
 import target from "./assets/target.png";
 import { useSelector } from "react-redux";
+// store
 import { getObjectStatusNameById } from "../../../store/object-status.store";
 import { getWorkingPositionNameById } from "../../../store/working-position.store";
 
@@ -64,7 +65,7 @@ const ObjectsOnMap = ({ object }) => {
 
     mapObjOnPage.geoObjects.add(placeMark);
   }
-  
+
   useEffect(() => {
     if (latitude && longitude && zoom) {
       ymaps.ready(showObjOnMap);

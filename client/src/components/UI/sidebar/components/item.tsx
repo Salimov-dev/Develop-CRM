@@ -1,14 +1,7 @@
-import {
-  Box,
-  IconButton,
-  Typography,
-  useTheme,
-  styled,
-  Divider,
-} from "@mui/material";
-import { Link, NavLink } from "react-router-dom";
+import { MenuItem } from "react-pro-sidebar";
+import { Typography, useTheme } from "@mui/material";
+import { Link } from "react-router-dom";
 import { tokens } from "../../../../theme";
-import { Sidebar as ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();

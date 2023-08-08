@@ -9,6 +9,7 @@ import { Box } from "@mui/material";
 // components
 import Header from "./components/header";
 import ObjectForm from "../../common/forms/object-form";
+import FindObjectOnMap from "./components/find-object-on-map";
 // store
 import { getDistrictsList } from "../../../store/districts.store";
 import { getMetroList } from "../../../store/metro.store";
@@ -19,7 +20,6 @@ import { getCurrentUserId } from "../../../store/users.store";
 // other
 import useFindObject from "../../../hooks/use-find-object";
 import { objectSchema } from "../../../schemas/schemas";
-import FindObjectOnMap from "./components/find-object-on-map";
 import { capitalizeFirstLetterOrReturn } from "../../../utils/capitalize-first-letter";
 
 const initialState = {
@@ -74,7 +74,6 @@ const CreateObject = () => {
     handleSubmit,
     setValue,
     formState: { errors, isValid },
-    reset,
   } = useForm({
     defaultValues: initialState,
     mode: "onBlur",
@@ -146,6 +145,7 @@ const CreateObject = () => {
       <FindObjectOnMap />
 
       <ObjectForm
+      initialState={initialState}
         handleSubmit={handleSubmit}
         onSubmit={onSubmit}
         register={register}

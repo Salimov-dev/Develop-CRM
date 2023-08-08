@@ -1,4 +1,3 @@
-import { enterPhoneFormat } from "../../../utils/enter-phone-format";
 import {
   FormatDate,
   FormatDistrict,
@@ -43,7 +42,6 @@ export const groupedColumns = [
       {
         accessorKey: "location.district",
         header: "Район",
-        // cell: (info) => info.getValue(),
         cell: (info) => {
           return FormatDistrict(info.getValue());
         },

@@ -3,8 +3,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 // MUI
-import styled from "@emotion/styled";
-import { Box, Button, Menu, MenuItem, Typography } from "@mui/material";
+import { Box, Button, Menu, MenuItem, Typography, styled } from "@mui/material";
 // store
 import { logOut } from "../../../../store/users.store";
 
@@ -40,7 +39,7 @@ const UserMenu = ({ currentUser }) => {
 
   const handleOpenProfile = () => {
     setAnchorEl(null);
-    navigate(`/user/${currentUser._id}`);
+    navigate("profile");
   };
 
   const handleLogOut = () => {
