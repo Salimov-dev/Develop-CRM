@@ -63,13 +63,13 @@ const useSearchObject = ({
         );
       }
     } else if (data.selectedCities?.length) {
-      array = array.filter((item) =>
-        data.selectedCities.includes(item.location.city)
+      array = array?.filter((item) =>
+        data.selectedCities?.includes(item.location?.city)
       );
     }
 
     if (data.selectedUsers?.length) {
-      array = array.filter((item) => data.selectedUsers.includes(item.userId));
+      array = array?.filter((item) => data.selectedUsers?.includes(item?.userId));
     }
 
     if (data.startDate && data.endDate) {
@@ -85,7 +85,7 @@ const useSearchObject = ({
       array = array?.filter((item) => dayjs(item.created_at) >= selectedDate);
     } else if (data.endDate) {
       const endDate = dayjs(data.endDate).endOf("day");
-      array = array.filter((item) => dayjs(item.created_at) <= endDate);
+      array = array?.filter((item) => dayjs(item?.created_at) <= endDate);
     }
 
     return array;

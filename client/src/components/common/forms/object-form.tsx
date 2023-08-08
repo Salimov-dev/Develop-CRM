@@ -123,7 +123,7 @@ const ObjectForm = ({
             onInputQuantities={12}
             errors={errors?.contact?.phone}
             valueAsNumber={true}
-            helperText={"Только в формате 79998887766, 78129998877"}
+            helperText={"Только в формате 79098887766, 78129998877, 9302211"}
             isHelperText={true}
             InputProps={{
               endAdornment: (
@@ -150,7 +150,7 @@ const ObjectForm = ({
         </FieldsContainer>
 
         <Box sx={{ marginRight: "auto" }}>
-          <h3>Коммерческая информация</h3>
+          <h3>Коммерческие условия</h3>
         </Box>
         <FieldsContainer>
           <TextFieldStyled

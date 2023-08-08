@@ -48,7 +48,7 @@ const MultiSelectField = ({
   const itemsWithId = checkArrayElements(itemsList);
 
   return (
-    <FormControl sx={{ minWidth: "300px", width: "100%" }}>
+    <FormControl sx={{ minWidth: "100px", width: "100%" }}>
       <InputLabel
         id={labelId}
         sx={{
@@ -72,7 +72,7 @@ const MultiSelectField = ({
         renderValue={(selected) => {
           const uniqueSelected = [...new Set(selected)];
           const selectedItemsNames = uniqueSelected?.map((elementID) => {
-            const item = itemsList?.find((item) => item._id === elementID);
+            const item = itemsList?.find((item) => item?._id === elementID);
             return item ? item.name : "";
           });
           return itemsWithId
@@ -82,10 +82,10 @@ const MultiSelectField = ({
         MenuProps={MenuProps}
         sx={{
           "& .MuiOutlinedInput-notchedOutline": {
-            borderColor: selectedItems.length ? "green" : "gray",
+            borderColor: selectedItems?.length ? "green" : "gray",
           },
           "& .MuiInputLabel-root": {
-            color: selectedItems.length ? "white" : "gray",
+            color: selectedItems?.length ? "white" : "gray",
           },
         }}
       >

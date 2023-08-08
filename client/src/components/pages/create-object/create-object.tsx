@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router-dom";
 // MUI
-import { Box, styled } from "@mui/material";
+import { Box } from "@mui/material";
 // components
 import Header from "./components/header";
 import ObjectForm from "../../common/forms/object-form";
@@ -20,6 +20,7 @@ import { getCurrentUserId } from "../../../store/users.store";
 import useFindObject from "../../../hooks/use-find-object";
 import { objectSchema } from "../../../schemas/schemas";
 import FindObjectOnMap from "./components/find-object-on-map";
+import { capitalizeFirstLetterOrReturn } from "../../../utils/capitalize-first-letter";
 
 const initialState = {
   status: "",
@@ -55,12 +56,6 @@ const initialState = {
   },
 };
 
-const Map = styled(Box)`
-  width: 100%;
-  height: 250px;
-  background-color: gray;
-`;
-
 const CreateObject = () => {
   const districts = useSelector(getDistrictsList());
   const metros = useSelector(getMetroList());
@@ -85,7 +80,7 @@ const CreateObject = () => {
     mode: "onBlur",
     resolver: yupResolver(objectSchema),
   });
-  
+
   const {
     getCity,
     getAddress,
@@ -103,11 +98,29 @@ const CreateObject = () => {
       ...data,
       userId: currentUser,
       company: company,
+      contact: {
+        ...data.contact,
+        name: capitalizeFirstLetterOrReturn(data.contact.name),
+      },
+      estateOptions: {
+        ...data.estateOptions,
+        premisesFloor: capitalizeFirstLetterOrReturn(
+          data.estateOptions.premisesFloor
+        ),
+      },
       location: {
         ...data.location,
         zoom: 16,
       },
+      description: {
+        ...data.description,
+        fullDescription: capitalizeFirstLetterOrReturn(
+          data.description.fullDescription
+        ),
+      },
     };
+    // console.log("newData", newData);
+
     dispatch(createObject(newData)).then(navigate("/objects"));
   };
 
@@ -130,9 +143,7 @@ const CreateObject = () => {
         getAddress={getAddress}
       />
 
-      <Map>
-        <FindObjectOnMap />
-      </Map>
+      <FindObjectOnMap />
 
       <ObjectForm
         handleSubmit={handleSubmit}

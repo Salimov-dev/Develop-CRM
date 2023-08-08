@@ -65,6 +65,7 @@ const UpdateObject = () => {
     } else {
       return;
     }
+    return () => {localStorage.removeItem("editingObject")}
   }, [localStorageObject]);
 
   return (

@@ -1,6 +1,7 @@
 // libraries
 import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
+import { useEffect } from "react";
 // components
 import BasicTable from "../../components/common/table/basic-table";
 import FiltersPanel from "./components/filters-panel";
@@ -12,6 +13,7 @@ import {
 } from "../../store/objects.store";
 // hooks
 import useSearchObject from "../../hooks/use-search-object";
+import dayjs from "dayjs";
 
 const initialState = {
   address: "",
@@ -30,8 +32,22 @@ const Objects = () => {
   const isObjectsLoading = useSelector(getObjectsLoadingStatus());
   const objects = useSelector(getObjectsList());
 
+  const localStorageState = JSON.parse(
+    localStorage.getItem("search-objects-data")
+  );
+
+  const formatedState = {
+    ...localStorageState,
+    startDate: localStorageState?.startDate
+      ? dayjs(localStorageState?.startDate)
+      : null,
+    endDate: localStorageState?.startDate
+      ? dayjs(localStorageState?.endDate)
+      : null,
+  };
+
   const { register, watch, setValue, reset } = useForm({
-    defaultValues: initialState,
+    defaultValues: formatedState || initialState,
     mode: "onBlur",
   });
 
@@ -41,6 +57,10 @@ const Objects = () => {
     objects,
     data,
   });
+
+  useEffect(() => {
+    localStorage.setItem("search-objects-data", JSON.stringify(data));
+  }, [data]);
 
   return (
     <>

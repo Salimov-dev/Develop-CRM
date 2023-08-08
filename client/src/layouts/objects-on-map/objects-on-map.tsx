@@ -2,6 +2,7 @@
 import { orderBy } from "lodash";
 import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
+import { useEffect } from "react";
 // MUI
 import { styled, Typography, Button } from "@mui/material";
 import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
@@ -16,7 +17,7 @@ import Map from "./components/map";
 import useSearchObject from "../../hooks/use-search-object";
 
 const Form = styled(`form`)({
-  width: '100%',
+  width: "100%",
   display: "flex",
   alignItems: "center",
   marginBottom: "10px",
@@ -32,9 +33,12 @@ const ObjectsOnMap = () => {
   const objects = useSelector(getObjectsList());
   const users = useSelector(getUsersList());
   const objectStatuses = useSelector(getObjectsStatusList());
+  const localStorageState = JSON.parse(
+    localStorage.getItem("search-objectsonmap-data")
+  );
 
   const { watch, setValue, reset } = useForm({
-    defaultValues: initialState,
+    defaultValues: localStorageState || initialState,
     mode: "onBlur",
   });
   const data = watch();
@@ -78,6 +82,10 @@ const ObjectsOnMap = () => {
     return sortedStatuses;
   };
 
+  useEffect(() => {
+    localStorage.setItem("search-objectsonmap-data", JSON.stringify(data));
+  }, [data]);
+
   return (
     <>
       <h1>Объекты на карте</h1>
@@ -110,7 +118,7 @@ const ObjectsOnMap = () => {
             alignItems: "center",
             gap: "3px",
             whiteSpace: "nowrap",
-            marginRight: '14px'
+            marginRight: "14px",
           }}
         >
           <Typography> Очистить фильтры</Typography>

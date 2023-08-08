@@ -43,7 +43,7 @@ const BasicTable = ({ items, itemsColumns, isLoading }) => {
   }, []);
 
   return (
-    <Box>
+    <Box >
       <table>
         <Thead table={table} colors={colors} />
         {!isLoading && <Tbody table={table} />}

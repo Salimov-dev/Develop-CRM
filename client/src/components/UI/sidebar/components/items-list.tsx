@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Typography, Tooltip, Box } from "@mui/material";
 import Item from "./item";
 // icons
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
@@ -9,9 +9,9 @@ import BusinessCenterOutlinedIcon from "@mui/icons-material/BusinessCenterOutlin
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import BusinessOutlinedIcon from "@mui/icons-material/BusinessOutlined";
-import ContactPhoneOutlinedIcon from '@mui/icons-material/ContactPhoneOutlined';
+import ContactPhoneOutlinedIcon from "@mui/icons-material/ContactPhoneOutlined";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
-import TableChartOutlinedIcon from '@mui/icons-material/TableChartOutlined';
+import TableChartOutlinedIcon from "@mui/icons-material/TableChartOutlined";
 // styled
 import { ItemsListContainer } from "../styled/styled";
 
@@ -21,10 +21,15 @@ const ItemsList = ({ isCollapsed, selected, setSelected, colors }) => {
       <Item
         title="Главная"
         to="/"
-        icon={<HomeOutlinedIcon />}
+        icon={
+          <Tooltip title="Главная" placement="top-start" arrow>
+            <HomeOutlinedIcon />
+          </Tooltip>
+        }
         selected={selected}
         setSelected={setSelected}
       />
+
       <Typography
         variant="h6"
         color={colors.grey[300]}
@@ -38,24 +43,32 @@ const ItemsList = ({ isCollapsed, selected, setSelected, colors }) => {
       <Item
         title="Таблица объектов"
         to="/objects"
-        icon={<BusinessOutlinedIcon />}
+        icon={
+          <Tooltip title="Таблица объектов" placement="top-start" arrow>
+            <BusinessOutlinedIcon />
+          </Tooltip>
+        }
         selected={selected}
         setSelected={setSelected}
       />
       <Item
         title="Объекты на карте"
         to="/map"
-        icon={<MapOutlinedIcon />}
+        icon={
+          <Tooltip title="Объекты на карте" placement="top-start" arrow>
+            <MapOutlinedIcon />
+          </Tooltip>
+        }
         selected={selected}
         setSelected={setSelected}
       />
-      <Item
+      {/* <Item
         title="Контакты"
         to="/contacts"
         icon={<ContactPhoneOutlinedIcon />}
         selected={selected}
         setSelected={setSelected}
-      />
+      /> */}
       <Typography
         variant="h6"
         color={colors.grey[300]}

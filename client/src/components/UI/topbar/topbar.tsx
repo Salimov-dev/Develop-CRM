@@ -28,7 +28,7 @@ const TopBar = () => {
 
   return (
     <Component>
-      <Box sx={{ m: "auto 0" }}>Место для наиболее частых функций</Box>
+      <Box sx={{ m: "auto 0" }}></Box>
       <RightSide>
         <IconButton onClick={colorMode.toggleColorMode}>
           {theme.palette.mode === "dark" ? (

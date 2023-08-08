@@ -120,7 +120,7 @@ const FiltersPanel = ({
           <Button
             variant="outlined"
             color="success"
-            onClick={() => reset()}
+            onClick={() => reset(initialState)}
             sx={{ display: "flex", alignItems: "center", gap: "3px" }}
           >
             <Typography> Очистить фильтры</Typography>
