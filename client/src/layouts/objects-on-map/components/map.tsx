@@ -20,7 +20,8 @@ import { makeDigitSeparator } from "../../../utils/make-digit-separator";
 
 const Component = styled(Box)`
   width: 99%;
-  height: 100%;
+  height: 500px;
+  margin-bottom: 10px;
 `;
 
 const Map = ({ searchedObjects }) => {

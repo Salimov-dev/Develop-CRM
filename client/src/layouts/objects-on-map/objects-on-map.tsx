@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { orderBy } from "lodash";
 // MUI
-import { styled, Typography, Button } from "@mui/material";
+import { styled, Typography, Button, Box } from "@mui/material";
 import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
 // store
 import { getObjectsStatusList } from "../../store/object-status.store";
@@ -23,6 +23,11 @@ const Form = styled(`form`)({
   marginBottom: "10px",
   gap: "4px",
 });
+
+const Component = styled(Box)`
+  display: flex;
+  flex-direction: column;
+`
 
 const initialState = {
   selectedUsers: [],
@@ -87,7 +92,7 @@ const ObjectsOnMap = () => {
   }, [data]);
 
   return (
-    <>
+    <Component>
       <h1>Объекты на карте</h1>
       <Form noValidate>
         <MultiSelectField
@@ -126,7 +131,8 @@ const ObjectsOnMap = () => {
         </Button>
       </Form>
       <Map searchedObjects={newSearchedObj} />
-    </>
+      <Typography variant="h5">Всего объектов: {newSearchedObj?.length}шт.</Typography>
+    </Component>
   );
 };
 

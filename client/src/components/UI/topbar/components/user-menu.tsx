@@ -64,7 +64,7 @@ const UserMenu = ({ currentUser }) => {
         <Avatar src={currentUser.image} />
         <UserName
           sx={{
-            color: open ? "white !important" : "inherit",
+            color: open ? "white !important" : "gray",
           }}
         >
           {currentUser.name}
