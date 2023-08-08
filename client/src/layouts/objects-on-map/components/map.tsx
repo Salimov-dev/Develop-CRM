@@ -1,7 +1,6 @@
-/* eslint-disable no-undef */
 import { useSelector } from "react-redux";
 import { getObjectsList } from "../../../store/objects.store";
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import { Box, styled } from "@mui/material";
 import dayjs from "dayjs";
 // Icons
@@ -33,14 +32,14 @@ const Map = ({ searchedObjects }) => {
   };
 
   const getUserName = (id) => {
-    return users?.find((s) => s._id === id)?.name;
+    return users?.find((u) => u._id === id)?.name;
   };
 
   const getPosition = (id) => {
     if (!id) {
       return "";
     }
-    return positions?.find((s) => s._id === id)?.name;
+    return positions?.find((p) => p._id === id)?.name;
   };
 
   let mapObjects = null;

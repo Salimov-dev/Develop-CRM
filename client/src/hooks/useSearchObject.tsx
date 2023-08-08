@@ -10,7 +10,7 @@ const useSearchObject = ({
   const searchedObjects = useMemo(() => {
     let array = objects;
 
-    if (data?.address.length) {
+    if (data?.address?.length) {
       array = array?.filter((obj) =>
         obj.location.address.toLowerCase().includes(data.address.toLowerCase())
       );
@@ -22,7 +22,7 @@ const useSearchObject = ({
       );
     }
 
-    if (data?.name.length) {
+    if (data?.name?.length) {
       array = array.filter((obj) =>
         obj.contact.name.toLowerCase().includes(data.name.toLowerCase())
       );

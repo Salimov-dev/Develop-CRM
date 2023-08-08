@@ -43,10 +43,6 @@ const FiltersPanel = ({
   const users = useSelector(getUsersList());
   const navigate = useNavigate();
 
-  const handleCLearForm = () => {
-    reset();
-  };
-
   const handleKeyDown = (e) => {
     const keyValue = e.key;
     const isRussianLetter = /^[А-ЯЁа-яё]$/.test(keyValue);
@@ -57,11 +53,6 @@ const FiltersPanel = ({
       e.preventDefault();
     }
   };
-
-  const handleCreateObject = () => {
-    navigate("create");
-  };
-
   const getActualCitiesList = () => {
     const filteredCities = objects?.map((dist) => dist.location.city);
     const uniqueCities = [...new Set(filteredCities)];
@@ -121,7 +112,7 @@ const FiltersPanel = ({
         <Button
           variant="contained"
           color="success"
-          onClick={handleCreateObject}
+          onClick={() => navigate("create")}
         >
           <Typography>Создать объект</Typography>
         </Button>
@@ -129,7 +120,7 @@ const FiltersPanel = ({
           <Button
             variant="outlined"
             color="success"
-            onClick={handleCLearForm}
+            onClick={() => reset()}
             sx={{ display: "flex", alignItems: "center", gap: "3px" }}
           >
             <Typography> Очистить фильтры</Typography>
