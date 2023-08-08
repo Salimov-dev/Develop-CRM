@@ -32,7 +32,7 @@ const UpdateObject = () => {
 
   const localStorageObject = JSON.parse(localStorage.getItem("editingObject"));
   const isObjectHasAddress =
-    localStorageObject.location.city && localStorageObject.location.address;
+    localStorageObject?.location?.city && localStorageObject?.location?.address;
 
   const {
     register,

@@ -1,17 +1,53 @@
-import { useState } from "react";
+// libraries
+import { useState, useEffect } from "react";
 import { Sidebar as ProSidebar, Menu } from "react-pro-sidebar";
+import { useDispatch } from "react-redux";
 import { useTheme } from "@mui/material";
-import { tokens } from "../../../theme";
+// components
 import Header from "./components/header";
-import CompanyLogo from "./components/company-logo";
 import ItemsList from "./components/items-list";
+// styles
 import { Component } from "./styled/styled";
+// store
+import { setSidebarCollapsState } from "../../../store/sidebar-collaps-state.store";
+// other
+import { tokens } from "../../../theme";
 
 const Sidebar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [isCollapsed, setIsCollapsed] = useState(false);
-  const [selected, setSelected] = useState("Dashboard");
+  const dispatch = useDispatch();
+  const [isCollapsed, setIsCollapsed] = useState(
+    JSON.parse(localStorage.getItem("sidebar-collaps-state"))
+  );
+  const [currentPath, setCurrentPath] = useState("");
+  const [selected, setSelected] = useState(setSelectedMenuItem());
+
+  function setSelectedMenuItem() {
+    if (currentPath === "/") {
+      return "Главная";
+    }
+    if (currentPath === "/objects") {
+      return "Таблица объектов";
+    }
+    if (currentPath === "/map") {
+      return "Объекты на карте";
+    }
+    return "";
+  }
+
+  const handleSetCollapsed = (value) => {
+    setIsCollapsed(value);
+    dispatch(setSidebarCollapsState(value));
+  };
+
+  useEffect(() => {
+    setSelected(setSelectedMenuItem());
+  }, [setSelectedMenuItem()]);
+
+  useEffect(() => {
+    setCurrentPath(window.location.pathname);
+  }, []);
 
   return (
     <Component
@@ -45,11 +81,9 @@ const Sidebar = () => {
         <Menu iconShape="square">
           <Header
             isCollapsed={isCollapsed}
-            setIsCollapsed={setIsCollapsed}
+            setIsCollapsed={handleSetCollapsed}
             colors={colors}
           />
-
-          {/* {!isCollapsed && <CompanyLogo colors={colors} />} */}
 
           <ItemsList
             isCollapsed={isCollapsed}

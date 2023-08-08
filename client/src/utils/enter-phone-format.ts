@@ -16,7 +16,7 @@ export const enterPhoneFormat = (number) => {
   } else if (phone.startsWith("9")) {
     return phone.replace(
       /(\d{3})(\d{3})(\d{2})(\d{2})/g,
-      `${startsWith}($1)$2-$3-$4`
+      `($1)$2-$3-$4`
     );
   } else {
     return phone.replace(/(\d{3})(\d{2})(\d{2})/g, `$1-$2-$3`);

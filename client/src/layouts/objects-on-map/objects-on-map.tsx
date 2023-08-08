@@ -13,9 +13,10 @@ import { getUsersList } from "../../store/users.store";
 import MultiSelectField from "../../components/common/inputs/multi-select-field";
 import Map from "./components/map";
 // hooks
-import useSearchObject from "../../hooks/useSearchObject";
+import useSearchObject from "../../hooks/use-search-object";
 
 const Form = styled(`form`)({
+  width: '100%',
   display: "flex",
   alignItems: "center",
   marginBottom: "10px",
@@ -109,6 +110,7 @@ const ObjectsOnMap = () => {
             alignItems: "center",
             gap: "3px",
             whiteSpace: "nowrap",
+            marginRight: '14px'
           }}
         >
           <Typography> Очистить фильтры</Typography>

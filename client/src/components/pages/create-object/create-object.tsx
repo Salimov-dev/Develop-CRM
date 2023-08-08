@@ -17,7 +17,7 @@ import { getObjectsStatusList } from "../../../store/object-status.store";
 import { createObject } from "../../../store/objects.store";
 import { getCurrentUserId } from "../../../store/users.store";
 // other
-import useFindObject from "../../../hoc/useFindObject";
+import useFindObject from "../../../hooks/use-find-object";
 import { objectSchema } from "../../../schemas/schemas";
 import FindObjectOnMap from "./components/find-object-on-map";
 

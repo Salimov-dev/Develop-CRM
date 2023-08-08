@@ -11,7 +11,7 @@ import {
   getObjectsLoadingStatus,
 } from "../../store/objects.store";
 // hooks
-import useSearchObject from "../../hooks/useSearchObject";
+import useSearchObject from "../../hooks/use-search-object";
 
 const initialState = {
   address: "",

@@ -1,22 +1,25 @@
 import { useSelector } from "react-redux";
-import { getObjectsList } from "../../../store/objects.store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Box, styled } from "@mui/material";
 import dayjs from "dayjs";
 // Icons
 import target_cluster from "../assets/target_cluster.png";
 import target from "../assets/target.png";
+// store
 import {
   getObjectStatusLoading,
   getObjectsStatusList,
 } from "../../../store/object-status.store";
 import { getUsersList } from "../../../store/users.store";
+import { getObjectsList } from "../../../store/objects.store";
 import { getWorkingPositionsList } from "../../../store/working-position.store";
+import { getSidebarCollapsState } from "../../../store/sidebar-collaps-state.store";
+// utils
 import { enterPhoneFormat } from "../../../utils/enter-phone-format";
 import { makeDigitSeparator } from "../../../utils/make-digit-separator";
 
 const Component = styled(Box)`
-  width: 99.6%;
+  width: 99%;
   height: 100%;
 `;
 
@@ -27,14 +30,18 @@ const Map = ({ searchedObjects }) => {
   const positions = useSelector(getWorkingPositionsList());
   const isLoading = useSelector(getObjectStatusLoading());
 
+  const sidebarCollapsedStatus = useSelector(getSidebarCollapsState());
+  const collapsLocalStorageSet = JSON.parse(
+    localStorage.getItem("sidebar-collaps-state")
+  );
+  const [isCollapsed, setIsCollapsed] = useState(collapsLocalStorageSet);
+
   const getStatus = (id) => {
     return statuses?.find((s) => s._id === id)?.name;
   };
-
   const getUserName = (id) => {
     return users?.find((u) => u._id === id)?.name;
   };
-
   const getPosition = (id) => {
     if (!id) {
       return "";
@@ -123,6 +130,10 @@ const Map = ({ searchedObjects }) => {
   }
 
   useEffect(() => {
+    setIsCollapsed(sidebarCollapsedStatus);
+  }, [sidebarCollapsedStatus]);
+
+  useEffect(() => {
     if (!isLoading) {
       showObjects();
     }
@@ -132,15 +143,16 @@ const Map = ({ searchedObjects }) => {
         mapObjects = null;
       }
     };
-  }, [geoObjects, objects]);
+  }, [geoObjects, objects, isCollapsed]);
 
   return (
     <Component>
       <Box
+        className={isCollapsed ? "collapsed" : ""}
         id="map__objects"
         style={{
-          width: "100%",
           height: "100%",
+          width: "100%",
           autoFitToViewport: "always",
         }}
       ></Box>
