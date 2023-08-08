@@ -8,6 +8,8 @@ Backend: Node, express, Docker
 
 ![image](https://github.com/Salimov-dev/Develop-CRM/assets/108460956/5d6fb9a9-cf89-4932-ba88-13fce6acfd5a)
 
+![image](https://github.com/Salimov-dev/Develop-CRM/assets/108460956/42c2933a-76a7-4d92-a272-871cf22d938c)
+
 ![image](https://github.com/Salimov-dev/Develop-CRM/assets/108460956/edca645b-b2a1-44ac-9b88-c6c427f698e7)
 
 ![image](https://github.com/Salimov-dev/Develop-CRM/assets/108460956/7db8b817-f918-4e88-8823-bbd8adbcaa4d)
