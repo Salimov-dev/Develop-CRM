@@ -47,6 +47,8 @@ const MultiSelectField = ({
 
   const itemsWithId = checkArrayElements(itemsList);
 
+  const selectedItemsArray = Array.isArray(selectedItems) ? selectedItems : []
+
   return (
     <FormControl sx={{ minWidth: "100px", width: "100%" }}>
       <InputLabel
@@ -66,18 +68,18 @@ const MultiSelectField = ({
         id={name}
         name={name}
         multiple
-        value={selectedItems}
+        value={selectedItemsArray}
         onChange={onChange}
         input={<OutlinedInput label={label} />}
         renderValue={(selected) => {
           const uniqueSelected = [...new Set(selected)];
           const selectedItemsNames = uniqueSelected?.map((elementID) => {
             const item = itemsList?.find((item) => item?._id === elementID);
-            return item ? item.name : "";
+            return item ? item?.name : "";
           });
           return itemsWithId
-            ? selectedItemsNames.join(", ")
-            : uniqueSelected.join(", ");
+            ? selectedItemsNames?.join(", ")
+            : uniqueSelected?.join(", ");
         }}
         MenuProps={MenuProps}
         sx={{

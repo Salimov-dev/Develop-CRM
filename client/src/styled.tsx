@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 
 export const AppStyled = styled(Box)`
   display: flex;
+  min-height: 100vh;
 `;
 
 export const RightSide = styled(Box)`

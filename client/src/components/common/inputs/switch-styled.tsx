@@ -9,10 +9,10 @@ const SwitchStyled = ({ register, label, name }) => {
       sx={{
         width: "fit-content",
         "& .MuiButtonBase-root.Mui-checked": {
-          color: "yellow",
+          color: "green",
         },
         "& .MuiSwitch-track": {
-          backgroundColor: "lightgreen !important"
+          backgroundColor: "gray !important"
         },
       }}
     />

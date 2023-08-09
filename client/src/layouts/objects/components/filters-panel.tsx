@@ -2,6 +2,7 @@
 import { orderBy } from "lodash";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 // MUI
 import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -10,7 +11,16 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 // components
 import SearchField from "../../../components/common/inputs/search-field";
 import MultiSelectField from "../../../components/common/inputs/multi-select-field";
-import { Box, styled, Typography, Button } from "@mui/material";
+import {
+  Box,
+  styled,
+  Typography,
+  Button,
+  FormControl,
+  FormControlLabel,
+  FormGroup,
+  Switch,
+} from "@mui/material";
 // store
 import { getUsersList } from "../../../store/users.store";
 import { getObjectsStatusList } from "../../../store/object-status.store";
@@ -18,6 +28,7 @@ import { getDistrictsList } from "../../../store/districts.store";
 
 const Form = styled(`form`)({
   display: "flex",
+  width: "100%",
   alignItems: "center",
   marginBottom: "10px",
   gap: "4px",
@@ -42,6 +53,8 @@ const FiltersPanel = ({
   const districts = useSelector(getDistrictsList());
   const users = useSelector(getUsersList());
   const navigate = useNavigate();
+
+  const isOnlyPhoneChecked = data?.onlyWithPhone;
 
   const handleKeyDown = (e) => {
     const keyValue = e.key;
@@ -169,16 +182,52 @@ const FiltersPanel = ({
           labelId="users-label"
           label="Выбор по менеджеру"
         />
+
+        <Box>
+          <FormControl
+            component="fieldset"
+            sx={{
+              padding: "4px 15px 4px 0px",
+              border: "1px solid",
+              borderColor: isOnlyPhoneChecked ? "green" : "gray",
+              borderRadius: "6px",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+            }}
+          >
+            <FormGroup aria-label="position" row sx={{ width: "100%" }}>
+              <FormControlLabel
+                {...register("onlyWithPhone")}
+                control={
+                  <Switch
+                    color="success"
+                    checked={data.onlyWithPhone}
+                    onChange={(e) => {
+                      setValue("onlyWithPhone", e.target.checked);
+                    }}
+                  />
+                }
+                label="Объекты с телефоном"
+                labelPlacement="start"
+                sx={{
+                  width: "100%",
+                  color: isOnlyPhoneChecked ? "white" : "gray",
+                }}
+              />
+            </FormGroup>
+          </FormControl>
+        </Box>
       </Form>
       <Form>
         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
           <DatePicker
             {...register("startDate")}
             value={data.startDate}
-            onChange={(value) => setValue("startDate", value)}
+            onChange={(e) => setValue("startDate", value)}
             label="Начало периода"
             sx={{
-              width: "400px",
+              width: "450px",
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
                   borderColor: data.startDate ? "green" : "gray",
@@ -204,7 +253,7 @@ const FiltersPanel = ({
             onChange={(value) => setValue("endDate", value)}
             label="Конец периода"
             sx={{
-              width: "400px",
+              width: "450px",
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
                   borderColor: data.endDate ? "green" : "gray",

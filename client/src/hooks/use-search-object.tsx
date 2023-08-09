@@ -2,11 +2,7 @@ import { useMemo } from "react";
 import dayjs from "dayjs";
 import "dayjs/locale/ru";
 
-const useSearchObject = ({
-  objects,
-  data,
-}) => {
-
+const useSearchObject = ({ objects, data }) => {
   const searchedObjects = useMemo(() => {
     let array = objects;
 
@@ -32,6 +28,10 @@ const useSearchObject = ({
       array = array?.filter((obj) =>
         data.selectedStatuses.includes(obj.status)
       );
+    }
+
+    if (data.onlyWithPhone) {
+      array = array?.filter((obj) => obj.contact.phone !== null);
     }
 
     // Фильтр для выбранных районов и городов
@@ -69,7 +69,9 @@ const useSearchObject = ({
     }
 
     if (data.selectedUsers?.length) {
-      array = array?.filter((item) => data.selectedUsers?.includes(item?.userId));
+      array = array?.filter((item) =>
+        data.selectedUsers?.includes(item?.userId)
+      );
     }
 
     if (data.startDate && data.endDate) {

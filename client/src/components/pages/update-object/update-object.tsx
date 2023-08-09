@@ -38,10 +38,10 @@ const UpdateObject = () => {
     register,
     watch,
     handleSubmit,
-    formState: { errors, isValid, isDirty },
+    formState: { errors, isValid },
     reset,
   } = useForm({
-    defaultValues: localStorageObject,
+    defaultValues: object,
     mode: "onBlur",
     resolver: yupResolver(objectSchema),
   });
@@ -50,13 +50,8 @@ const UpdateObject = () => {
   const watchDistrict = watch("location.district");
 
   const onSubmit = (data) => {
-    console.log("data onSubmit", data);
     dispatch(updateObject(data, objectId));
     navigate(-1);
-  };
-
-  const handleClearForm = () => {
-    reset();
   };
 
   useEffect(() => {
@@ -65,9 +60,6 @@ const UpdateObject = () => {
     } else {
       return;
     }
-    return () => {
-      localStorage.removeItem("editingObject");
-    };
   }, [localStorageObject]);
 
   return (

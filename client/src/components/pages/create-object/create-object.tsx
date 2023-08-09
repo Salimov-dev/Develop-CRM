@@ -118,7 +118,6 @@ const CreateObject = () => {
         ),
       },
     };
-    // console.log("newData", newData);
 
     dispatch(createObject(newData)).then(navigate("/objects"));
   };
@@ -145,7 +144,7 @@ const CreateObject = () => {
       <FindObjectOnMap />
 
       <ObjectForm
-      initialState={initialState}
+        initialState={initialState}
         handleSubmit={handleSubmit}
         onSubmit={onSubmit}
         register={register}

@@ -84,6 +84,8 @@ const ObjectForm = ({
             register={register}
             disabled={!watchDistrict && true}
             defaultValue={object?.location?.metro}
+            helperText="Если есть в радиусе 1км"
+            isHelperText={true}
           />
         </FieldsContainer>
 

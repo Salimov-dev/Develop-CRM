@@ -1,4 +1,5 @@
 // libraries
+import { Box } from "@mui/material";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
@@ -25,12 +26,15 @@ const initialState = {
   selectedCities: [],
   selectedUsers: [],
   selectedStatuses: [],
+  onlyWithPhone: false,
 };
 
 const Objects = () => {
   const columns = groupedColumns;
   const isObjectsLoading = useSelector(getObjectsLoadingStatus());
   const objects = useSelector(getObjectsList());
+  // console.log("objects", String(objects[1].contact.phone).length)
+  
 
   const localStorageState = JSON.parse(
     localStorage.getItem("search-objects-data")
@@ -44,6 +48,7 @@ const Objects = () => {
     endDate: localStorageState?.startDate
       ? dayjs(localStorageState?.endDate)
       : null,
+    onlyWithPhone: Boolean(localStorageState?.onlyWithPhone),
   };
 
   const { register, watch, setValue, reset } = useForm({
@@ -57,13 +62,15 @@ const Objects = () => {
     objects,
     data,
   });
+  // console.log("searchedObjects", searchedObjects);
+  
 
   useEffect(() => {
     localStorage.setItem("search-objects-data", JSON.stringify(data));
   }, [data]);
 
   return (
-    <>
+    <Box>
       <h1>Таблица объектов</h1>
       <FiltersPanel
         register={register}
@@ -79,7 +86,7 @@ const Objects = () => {
         itemsColumns={columns}
         isLoading={isObjectsLoading}
       />
-    </>
+    </Box>
   );
 };
 
