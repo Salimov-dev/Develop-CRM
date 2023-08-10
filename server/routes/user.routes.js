@@ -1,6 +1,7 @@
-const express = require("express");
-const User = require("../models/User");
-const auth = require("../middleware/auth.middleware");
+import express from "express"
+import User from "../models/User.js"
+import auth from "../middleware/auth.middleware.js"
+
 const router = express.Router({ mergeParams: true });
 
 router.get("/", async (req, res) => {
@@ -33,4 +34,4 @@ router.patch("/:userId", auth, async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

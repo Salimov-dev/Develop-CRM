@@ -1,10 +1,11 @@
-const express = require("express");
-const bcrypt = require("bcryptjs");
-const { check, validationResult } = require("express-validator");
-const User = require("../models/User");
-const { generateUserData } = require("../utils/helpers");
-const tokenService = require("../services/token.service");
-const { TokenExpiredError } = require("jsonwebtoken");
+import express from"express"
+import bcrypt from"bcryptjs"
+import { check, validationResult } from "express-validator"
+import User from"../models/User.js"
+import  generateUserData  from"../utils/helpers.js"
+import tokenService from"../services/token.service.js"
+import  TokenExpiredError  from"jsonwebtoken"
+
 const router = express.Router({ mergeParams: true });
 
 router.post("/signUp", [
@@ -139,4 +140,4 @@ router.post("/token", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

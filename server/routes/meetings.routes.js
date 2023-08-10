@@ -1,7 +1,8 @@
-const express = require('express')
-const Meetings = require('../models/Meeting')
+import express from 'express'
+import Meetings from '../models/Meeting.js'
+import auth from '../middleware/auth.middleware.js'
+
 const router = express.Router({ mergeParams: true })
-const auth = require('../middleware/auth.middleware')
 
 // router.get('/', auth, async (req, res) => {
 router.get('/', async (req, res) => {
@@ -50,4 +51,4 @@ router.delete('/:meetingId?', auth, async (req, res) => {
     }
 })
 
-module.exports = router
+export default router

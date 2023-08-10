@@ -1,7 +1,8 @@
-const express = require("express");
-const Metro = require("../models/Metro");
+import express from "express"
+import Metro from "../models/Metro.js"
+import auth from "../middleware/auth.middleware.js"
+
 const router = express.Router({ mergeParams: true });
-const auth = require("../middleware/auth.middleware");
 
 router.get("/", async (req, res) => {
   try {
@@ -14,4 +15,4 @@ router.get("/", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

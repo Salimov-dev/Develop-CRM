@@ -1,5 +1,6 @@
-const express = require("express");
-const ObjectStatus = require("../models/Object-status");
+import express from "express"
+import ObjectStatus from "../models/Object-status.js"
+
 const router = express.Router({ mergeParams: true });
 
 router.get("/", async (req, res) => {
@@ -13,4 +14,4 @@ router.get("/", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

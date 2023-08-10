@@ -1,5 +1,6 @@
-const express = require('express')
-const MeetingStatus = require('../models/MeetingStatus')
+import express from 'express'
+import MeetingStatus from '../models/MeetingStatus.js'
+
 const router = express.Router({ mergeParams: true })
 
 router.get('/', async (req, res) => {
@@ -14,4 +15,4 @@ router.get('/', async (req, res) => {
     }
 })
 
-module.exports = router
+export default router

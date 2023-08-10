@@ -1,5 +1,6 @@
-const express = require('express')
-const WorkingPosition = require('../models/Working-position')
+import express from 'express'
+import WorkingPosition from '../models/Working-position.js'
+
 const router = express.Router({ mergeParams: true })
 
 router.get('/', async (req, res) => {
@@ -13,4 +14,4 @@ router.get('/', async (req, res) => {
     }
 })
 
-module.exports = router
+export default router

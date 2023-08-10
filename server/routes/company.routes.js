@@ -1,5 +1,6 @@
-const express = require("express");
-const Company = require("../models/Company");
+import express from "express"
+import Company from "../models/Company.js"
+
 const router = express.Router({ mergeParams: true });
 
 router.get("/", async (req, res) => {
@@ -13,4 +14,4 @@ router.get("/", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

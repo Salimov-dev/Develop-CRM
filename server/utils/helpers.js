@@ -8,6 +8,6 @@ function generateUserData() {
   };
 }
 
-module.exports = {
+export default {
   generateUserData,
 };

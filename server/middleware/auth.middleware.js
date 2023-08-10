@@ -1,6 +1,6 @@
-const tokenService = require("../services/token.service");
+import tokenService from "../services/token.service.js"
 
-module.exports = (req, res, next) => {
+export default (req, res, next) => {
   if (req.method === "OPTIONS") {
     return next;
   }

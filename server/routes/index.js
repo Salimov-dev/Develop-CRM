@@ -1,13 +1,22 @@
-const express = require("express");
+import express from "express";
+import objectsRoutes from "./objects.routes.js";
+import companyRoutes from "./company.routes.js";
+import districtsRoutes from "./districts.routes.js";
+import metroRoutes from "./metro.routes.js";
+import userRoutes from "./user.routes.js";
+import objectStatusRoutes from "./object-status.routes.js";
+import workingPositionRoutes from "./working-position.routes.js";
+import authRoutes from "./auth.routes.js";
+
 const router = express.Router({ mergeParams: true });
 
-router.use("/objects", require("./objects.routes"));
-router.use("/company", require("./company.routes"));
-router.use("/districts", require("./districts.routes"));
-router.use("/metro", require("./metro.routes"));
-router.use("/user", require("./user.routes"));
-router.use("/objectStatus", require("./object-status.routes"));
-router.use("/workingPosition", require("./working-position.routes"));
-router.use("/auth", require("./auth.routes"));
+router.use("/objects", objectsRoutes);
+router.use("/company", companyRoutes);
+router.use("/districts", districtsRoutes);
+router.use("/metro", metroRoutes);
+router.use("/user", userRoutes);
+router.use("/objectStatus", objectStatusRoutes);
+router.use("/workingPosition", workingPositionRoutes);
+router.use("/auth", authRoutes);
 
-module.exports = router;
+export default router;

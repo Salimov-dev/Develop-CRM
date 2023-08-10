@@ -2,7 +2,6 @@
 import { orderBy } from "lodash";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 // MUI
 import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -240,7 +239,7 @@ const FiltersPanel = ({
                 color: "gray",
               },
               "& label.Mui-focused": {
-                color: "white", // Изменение цвета label на белый при фокусе
+                color: "white",
               },
               "& .MuiButtonBase-root": {
                 color: data.startDate ? "white" : "gray",
@@ -266,7 +265,7 @@ const FiltersPanel = ({
                 color: "gray",
               },
               "& label.Mui-focused": {
-                color: "white", // Изменение цвета label на белый при фокусе
+                color: "white",
               },
               "& .MuiButtonBase-root": {
                 color: data.endDate ? "white" : "gray",

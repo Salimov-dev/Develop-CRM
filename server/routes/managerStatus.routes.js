@@ -1,5 +1,6 @@
-const express = require('express')
-const ManagerStatus = require('../models/ManagerStatus')
+import express from 'express'
+import ManagerStatus from '../models/ManagerStatus.js'
+
 const router = express.Router({ mergeParams: true })
 
 router.get('/', async (req, res) => {
@@ -13,4 +14,4 @@ router.get('/', async (req, res) => {
     }
 })
 
-module.exports = router
+export default router

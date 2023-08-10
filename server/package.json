@@ -1,13 +1,14 @@
 {
-  "name": "amiran",
+  "name": "CRM",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "cross-env NODE_ENV=production node app.js",
     "serve": "cross-env NODE_ENV=development nodemon app.js"
   },
-  "author": "",
+  "author": "Salimov Ruslan",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",

@@ -1,10 +1,10 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const config = require("config");
-const chalk = require("chalk");
-const cors = require("cors");
-const initDatabase = require("./startUp/initDatabase");
-const routes = require("./routes");
+import express from "express";
+import mongoose from "mongoose"
+import config from "config"
+import chalk from "chalk"
+import cors from "cors"
+// import initDatabase from "./startUp/initDatabase.js"
+import routes from "./routes/index.js"
 
 const corsOptions = {
   origin: "http://localhost:5173",

@@ -1,7 +1,8 @@
-const express = require("express");
-const Object = require("../models/Object");
+import express from "express"
+import Object from "../models/Object.js"
+import auth from "../middleware/auth.middleware.js"
+
 const router = express.Router({ mergeParams: true });
-const auth = require("../middleware/auth.middleware");
 
 router.get("/", async (req, res) => {
   try {
@@ -59,4 +60,4 @@ router.post("/create", auth, async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;
