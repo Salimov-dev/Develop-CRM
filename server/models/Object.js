@@ -1,8 +1,12 @@
-import { Schema, model } from "mongoose"
+import { Schema, model } from "mongoose";
 
 const schema = new Schema(
   {
-    status: String,
+    status: {
+      type: Schema.Types.ObjectId,
+      ref: "ObjectStatus",
+      required: true,
+    },
     company: { type: Schema.Types.ObjectId, ref: "Company", required: true },
     userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
     contact: {
@@ -10,7 +14,6 @@ const schema = new Schema(
       name: String,
       phone: Number,
       position: { type: Schema.Types.ObjectId, ref: "WorkingPosition" },
-      position: { type: String },
     },
     accordTerms: {
       readyToContract: Boolean,
@@ -30,13 +33,13 @@ const schema = new Schema(
       totalSquare: Number,
     },
     location: {
-      city: { type: String },
-      district: { type: String },
-      address: { type: String },
+      city: { type: String, required: true },
+      district: { type: String, required: true },
+      address: { type: String, required: true },
       metro: { type: String },
-      latitude: { type: Number },
-      longitude: { type: Number },
-      zoom: { type: Number },
+      latitude: { type: Number, required: true },
+      longitude: { type: Number, required: true },
+      zoom: { type: Number, required: true },
     },
   },
   {

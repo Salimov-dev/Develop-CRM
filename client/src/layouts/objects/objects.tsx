@@ -26,6 +26,7 @@ const initialState = {
   selectedCities: [],
   selectedUsers: [],
   selectedStatuses: [],
+  selectedMetro: [],
   onlyWithPhone: false,
 };
 

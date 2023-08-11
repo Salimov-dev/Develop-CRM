@@ -30,6 +30,12 @@ const useSearchObject = ({ objects, data }) => {
       );
     }
 
+    if (data.selectedMetro?.length) {
+      array = array?.filter((obj) =>
+        data.selectedMetro.includes(obj.location.metro)
+      );
+    }
+
     if (data.onlyWithPhone) {
       array = array?.filter((obj) => obj.contact.phone !== null);
     }

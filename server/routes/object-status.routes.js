@@ -1,5 +1,6 @@
 import express from "express"
 import ObjectStatus from "../models/Object-status.js"
+import auth from "../middleware/auth.middleware.js"
 
 const router = express.Router({ mergeParams: true });
 

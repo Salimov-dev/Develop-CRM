@@ -48,7 +48,6 @@ const ObjectForm = ({
   isEmptyFindedObject,
   objectId,
 }) => {
-  console.log("isEmptyFindedObject", isEmptyFindedObject);
 
   const isValidAndHasObject =
     (Boolean(isEmptyFindedObject) || isObjectHasAddress) && isValid;

@@ -18,7 +18,6 @@ export const groupedColumns = [
         cell: (info) => {
           return FormatDate(new Date(info.getValue()));
         },
-        footer: "Дата",
       },
       {
         accessorKey: "userId",
@@ -26,7 +25,6 @@ export const groupedColumns = [
         cell: (info) => {
           return FormatManagerName(info.getValue());
         },
-        footer: "Менеджер",
       },
     ],
   },
@@ -37,7 +35,6 @@ export const groupedColumns = [
         accessorKey: "location.city",
         header: "Город",
         cell: (info) => info.getValue(),
-        footer: "Город",
       },
       {
         accessorKey: "location.district",
@@ -45,21 +42,19 @@ export const groupedColumns = [
         cell: (info) => {
           return FormatDistrict(info.getValue());
         },
-        footer: "Дата",
       },
       {
         accessorKey: "location.metro",
         header: "Метро",
         cell: (info) => {
-          return FormatMetro(info.getValue());
+          const metroValue = info?.getValue()
+          return metroValue !== undefined ? FormatMetro(metroValue) : "";
         },
-        footer: "Дата",
       },
       {
         accessorKey: "location.address",
         header: "Адрес",
         cell: (info) => info.getValue(),
-        footer: "Дата",
       },
     ],
   },
@@ -71,19 +66,16 @@ export const groupedColumns = [
         accessorKey: "contact.phone",
         header: "Телефон",
         cell: (info) => FormatPhone(info.getValue()) ,
-        footer: "Телефон",
       },
       {
         accessorKey: "contact.name",
         header: "Имя",
         cell: (info) => info.getValue(),
-        footer: "Имя",
       },
       {
         accessorKey: "",
         header: "Последний контакт",
         cell: (info) => info.getValue(),
-        footer: "Последний контакт",
       },
     ],
   },
@@ -96,14 +88,12 @@ export const groupedColumns = [
         cell: (info) => {
           return FormatObjectStatus(info.getValue());
         },
-        footer: "Статус",
       },
       {
         accessorKey: "_id",
         header: "Ссылка",
         enableSorting: false,
         cell: (info) => <OpenButton objectId={info.getValue()} />,
-        footer: "Открыть",
       },
     ],
   },

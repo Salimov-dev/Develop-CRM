@@ -24,6 +24,7 @@ import {
 import { getUsersList } from "../../../store/users.store";
 import { getObjectsStatusList } from "../../../store/object-status.store";
 import { getDistrictsList } from "../../../store/districts.store";
+import { getMetroList } from "../../../store/metro.store";
 
 const Form = styled(`form`)({
   display: "flex",
@@ -51,6 +52,7 @@ const FiltersPanel = ({
   const objectStatuses = useSelector(getObjectsStatusList());
   const districts = useSelector(getDistrictsList());
   const users = useSelector(getUsersList());
+  const metro = useSelector(getMetroList());
   const navigate = useNavigate();
 
   const isOnlyPhoneChecked = data?.onlyWithPhone;
@@ -116,6 +118,23 @@ const FiltersPanel = ({
     const sortedDistricts = orderBy(actualDistrictsArray, ["name"], ["asc"]);
 
     return sortedDistricts;
+  };
+  const getActualMetroList = () => {
+    const filteredMetro = objects?.map((dist) => dist?.location?.metro);
+    const formatedMetroArray = filteredMetro?.filter((m) => m !== "");
+
+    const uniqueMetro = [...new Set(formatedMetroArray)];
+
+    const actualMetroArray = uniqueMetro?.map((id) => {
+      const foundObject = metro?.find((obj) => obj._id === id);
+      return foundObject
+        ? { _id: foundObject._id, name: foundObject.name }
+        : null;
+    });
+
+    const sortedMetros = orderBy(actualMetroArray, ["name"], ["asc"]);
+
+    return sortedMetros;
   };
 
   return (
@@ -224,7 +243,7 @@ const FiltersPanel = ({
             {...register("startDate")}
             value={data.startDate}
             onChange={(e) => setValue("startDate", value)}
-            label="Начало периода"
+            label="Начало"
             sx={{
               width: "450px",
               "& .MuiOutlinedInput-root": {
@@ -250,7 +269,7 @@ const FiltersPanel = ({
             {...register("endDate")}
             value={data.endDate}
             onChange={(value) => setValue("endDate", value)}
-            label="Конец периода"
+            label="Конец"
             sx={{
               width: "450px",
               "& .MuiOutlinedInput-root": {
@@ -274,12 +293,12 @@ const FiltersPanel = ({
           />
         </LocalizationProvider>
         <MultiSelectField
-          itemsList={getActualCitiesList()}
-          selectedItems={data.selectedCities}
-          onChange={(e) => setValue("selectedCities", e.target.value)}
-          name="cities"
-          labelId="cities-label"
-          label="Выбор по городу"
+          itemsList={getActualMetroList()}
+          selectedItems={data.selectedMetro}
+          onChange={(e) => setValue("selectedMetro", e.target.value)}
+          name="metro"
+          labelId="metro-label"
+          label="Выбор по метро"
         />
         <MultiSelectField
           itemsList={getActualDistrictsList()}
@@ -288,6 +307,14 @@ const FiltersPanel = ({
           name="districts"
           labelId="districts-label"
           label="Выбор по району"
+        />
+        <MultiSelectField
+          itemsList={getActualCitiesList()}
+          selectedItems={data.selectedCities}
+          onChange={(e) => setValue("selectedCities", e.target.value)}
+          name="cities"
+          labelId="cities-label"
+          label="Выбор по городу"
         />
       </Form>
     </>
