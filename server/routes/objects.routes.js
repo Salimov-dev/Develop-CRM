@@ -1,6 +1,7 @@
-import express from "express"
-import Object from "../models/Object.js"
-import auth from "../middleware/auth.middleware.js"
+import express from "express";
+import Object from "../models/Object.js";
+import Company from "../models/Company.js";
+import auth from "../middleware/auth.middleware.js";
 
 const router = express.Router({ mergeParams: true });
 
@@ -51,7 +52,16 @@ router.delete("/:objectId?", auth, async (req, res) => {
 
 router.post("/create", auth, async (req, res) => {
   try {
-    const newObject = await Object.create({ ...req.body });
+    const userId = req.user._id;
+    const company = await Company.findOne({
+      $or: [{ managers: userId }, { curators: userId }],
+    });
+
+    const newObject = await Object.create({
+      ...req.body,
+      userId,
+      company: company._id,
+    });
     res.status(201).send(newObject);
   } catch (e) {
     res.status(500).json({

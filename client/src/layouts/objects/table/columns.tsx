@@ -47,7 +47,7 @@ export const groupedColumns = [
         accessorKey: "location.metro",
         header: "Метро",
         cell: (info) => {
-          const metroValue = info?.getValue()
+          const metroValue = info.getValue()
           return metroValue !== undefined ? FormatMetro(metroValue) : "";
         },
       },

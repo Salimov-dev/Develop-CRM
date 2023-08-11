@@ -1,9 +1,11 @@
-import { Schema, model} from 'mongoose'
+import { Schema, model } from "mongoose";
 
 const schema = new Schema({
     name: {
         type: String,
     }
+}, {
+    timestamps: true
 })
 
-export default model('WorkingPosition', schema)
+export default model("WorkingPosition", schema);

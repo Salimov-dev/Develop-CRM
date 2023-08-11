@@ -13,7 +13,8 @@ const schema = new Schema(
       email: String,
       name: String,
       phone: Number,
-      position: { type: Schema.Types.ObjectId, ref: "WorkingPosition" },
+      position: String,
+      // position: { type: Schema.Types.ObjectId, ref: "WorkingPosition" },
     },
     accordTerms: {
       readyToContract: Boolean,
@@ -34,9 +35,10 @@ const schema = new Schema(
     },
     location: {
       city: { type: String, required: true },
-      district: { type: String, required: true },
+      district: { type: Schema.Types.ObjectId, ref: "District" },
       address: { type: String, required: true },
-      metro: { type: String },
+      // metro: { type: Schema.Types.ObjectId, ref: "Metro" },
+      metro: String,
       latitude: { type: Number, required: true },
       longitude: { type: Number, required: true },
       zoom: { type: Number, required: true },

@@ -95,8 +95,6 @@ const CreateObject = () => {
   const onSubmit = (data) => {
     const newData = {
       ...data,
-      userId: currentUser,
-      company: company,
       contact: {
         ...data.contact,
         name: capitalizeFirstLetterOrReturn(data.contact.name),
@@ -118,6 +116,7 @@ const CreateObject = () => {
         ),
       },
     };
+// console.log("newData", newData);
 
     dispatch(createObject(newData)).then(navigate("/objects"));
   };
