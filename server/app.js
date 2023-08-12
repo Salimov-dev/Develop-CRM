@@ -1,10 +1,10 @@
 import express from "express";
-import mongoose from "mongoose"
-import config from "config"
-import chalk from "chalk"
-import cors from "cors"
+import mongoose from "mongoose";
+import config from "config";
+import chalk from "chalk";
+import cors from "cors";
 // import initDatabase from "./startUp/initDatabase.js"
-import routes from "./routes/index.js"
+import routes from "./routes/index.js";
 
 const corsOptions = {
   origin: "http://localhost:5173",
@@ -18,6 +18,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors(corsOptions));
 app.use("/api", routes);
+app.use("/api/uploads", express.static("uploads"));
 
 const PORT = config.get("port") ?? 8080;
 

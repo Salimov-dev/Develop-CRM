@@ -8,13 +8,18 @@ import { styled, Typography, Button, Box } from "@mui/material";
 import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
 // store
 import { getObjectsStatusList } from "../../store/object-status.store";
-import { getObjectsList } from "../../store/objects.store";
+import {
+  getObjectsList,
+  getObjectsLoadingStatus,
+} from "../../store/objects.store";
 import { getUsersList } from "../../store/users.store";
 // components
 import MultiSelectField from "../../components/common/inputs/multi-select-field";
 import Map from "./components/map";
 // hooks
 import useSearchObject from "../../hooks/use-search-object";
+import Loader from "../../components/common/loader/loader";
+import ObjectQuantity from "./components/objects-quantity";
 
 const Form = styled(`form`)({
   width: "100%",
@@ -27,7 +32,14 @@ const Form = styled(`form`)({
 const Component = styled(Box)`
   display: flex;
   flex-direction: column;
-`
+`;
+
+const MapContainer = styled(Box)`
+  width: 99%;
+  height: 500px;
+  margin-bottom: 10px;
+  background-color: gray;
+`;
 
 const initialState = {
   selectedUsers: [],
@@ -38,6 +50,7 @@ const ObjectsOnMap = () => {
   const objects = useSelector(getObjectsList());
   const users = useSelector(getUsersList());
   const objectStatuses = useSelector(getObjectsStatusList());
+  const isLoading = useSelector(getObjectsLoadingStatus());
   const localStorageState = JSON.parse(
     localStorage.getItem("search-objectsonmap-data")
   );
@@ -130,8 +143,10 @@ const ObjectsOnMap = () => {
           <ClearOutlinedIcon />
         </Button>
       </Form>
-      <Map searchedObjects={newSearchedObj} />
-      <Typography variant="h5">Всего объектов: {newSearchedObj?.length}шт.</Typography>
+      <MapContainer>
+        {!isLoading ? <Map searchedObjects={newSearchedObj} /> : <Loader />}
+      </MapContainer>
+      <ObjectQuantity isLoading={isLoading} newSearchedObj={newSearchedObj} />
     </Component>
   );
 };

@@ -6,7 +6,11 @@ import ObjectsOnMap from "../../common/elements-on-map/objects-on-map";
 import ObjectInfo from "./components/object-info";
 import Header from "./components/header";
 // store
-import { getObjectById } from "../../../store/objects.store";
+import {
+  getObjectById,
+  getObjectsLoadingStatus,
+} from "../../../store/objects.store";
+import Loader from "../../common/loader/loader";
 
 const Map = styled(Box)`
   width: 100%;
@@ -20,14 +24,13 @@ const Map = styled(Box)`
 const ObjectPage = () => {
   const objectId = useParams().objectId;
   const object = useSelector(getObjectById(objectId));
+  const isLoading = useSelector(getObjectsLoadingStatus());
 
   return (
     <Box>
       <Header object={object} />
-      <Map>
-        <ObjectsOnMap object={object} />
-      </Map>
-      <ObjectInfo object={object} />
+      <Map>{!isLoading ? <ObjectsOnMap object={object} /> : <Loader />}</Map>
+      {!isLoading ? <ObjectInfo object={object} /> : <Loader />}
     </Box>
   );
 };

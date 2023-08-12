@@ -79,7 +79,9 @@ export const loadObjectsList = () => async (dispatch, getState) => {
     dispatch(objectsRequested());
     try {
       const { content } = await objectService.get();
-      dispatch(objectsReceived(content));
+      setTimeout(() => {
+        dispatch(objectsReceived(content));
+      }, 1000);
     } catch (error) {
       objectsFailed(error.message);
     }
