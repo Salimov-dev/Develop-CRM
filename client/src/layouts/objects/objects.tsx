@@ -32,7 +32,7 @@ const initialState = {
 
 const Objects = () => {
   const columns = groupedColumns;
-  const isObjectsLoading = useSelector(getObjectsLoadingStatus());
+  const isLoading = useSelector(getObjectsLoadingStatus());
   const objects = useSelector(getObjectsList());
   // console.log("objects", String(objects[1].contact.phone).length)
   
@@ -80,12 +80,13 @@ const Objects = () => {
         initialState={initialState}
         setValue={setValue}
         reset={reset}
+        isLoading={isLoading}
       />
 
       <BasicTable
         items={searchedObjects}
         itemsColumns={columns}
-        isLoading={isObjectsLoading}
+        isLoading={isLoading}
       />
     </Box>
   );

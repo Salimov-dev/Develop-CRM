@@ -8,6 +8,11 @@ import { loadDistrictsList } from "../store/districts.store";
 import { loadObjectStatusList } from "../store/object-status.store";
 import { loadWorkingPositionList } from "../store/working-position.store";
 import { loadSidebarCollapsState } from "../store/sidebar-collaps-state.store";
+import { loadCurrentRentersList } from "../store/current-renter.store";
+import { loadEstateConditionsList } from "../store/estate-conditions.store";
+import { loadRentTypesList } from "../store/rent-types.store";
+import { loadobjectTypesList } from "../store/object-types.store";
+import { loadEstateTypesList } from "../store/estate-types.store";
 
 interface AppLoaderProps {
   children: React.ReactNode;
@@ -25,6 +30,11 @@ const AppLoader = ({ children }: AppLoaderProps) => {
     dispatch<any>(loadWorkingPositionList());
     dispatch<any>(loadWorkingPositionList());
     dispatch<any>(loadSidebarCollapsState());
+    dispatch<any>(loadCurrentRentersList());
+    dispatch<any>(loadEstateConditionsList());
+    dispatch<any>(loadRentTypesList());
+    dispatch<any>(loadobjectTypesList());
+    dispatch<any>(loadEstateTypesList());
   }, []);
 
   return children;

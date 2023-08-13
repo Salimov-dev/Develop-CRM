@@ -19,7 +19,7 @@ import { enterPhoneFormat } from "../../../utils/enter-phone-format";
 import { makeDigitSeparator } from "../../../utils/make-digit-separator";
 
 const Component = styled(Box)`
-  width: 99%;
+  // width: 99%;
   height: 500px;
   margin-bottom: 10px;
 `;

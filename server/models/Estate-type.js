@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
 
 const schema = new Schema({
-  name: String,
+  type: String,
 });
 
-export default model("Metro", schema);
+export default model("EstateType", schema);

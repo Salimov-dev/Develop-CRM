@@ -25,6 +25,8 @@ const schema = new Schema(
       fullDescription: { type: String },
     },
     estateOptions: {
+      estateType: { type: Schema.Types.ObjectId, ref: "EstateType" },
+      objectType: { type: Schema.Types.ObjectId, ref: "ObjectType" },
       premisesFloor: String,
       premisesHeight: Number,
       rentPrice: Number,

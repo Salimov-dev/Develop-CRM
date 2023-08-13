@@ -115,6 +115,7 @@ const ObjectsOnMap = () => {
           name="selectedUsers"
           labelId="managers-label"
           label="Выбор по менеджеру"
+          disabled = {isLoading ? true : false}
         />
         <MultiSelectField
           itemsList={getActualStatusesList()}
@@ -123,6 +124,7 @@ const ObjectsOnMap = () => {
           name="selectedStatuses"
           labelId="statuses-label"
           label="Выбор по статусу"
+          disabled = {isLoading ? true : false}
         />
         <Button
           variant="outlined"

@@ -35,6 +35,7 @@ const MultiSelectField = ({
   name,
   labelId,
   label,
+  disabled = false
 }) => {
   function checkArrayElements(arr) {
     for (const element of arr) {
@@ -70,6 +71,7 @@ const MultiSelectField = ({
         multiple
         value={selectedItemsArray}
         onChange={onChange}
+        disabled={disabled}
         input={<OutlinedInput label={label} />}
         renderValue={(selected) => {
           const uniqueSelected = [...new Set(selected)];

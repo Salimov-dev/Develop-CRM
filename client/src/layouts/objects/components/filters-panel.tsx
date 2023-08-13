@@ -47,6 +47,7 @@ const FiltersPanel = ({
   initialState,
   register,
   reset,
+  isLoading
 }) => {
   const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
   const objectStatuses = useSelector(getObjectsStatusList());
@@ -167,6 +168,7 @@ const FiltersPanel = ({
           onKeyDown={handleKeyDown}
           value={data.address}
           inputProps={{ maxLength: 30 }}
+          disabled = {isLoading ? true : false}
         />
         <SearchField
           register={register}
@@ -175,6 +177,7 @@ const FiltersPanel = ({
           onKeyDown={handleKeyDown}
           value={data.phone}
           inputProps={{ maxLength: 12 }}
+          disabled = {isLoading ? true : false}
         />
         <SearchField
           register={register}
@@ -183,6 +186,7 @@ const FiltersPanel = ({
           onKeyDown={handleKeyDown}
           value={data.name}
           inputProps={{ maxLength: 30 }}
+          disabled = {isLoading ? true : false}
         />
         <MultiSelectField
           itemsList={getActualStatusesList()}
@@ -191,6 +195,7 @@ const FiltersPanel = ({
           name="status"
           labelId="status-label"
           label="Выбор по статусу"
+          disabled = {isLoading ? true : false}
         />
         <MultiSelectField
           itemsList={getActualUsersList()}
@@ -199,6 +204,7 @@ const FiltersPanel = ({
           name="users"
           labelId="users-label"
           label="Выбор по менеджеру"
+          disabled = {isLoading ? true : false}
         />
 
         <Box>
@@ -221,6 +227,7 @@ const FiltersPanel = ({
                   <Switch
                     color="success"
                     checked={data.onlyWithPhone}
+                    disabled = {isLoading ? true : false}
                     onChange={(e) => {
                       setValue("onlyWithPhone", e.target.checked);
                     }}
@@ -244,6 +251,7 @@ const FiltersPanel = ({
             value={data.startDate}
             onChange={(e) => setValue("startDate", value)}
             label="Начало"
+            disabled = {isLoading ? true : false}
             sx={{
               width: "450px",
               "& .MuiOutlinedInput-root": {
@@ -270,6 +278,7 @@ const FiltersPanel = ({
             value={data.endDate}
             onChange={(value) => setValue("endDate", value)}
             label="Конец"
+            disabled = {isLoading ? true : false}
             sx={{
               width: "450px",
               "& .MuiOutlinedInput-root": {
@@ -299,6 +308,7 @@ const FiltersPanel = ({
           name="metro"
           labelId="metro-label"
           label="Выбор по метро"
+          disabled = {isLoading ? true : false}
         />
         <MultiSelectField
           itemsList={getActualDistrictsList()}
@@ -307,6 +317,7 @@ const FiltersPanel = ({
           name="districts"
           labelId="districts-label"
           label="Выбор по району"
+          disabled = {isLoading ? true : false}
         />
         <MultiSelectField
           itemsList={getActualCitiesList()}
@@ -315,6 +326,7 @@ const FiltersPanel = ({
           name="cities"
           labelId="cities-label"
           label="Выбор по городу"
+          disabled = {isLoading ? true : false}
         />
       </Form>
     </>

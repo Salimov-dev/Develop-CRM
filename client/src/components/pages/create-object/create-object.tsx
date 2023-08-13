@@ -16,7 +16,6 @@ import { getMetroList } from "../../../store/metro.store";
 import { getWorkingPositionsList } from "../../../store/working-position.store";
 import { getObjectsStatusList } from "../../../store/object-status.store";
 import { createObject } from "../../../store/objects.store";
-import { getCurrentUserId } from "../../../store/users.store";
 // other
 import useFindObject from "../../../hooks/use-find-object";
 import { objectSchema } from "../../../schemas/schemas";
@@ -37,6 +36,8 @@ const initialState = {
     metro: "",
   },
   estateOptions: {
+    estateType: "",
+    objectType: "",
     rentPrice: "",
     rentPriceForMetr: "",
     securityDeposit: "",
@@ -61,12 +62,8 @@ const CreateObject = () => {
   const metros = useSelector(getMetroList());
   const workingPositions = useSelector(getWorkingPositionsList());
   const objectStatuses = useSelector(getObjectsStatusList());
-  const currentUser = useSelector(getCurrentUserId());
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const company = "64c140eb8d214a0532377114";
 
   const {
     register,

@@ -1,4 +1,4 @@
-// // models
+// models
 // import User from "../models/User.js"
 // import Object from "../models/Object.js"
 // import ObjectStatus from "../models/Object-status.js"
@@ -6,7 +6,8 @@
 // import Metro from "../models/Metro.js"
 // import District from "../models/District.js"
 // import WorkingPosition from "../models/Working-position.js"
-// // mock
+import EstateType from "../models/Estate-type.js"
+// mock
 // import usersMock from "../mock/users.json"
 // import objectsMock from "../mock/objects.json"
 // import workingPositionsMock from "../mock/working-positions.json"
@@ -14,8 +15,14 @@
 // import companiesMock from "../mock/companies.json"
 // import metrosMock from "../mock/metro.json"
 // import districtsMock from "../mock/districts.json"
+import estateTypesMock from "../mock/estate-types.jы"
 
-// module.exports = async () => {
+module.exports = async () => {
+  const estateTypes = await EstateType.find();
+  if (estateTypes.length !== estateTypesMock.length) {
+    await createInitialEntity(EstateType, estateTypesMock);
+  }
+
 //   const objects = await Object.find();
 //   if (objects.length !== objectsMock.length) {
 //     await createInitialEntity(Object, objectsMock);
@@ -50,21 +57,21 @@
 //   if (districts.length !== districtsMock.length) {
 //     await createInitialEntity(District, districtsMock);
 //   }
-// };
+};
 
-// async function createInitialEntity(Model, data) {
-//   await Model.collection.drop();
+async function createInitialEntity(Model, data) {
+  await Model.collection.drop();
 
-//   return Promise.all(
-//     data.map(async (item) => {
-//       try {
-//         delete item._id;
-//         const newItem = new Model(item);
-//         await newItem.save();
-//         return newItem;
-//       } catch (e) {
-//         return e;
-//       }
-//     })
-//   );
-// }
+  return Promise.all(
+    data.map(async (item) => {
+      try {
+        delete item._id;
+        const newItem = new Model(item);
+        await newItem.save();
+        return newItem;
+      } catch (e) {
+        return e;
+      }
+    })
+  );
+}
