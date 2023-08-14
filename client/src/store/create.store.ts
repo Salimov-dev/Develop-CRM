@@ -11,6 +11,7 @@ import objectConditionsReducer from "./object-conditions.store";
 import rentTypesReducer from "./rent-types.store";
 import objectTypesReducer from "./object-types.store";
 import estateTypesReducer from "./estate-types.store";
+import userStatusesReducer from "./user-statuses.store";
 
 const rootReducer = combineReducers({
   objects: objectsReducer,
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   rentTypes: rentTypesReducer,
   objectTypes: objectTypesReducer,
   estateTypes: estateTypesReducer,
+  userStatuses: userStatusesReducer,
 });
 
 export function createStore() {

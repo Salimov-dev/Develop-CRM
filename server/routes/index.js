@@ -13,6 +13,7 @@ import objectConditionsRoutes from "./object-conditions.routes.js";
 import rentTypeRoutes from "./rent-type.routes.js";
 import objectTypeRoutes from "./object-type.routes.js";
 import estateTypeRoutes from "./estate-type.routes.js";
+import userStatusRoutes from "./user-status.routes.js";
 
 const router = express.Router({ mergeParams: true });
 
@@ -30,5 +31,6 @@ router.use("/objectConditions", objectConditionsRoutes);
 router.use("/rentType", rentTypeRoutes);
 router.use("/objectType", objectTypeRoutes);
 router.use("/estateType", estateTypeRoutes);
+router.use("/userStatus", userStatusRoutes);
 
 export default router;

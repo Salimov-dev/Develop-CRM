@@ -105,7 +105,7 @@ const ItemsList = ({ isCollapsed, selected, setSelected, colors }) => {
       </Typography>
       <Item
         title="Менеджеры"
-        to="/managers"
+        to="/users"
         icon={<PeopleOutlinedIcon />}
         selected={selected}
         setSelected={setSelected}

@@ -25,6 +25,7 @@ const StyledSelect = styled(Select)(() => ({
 const SimpleSelectField = ({
   itemsList,
   name,
+  errors,
   labelId,
   label,
   register,
@@ -32,7 +33,7 @@ const SimpleSelectField = ({
   isHelperText = false,
   helperText,
   defaultValue = "",
-  watch
+  watch,
 }) => {
   const sortedItems = orderBy(itemsList, ["name"], ["asc"]);
 
@@ -70,6 +71,7 @@ const SimpleSelectField = ({
         MenuProps={MenuProps}
         disabled={disabled}
         defaultValue={defaultValue}
+        error={!!errors}
       >
         <MenuItem value="">
           <em>Отмена</em>
@@ -80,7 +82,10 @@ const SimpleSelectField = ({
           </MenuItem>
         ))}
       </StyledSelect>
-      {!watch || !isHelperText ? <FormHelperText sx={{color: "green"}}>{helperText}</FormHelperText> : null}
+      <FormHelperText sx={{ color: "red" }}>{errors?.message}</FormHelperText>
+      {!watch || !isHelperText ? (
+        <FormHelperText sx={{ color: "green" }}>{helperText}</FormHelperText>
+      ) : null}
     </FormControl>
   );
 };

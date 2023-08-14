@@ -4,7 +4,6 @@ import { Routes, Route, Navigate } from "react-router-dom";
 // layouts
 import Presentations from "./layouts/presentations/presentations";
 import ObjectsOnMap from "./layouts/objects-on-map/objects-on-map";
-import Users from "./layouts/users";
 import Login from "./layouts/login/login";
 import Signup from "./layouts/signup";
 import Profile from "./layouts/profile/profile";
@@ -24,6 +23,8 @@ import "./styles.css";
 import ScrollToTop from "./utils/scroll-to-top";
 import AppLoader from "./hoc/app-loader";
 import { ColorModeContext, useMode } from "./theme";
+import Users from "./layouts/users/users";
+import CreateManager from "./components/pages/create-manager/create-manager";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -53,13 +54,10 @@ function App() {
                     <Route path="*" element={<Navigate to=""/>} />
                   </Route>
 
-                  <Route path="users" element={<Users />}>
-                    <Route index element={<Navigate to="/users" />} />
-                    {/* <Route path="" element={<Managers />} /> */}
-                    {/* <Route path="create" element={<AddNewManager />} /> */}
+                  <Route path="users">
+                  <Route index element={<Users/>} />
+                    <Route path="create" element={<CreateManager />} />
                     {/* <Route path=":userId?/edit" element={<EditManager />} /> */}
-                    {/* <Route path=":userId?/profileUpdate" element={<EditManager />} /> */}
-                    {/* <Route path=":userId?/profileUpdate" element={<EditManager />} /> */}
                     <Route path="*" element={<Navigate to="/users" />} />
                   </Route>
 
@@ -73,7 +71,7 @@ function App() {
                   </Route>
 
                   <Route path="objects">
-                    <Route index element={<Objects/>} />
+                    
                     <Route path={":objectId/"} element={<ObjectPage/>} />
                     <Route path={"create"} element={<CreateObject/>}/>
                     <Route path={":objectId/edit"} element={<UpdateObject />} />

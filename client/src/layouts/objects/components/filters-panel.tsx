@@ -28,6 +28,7 @@ import { getMetroList } from "../../../store/metro.store";
 import { getCurrentRentersList } from "../../../store/current-renter.store";
 import { getEstateTypesList } from "../../../store/estate-types.store";
 import { getObjectTypesList } from "../../../store/object-types.store";
+import DatePickerStyled from "../../../components/common/inputs/date-picker";
 
 const Form = styled(`form`)({
   display: "flex",
@@ -62,6 +63,7 @@ const FiltersPanel = ({
   const objectTypes = useSelector(getObjectTypesList());
   const navigate = useNavigate();
   // console.log("objects", objects);
+  // console.log("data", data);
 
   const isOnlyPhoneChecked = data?.onlyWithPhone;
 
@@ -258,7 +260,7 @@ const FiltersPanel = ({
           <FormControl
             component="fieldset"
             sx={{
-              padding: "4px 15px 4px 0px",
+              padding: "5px 15px 5px 0px",
               border: "1px solid",
               borderColor: isOnlyPhoneChecked ? "green" : "gray",
               borderRadius: "6px",
@@ -293,63 +295,6 @@ const FiltersPanel = ({
       </Form>
 
       <Form>
-        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
-          <DatePicker
-            {...register("startDate")}
-            value={data.startDate}
-            onChange={(e) => setValue("startDate", value)}
-            label="Начало"
-            disabled={isLoading ? true : false}
-            sx={{
-              width: "450px",
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  borderColor: data.startDate ? "green" : "gray",
-                },
-                "&.Mui-focused fieldset": {
-                  borderColor: "green",
-                },
-              },
-              "& .MuiInputLabel-root": {
-                color: "gray",
-              },
-              "& label.Mui-focused": {
-                color: "white",
-              },
-              "& .MuiButtonBase-root": {
-                color: data.startDate ? "white" : "gray",
-              },
-            }}
-          />
-          <DatePicker
-            {...register("endDate")}
-            value={data.endDate}
-            onChange={(value) => setValue("endDate", value)}
-            label="Конец"
-            disabled={isLoading ? true : false}
-            sx={{
-              width: "450px",
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  borderColor: data.endDate ? "green" : "gray",
-                },
-                "&.Mui-focused fieldset": {
-                  borderColor: "green",
-                },
-              },
-              "& .MuiInputLabel-root": {
-                color: "gray",
-              },
-              "& label.Mui-focused": {
-                color: "white",
-              },
-              "& .MuiButtonBase-root": {
-                color: data.endDate ? "white" : "gray",
-              },
-            }}
-          />
-        </LocalizationProvider>
-
         <MultiSelectField
           itemsList={getActualMetroList()}
           selectedItems={data.selectedMetro}
@@ -406,6 +351,22 @@ const FiltersPanel = ({
           labelId="objectTypes-label"
           label="Тип объекта"
           disabled={isLoading ? true : false}
+        />
+        <DatePickerStyled
+          register={register}
+          name="startDate"
+          label="Начало"
+          value={data.startDate}
+          onChange={(value) => setValue("startDate", value)}
+          isLoading={isLoading}
+        />
+        <DatePickerStyled
+          register={register}
+          name="endDate"
+          label="Конец"
+          value={data.endDate}
+          onChange={(value) => setValue("endDate", value)}
+          isLoading={isLoading}
         />
       </Form>
     </>
