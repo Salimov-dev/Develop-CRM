@@ -35,7 +35,6 @@ const Objects = () => {
   const isLoading = useSelector(getObjectsLoadingStatus());
   const objects = useSelector(getObjectsList());
   // console.log("objects", String(objects[1].contact.phone).length)
-  
 
   const localStorageState = JSON.parse(
     localStorage.getItem("search-objects-data")
@@ -63,8 +62,7 @@ const Objects = () => {
     objects,
     data,
   });
-  // console.log("searchedObjects", searchedObjects);
-  
+  console.log("searchedObjects", searchedObjects);
 
   useEffect(() => {
     localStorage.setItem("search-objects-data", JSON.stringify(data));
@@ -83,11 +81,11 @@ const Objects = () => {
         isLoading={isLoading}
       />
 
-      <BasicTable
+      {searchedObjects.length ? <BasicTable
         items={searchedObjects}
         itemsColumns={columns}
         isLoading={isLoading}
-      />
+      /> : <Box sx={{marginTop: '50px'}}><h3>У вас пока нет ни одного объекта, создайте свой первый объект</h3></Box>}
     </Box>
   );
 };

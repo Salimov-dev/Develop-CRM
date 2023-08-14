@@ -145,7 +145,7 @@ const CreateObject = () => {
     };
     console.log("newData", newData);
 
-    // dispatch(createObject(newData)).then(navigate("/objects"));
+    dispatch(createObject(newData)).then(navigate("/objects"));
   };
 
   const handleClearForm = () => {
