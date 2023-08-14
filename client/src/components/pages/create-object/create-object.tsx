@@ -1,6 +1,6 @@
 // libraries
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router-dom";
@@ -11,20 +11,11 @@ import Header from "./components/header";
 import ObjectForm from "../../common/forms/object-form";
 import FindObjectOnMap from "./components/find-object-on-map";
 // store
-import { getDistrictsList } from "../../../store/districts.store";
-import { getMetroList } from "../../../store/metro.store";
-import { getWorkingPositionsList } from "../../../store/working-position.store";
-import { getObjectsStatusList } from "../../../store/object-status.store";
 import { createObject } from "../../../store/objects.store";
 // other
 import useFindObject from "../../../hooks/use-find-object";
 import { objectSchema } from "../../../schemas/schemas";
 import { capitalizeFirstLetterOrReturn } from "../../../utils/capitalize-first-letter";
-import { getobjectConditionsList } from "../../../store/object-conditions.store";
-import { getRentTypesList } from "../../../store/rent-types.store";
-import { getObjectTypesList } from "../../../store/object-types.store";
-import { getEstateTypesList } from "../../../store/estate-types.store";
-import { getCurrentRentersList } from "../../../store/current-renter.store";
 
 const initialState = {
   status: "",
@@ -74,15 +65,6 @@ const initialState = {
 };
 
 const CreateObject = () => {
-  const districts = useSelector(getDistrictsList());
-  const metros = useSelector(getMetroList());
-  const workingPositions = useSelector(getWorkingPositionsList());
-  const objectStatuses = useSelector(getObjectsStatusList());
-  const currentRenters = useSelector(getCurrentRentersList());
-  const objectConditions = useSelector(getobjectConditionsList());
-  const rentTypes = useSelector(getRentTypesList());
-  const objectTypes = useSelector(getObjectTypesList());
-  const estateTypes = useSelector(getEstateTypesList());
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -107,6 +89,7 @@ const CreateObject = () => {
   } = useFindObject();
 
   const isEmptyFindedObject = Boolean(Object.keys(findedObject)?.length);
+  
   const watchName = watch("contact.name");
   const watchStatus = watch("status");
   const watchDistrict = watch("location.district");
@@ -172,20 +155,11 @@ const CreateObject = () => {
         onSubmit={onSubmit}
         register={register}
         errors={errors}
-        districts={districts}
-        metros={metros}
-        watchDistrict={watchDistrict}
-        watchName={watchName}
-        workingPositions={workingPositions}
-        objectStatuses={objectStatuses}
         handleClearForm={handleClearForm}
         isValid={isValid}
         isEmptyFindedObject={isEmptyFindedObject}
-        currentRenters={currentRenters}
-        objectConditions={objectConditions}
-        rentTypes={rentTypes}
-        objectTypes={objectTypes}
-        estateTypes={estateTypes}
+        watchName={watchName}
+        watchDistrict={watchDistrict}
         watchCurrentRenters={watchCurrentRenters}
         watchobjectConditions={watchobjectConditions}
         watchRentTypes={watchRentTypes}

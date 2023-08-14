@@ -10,10 +10,6 @@ import { Box } from "@mui/material";
 import Header from "./components/header";
 import ObjectForm from "../../common/forms/object-form";
 // store
-import { getDistrictsList } from "../../../store/districts.store";
-import { getMetroList } from "../../../store/metro.store";
-import { getWorkingPositionsList } from "../../../store/working-position.store";
-import { getObjectsStatusList } from "../../../store/object-status.store";
 import { getObjectById, updateObject } from "../../../store/objects.store";
 // other
 import { objectSchema } from "../../../schemas/schemas";
@@ -22,10 +18,6 @@ const UpdateObject = () => {
   const { objectId } = useParams();
   const object = useSelector(getObjectById(objectId));
   const isEditMode = objectId ? true : false;
-  const districts = useSelector(getDistrictsList());
-  const metros = useSelector(getMetroList());
-  const workingPositions = useSelector(getWorkingPositionsList());
-  const objectStatuses = useSelector(getObjectsStatusList());
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -33,6 +25,7 @@ const UpdateObject = () => {
   const localStorageObject = JSON.parse(localStorage.getItem("editingObject"));
   const isObjectHasAddress =
     localStorageObject?.location?.city && localStorageObject?.location?.address;
+console.log("localStorageObject", localStorageObject);
 
   const {
     register,
@@ -66,22 +59,18 @@ const UpdateObject = () => {
     <Box>
       <Header object={object} />
       <ObjectForm
+        objectId={objectId}
+        object={localStorageObject}
         handleSubmit={handleSubmit}
         onSubmit={onSubmit}
         register={register}
         errors={errors}
-        districts={districts}
-        metros={metros}
-        watchDistrict={watchDistrict}
-        watchName={watchName}
-        workingPositions={workingPositions}
-        objectStatuses={objectStatuses}
         reset={reset}
         isEditMode={isEditMode}
-        object={localStorageObject}
         isValid={isValid}
         isObjectHasAddress={isObjectHasAddress}
-        objectId={objectId}
+        watchName={watchName}
+        watchDistrict={watchDistrict}
       />
     </Box>
   );
