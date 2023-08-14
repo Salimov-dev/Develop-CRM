@@ -80,6 +80,24 @@ const useSearchObject = ({ objects, data }) => {
       );
     }
 
+    if (data.selectedCurrentRenters?.length) {
+      array = array?.filter((item) =>
+        data.selectedCurrentRenters?.includes(item?.estateOptions.currentRenters)
+      );
+    }
+
+    if (data.selectedEstateTypes?.length) {
+      array = array?.filter((item) =>
+        data.selectedEstateTypes?.includes(item?.estateOptions.estateTypes)
+      );
+    }
+    
+    if (data.selectedObjectTypes?.length) {
+      array = array?.filter((item) =>
+        data.selectedObjectTypes?.includes(item?.estateOptions.objectTypes)
+      );
+    }
+
     if (data.startDate && data.endDate) {
       const startDate = dayjs(data.startDate);
       const endDate = dayjs(data.endDate).endOf("day");

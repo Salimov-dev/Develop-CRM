@@ -31,7 +31,6 @@ const InfoBlock = styled(Box)`
 `;
 
 const ObjectInfo = ({ object }) => {
-  console.log("object", object);
 
   const metroName = useSelector(getMetroName(object?.location.metro));
 
@@ -59,7 +58,6 @@ const ObjectInfo = ({ object }) => {
   const indexingAnnual = makeDigitSeparator(
     object?.commercialTerms.indexingAnnual
   );
-  // const rentTypes = makeDigitSeparator(object?.commercialTerms.rentTypes);
   const rentTypes = useSelector(
     getRentTypeNameById(object?.commercialTerms.rentTypes)
   );

@@ -26,6 +26,9 @@ const initialState = {
   selectedCities: [],
   selectedUsers: [],
   selectedStatuses: [],
+  selectedCurrentRenters: [],
+  selectedEstateTypes: [],
+  selectedObjectTypes: [],
   selectedMetro: [],
   onlyWithPhone: false,
 };
@@ -34,7 +37,6 @@ const Objects = () => {
   const columns = groupedColumns;
   const isLoading = useSelector(getObjectsLoadingStatus());
   const objects = useSelector(getObjectsList());
-  // console.log("objects", String(objects[1].contact.phone).length)
 
   const localStorageState = JSON.parse(
     localStorage.getItem("search-objects-data")
@@ -68,6 +70,10 @@ const Objects = () => {
     localStorage.setItem("search-objects-data", JSON.stringify(data));
   }, [data]);
 
+  useEffect(() => {
+    localStorage.setItem("search-objects-data", JSON.stringify(initialState));
+  }, []);
+
   return (
     <Box>
       <h1>Таблица объектов</h1>
@@ -81,11 +87,11 @@ const Objects = () => {
         isLoading={isLoading}
       />
 
-      {searchedObjects?.length ? <BasicTable
+      <BasicTable
         items={searchedObjects}
         itemsColumns={columns}
         isLoading={isLoading}
-      /> : <Box sx={{marginTop: '50px'}}><h3>У вас пока нет ни одного объекта, создайте свой первый объект</h3></Box>}
+      />
     </Box>
   );
 };

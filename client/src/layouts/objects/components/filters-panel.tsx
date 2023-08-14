@@ -25,6 +25,9 @@ import { getUsersList } from "../../../store/users.store";
 import { getObjectsStatusList } from "../../../store/object-status.store";
 import { getDistrictsList } from "../../../store/districts.store";
 import { getMetroList } from "../../../store/metro.store";
+import { getCurrentRentersList } from "../../../store/current-renter.store";
+import { getEstateTypesList } from "../../../store/estate-types.store";
+import { getObjectTypesList } from "../../../store/object-types.store";
 
 const Form = styled(`form`)({
   display: "flex",
@@ -47,14 +50,18 @@ const FiltersPanel = ({
   initialState,
   register,
   reset,
-  isLoading
+  isLoading,
 }) => {
   const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
   const objectStatuses = useSelector(getObjectsStatusList());
   const districts = useSelector(getDistrictsList());
   const users = useSelector(getUsersList());
   const metro = useSelector(getMetroList());
+  const currentRenters = useSelector(getCurrentRentersList());
+  const estateTypes = useSelector(getEstateTypesList());
+  const objectTypes = useSelector(getObjectTypesList());
   const navigate = useNavigate();
+  // console.log("objects", objects);
 
   const isOnlyPhoneChecked = data?.onlyWithPhone;
 
@@ -68,42 +75,25 @@ const FiltersPanel = ({
       e.preventDefault();
     }
   };
+  const getActualList = (data, property, source) => {
+    const filteredItems = data?.map((item) => item[property]);
+    const uniqueItems = [...new Set(filteredItems)];
+
+    const actualItemsArray = uniqueItems?.map((id) => {
+      const foundItem = source?.find((item) => item._id === id);
+      return foundItem ? { _id: foundItem._id, name: foundItem.name } : null;
+    });
+
+    const sortedItems = orderBy(actualItemsArray, ["name"], ["asc"]);
+
+    return sortedItems;
+  };
   const getActualCitiesList = () => {
     const filteredCities = objects?.map((dist) => dist.location.city);
     const uniqueCities = [...new Set(filteredCities)];
     const sortedCities = orderBy(uniqueCities, ["name"], ["asc"]);
 
     return sortedCities;
-  };
-  const getActualStatusesList = () => {
-    const filteredStatuses = objects?.map((obj) => obj.status);
-    const uniqueStatuses = [...new Set(filteredStatuses)];
-
-    const actualStatuesArray = uniqueStatuses?.map((id) => {
-      const foundObject = objectStatuses?.find((status) => status._id === id);
-      return foundObject
-        ? { _id: foundObject._id, name: foundObject.name }
-        : null;
-    });
-
-    const sortedStatuses = orderBy(actualStatuesArray, ["name"], ["asc"]);
-
-    return sortedStatuses;
-  };
-  const getActualUsersList = () => {
-    const filteredUsers = objects?.map((obj) => obj.userId);
-    const uniqueUsers = [...new Set(filteredUsers)];
-
-    const actualUsersArray = uniqueUsers?.map((id) => {
-      const foundObject = users?.find((user) => user._id === id);
-      return foundObject
-        ? { _id: foundObject._id, name: foundObject.name }
-        : null;
-    });
-
-    const sortedUsers = orderBy(actualUsersArray, ["name"], ["asc"]);
-
-    return sortedUsers;
   };
   const getActualDistrictsList = () => {
     const filteredDistricts = objects?.map((dist) => dist.location.district);
@@ -137,7 +127,63 @@ const FiltersPanel = ({
 
     return sortedMetros;
   };
+  const getActualCurrentRentersList = () => {
+    const filteredRenters = objects?.map(
+      (renter) => renter?.estateOptions?.currentRenters
+    );
+    const formateRentersArray = filteredRenters?.filter((m) => m !== "");
 
+    const uniqueRenter = [...new Set(formateRentersArray)];
+
+    const actuaRentersArray = uniqueRenter?.map((id) => {
+      const foundObject = currentRenters?.find((obj) => obj._id === id);
+      return foundObject
+        ? { _id: foundObject._id, name: foundObject.name }
+        : null;
+    });
+
+    const sortedRenter = orderBy(actuaRentersArray, ["name"], ["asc"]);
+
+    return sortedRenter;
+  };
+  const getActualEstateTypesList = () => {
+    const filteredType = objects?.map(
+      (renter) => renter?.estateOptions?.estateTypes
+    );
+    const formateTypeArray = filteredType?.filter((m) => m !== "");
+
+    const uniqueType = [...new Set(formateTypeArray)];
+
+    const actuaTypeArray = uniqueType?.map((id) => {
+      const foundObject = estateTypes?.find((obj) => obj._id === id);
+      return foundObject
+        ? { _id: foundObject._id, name: foundObject.name }
+        : null;
+    });
+
+    const sortedType = orderBy(actuaTypeArray, ["name"], ["asc"]);
+
+    return sortedType;
+  };
+  const getActualObjectTypesList = () => {
+    const filteredType = objects?.map(
+      (renter) => renter?.estateOptions?.objectTypes
+    );
+    const formateTypeArray = filteredType?.filter((m) => m !== "");
+
+    const uniqueType = [...new Set(formateTypeArray)];
+
+    const actuaTypeArray = uniqueType?.map((id) => {
+      const foundObject = objectTypes?.find((obj) => obj._id === id);
+      return foundObject
+        ? { _id: foundObject._id, name: foundObject.name }
+        : null;
+    });
+
+    const sortedType = orderBy(actuaTypeArray, ["name"], ["asc"]);
+
+    return sortedType;
+  };
   return (
     <>
       <ButtonsBlock>
@@ -160,6 +206,7 @@ const FiltersPanel = ({
           </Button>
         )}
       </ButtonsBlock>
+
       <Form>
         <SearchField
           register={register}
@@ -168,7 +215,7 @@ const FiltersPanel = ({
           onKeyDown={handleKeyDown}
           value={data.address}
           inputProps={{ maxLength: 30 }}
-          disabled = {isLoading ? true : false}
+          disabled={isLoading ? true : false}
         />
         <SearchField
           register={register}
@@ -177,7 +224,7 @@ const FiltersPanel = ({
           onKeyDown={handleKeyDown}
           value={data.phone}
           inputProps={{ maxLength: 12 }}
-          disabled = {isLoading ? true : false}
+          disabled={isLoading ? true : false}
         />
         <SearchField
           register={register}
@@ -186,25 +233,25 @@ const FiltersPanel = ({
           onKeyDown={handleKeyDown}
           value={data.name}
           inputProps={{ maxLength: 30 }}
-          disabled = {isLoading ? true : false}
+          disabled={isLoading ? true : false}
         />
         <MultiSelectField
-          itemsList={getActualStatusesList()}
+          itemsList={getActualList(objects, "status", objectStatuses)}
           selectedItems={data.selectedStatuses}
           onChange={(e) => setValue("selectedStatuses", e.target.value)}
           name="status"
           labelId="status-label"
           label="Выбор по статусу"
-          disabled = {isLoading ? true : false}
+          disabled={isLoading ? true : false}
         />
         <MultiSelectField
-          itemsList={getActualUsersList()}
+          itemsList={getActualList(objects, "userId", users)}
           selectedItems={data.selectedUsers}
           onChange={(e) => setValue("selectedUsers", e.target.value)}
           name="users"
           labelId="users-label"
           label="Выбор по менеджеру"
-          disabled = {isLoading ? true : false}
+          disabled={isLoading ? true : false}
         />
 
         <Box>
@@ -227,7 +274,7 @@ const FiltersPanel = ({
                   <Switch
                     color="success"
                     checked={data.onlyWithPhone}
-                    disabled = {isLoading ? true : false}
+                    disabled={isLoading ? true : false}
                     onChange={(e) => {
                       setValue("onlyWithPhone", e.target.checked);
                     }}
@@ -244,6 +291,7 @@ const FiltersPanel = ({
           </FormControl>
         </Box>
       </Form>
+
       <Form>
         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
           <DatePicker
@@ -251,7 +299,7 @@ const FiltersPanel = ({
             value={data.startDate}
             onChange={(e) => setValue("startDate", value)}
             label="Начало"
-            disabled = {isLoading ? true : false}
+            disabled={isLoading ? true : false}
             sx={{
               width: "450px",
               "& .MuiOutlinedInput-root": {
@@ -278,7 +326,7 @@ const FiltersPanel = ({
             value={data.endDate}
             onChange={(value) => setValue("endDate", value)}
             label="Конец"
-            disabled = {isLoading ? true : false}
+            disabled={isLoading ? true : false}
             sx={{
               width: "450px",
               "& .MuiOutlinedInput-root": {
@@ -301,6 +349,7 @@ const FiltersPanel = ({
             }}
           />
         </LocalizationProvider>
+
         <MultiSelectField
           itemsList={getActualMetroList()}
           selectedItems={data.selectedMetro}
@@ -308,7 +357,7 @@ const FiltersPanel = ({
           name="metro"
           labelId="metro-label"
           label="Выбор по метро"
-          disabled = {isLoading ? true : false}
+          disabled={isLoading ? true : false}
         />
         <MultiSelectField
           itemsList={getActualDistrictsList()}
@@ -317,7 +366,7 @@ const FiltersPanel = ({
           name="districts"
           labelId="districts-label"
           label="Выбор по району"
-          disabled = {isLoading ? true : false}
+          disabled={isLoading ? true : false}
         />
         <MultiSelectField
           itemsList={getActualCitiesList()}
@@ -326,7 +375,37 @@ const FiltersPanel = ({
           name="cities"
           labelId="cities-label"
           label="Выбор по городу"
-          disabled = {isLoading ? true : false}
+          disabled={isLoading ? true : false}
+        />
+      </Form>
+
+      <Form>
+        <MultiSelectField
+          itemsList={getActualCurrentRentersList()}
+          selectedItems={data.selectedCurrentRenters}
+          onChange={(e) => setValue("selectedCurrentRenters", e.target.value)}
+          name="currentRenters"
+          labelId="currentRenters-label"
+          label="Текущий арендатор"
+          disabled={isLoading ? true : false}
+        />
+        <MultiSelectField
+          itemsList={getActualEstateTypesList()}
+          selectedItems={data.selectedEstateTypes}
+          onChange={(e) => setValue("selectedEstateTypes", e.target.value)}
+          name="estateTypes"
+          labelId="estateTypes-label"
+          label="Тип недвижимости"
+          disabled={isLoading ? true : false}
+        />
+        <MultiSelectField
+          itemsList={getActualObjectTypesList()}
+          selectedItems={data.selectedObjectTypes}
+          onChange={(e) => setValue("selectedObjectTypes", e.target.value)}
+          name="objectTypes"
+          labelId="objectTypes-label"
+          label="Тип объекта"
+          disabled={isLoading ? true : false}
         />
       </Form>
     </>
