@@ -1,5 +1,4 @@
 // libraries
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -11,8 +10,8 @@ import PhoneIphoneOutlinedIcon from "@mui/icons-material/PhoneIphoneOutlined";
 import DatePickerStyled from "../../common/inputs/date-picker";
 import SimpleSelectField from "../../common/inputs/simple-select-field";
 import { getUserStatusesList } from "../../../store/user-statuses.store";
-import AlternateEmailOutlinedIcon from '@mui/icons-material/AlternateEmailOutlined';
-import KeyOutlinedIcon from '@mui/icons-material/KeyOutlined';
+import AlternateEmailOutlinedIcon from "@mui/icons-material/AlternateEmailOutlined";
+import KeyOutlinedIcon from "@mui/icons-material/KeyOutlined";
 import { managerSchema } from "../../../schemas/schemas";
 
 const FieldsContainer = styled(Box)`
@@ -54,9 +53,9 @@ const initialState = {
 };
 
 const CreateManager = () => {
-  const userStatuses = useSelector(getUserStatusesList())
+  const userStatuses = useSelector(getUserStatusesList());
   const dispatch = useDispatch();
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const {
     register,
@@ -67,12 +66,16 @@ const CreateManager = () => {
   } = useForm({
     defaultValues: initialState,
     mode: "onBlur",
-      resolver: yupResolver(managerSchema),
+    resolver: yupResolver(managerSchema),
   });
+  console.log("errors", errors);
+
+  const watchTrialStatus = watch("status");
+
+  const isTrialStatusSelected = watchTrialStatus === "64da643f547d1cfcd04b1dc8";
 
   const onSubmit = (data) => {
     console.log("data", data);
-
     // dispatch(createObject(data)).then(navigate("/objects"));
   };
 
@@ -84,12 +87,9 @@ const CreateManager = () => {
     // navigate(isEditMode ? `/objects/${objectId}` : "/objects");
   };
 
-  console.log("errors", errors);
-  
-
   return (
     <Box>
-      <h1>CreateManager</h1>
+      <h1>Добавить нового менеджера</h1>
       <Form onSubmit={handleSubmit(onSubmit)} noValidate>
         <Box sx={{ marginRight: "auto" }}>
           <h3>Контактные данные</h3>
@@ -162,22 +162,28 @@ const CreateManager = () => {
             register={register}
             name="contract.startDate"
             label="Начало договора"
+            errors={errors?.contract?.startDate}
             onChange={(value) => setValue("contract.startDate", value)}
-            //   isLoading={isLoading}
           />
           <DatePickerStyled
             register={register}
             name="contract.endDate"
             label="Окончание договора"
+            errors={errors?.contract?.endDate}
             onChange={(value) => setValue("contract.endDate", value)}
-            //   isLoading={isLoading}
           />
           <DatePickerStyled
             register={register}
             name="contract.trialPeriod"
             label="Окончание испыт.срока"
+            disabled={!isTrialStatusSelected}
+            helperText={
+              !isTrialStatusSelected
+                ? "Активно на статусе `Испытательный срок`"
+                : ""
+            }
+            color="green"
             onChange={(value) => setValue("contract.trialPeriod", value)}
-            //   isLoading={isLoading}
           />
         </FieldsContainer>
 
@@ -185,7 +191,7 @@ const CreateManager = () => {
           <h3>Аккаунт в CRM</h3>
         </Box>
         <FieldsContainer>
-        <SimpleSelectField
+          <SimpleSelectField
             itemsList={userStatuses}
             name="status"
             labelId="status"
@@ -201,7 +207,11 @@ const CreateManager = () => {
             errors={errors?.email}
             onInputQuantities={25}
             InputProps={{
-              endAdornment: <InputAdornment position="end"><AlternateEmailOutlinedIcon/></InputAdornment>,
+              endAdornment: (
+                <InputAdornment position="end">
+                  <AlternateEmailOutlinedIcon />
+                </InputAdornment>
+              ),
             }}
           />
           <TextFieldStyled
@@ -211,7 +221,11 @@ const CreateManager = () => {
             name="password"
             errors={errors?.password}
             InputProps={{
-              endAdornment: <InputAdornment position="end"><KeyOutlinedIcon/></InputAdornment>,
+              endAdornment: (
+                <InputAdornment position="end">
+                  <KeyOutlinedIcon />
+                </InputAdornment>
+              ),
             }}
           />
         </FieldsContainer>
@@ -221,7 +235,7 @@ const CreateManager = () => {
             type="submit"
             variant="outlined"
             color="success"
-            // disabled={!isValidAndHasObject}
+            disabled={!isValid}
           >
             Создать
             {/* {isEditMode ? "Сохранить" : "Создать"} */}
@@ -230,7 +244,7 @@ const CreateManager = () => {
             <Button
               type="button"
               variant="outlined"
-              color="success"
+              color="error"
               onClick={handleBackPage}
             >
               Отмена

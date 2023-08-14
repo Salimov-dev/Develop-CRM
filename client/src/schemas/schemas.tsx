@@ -50,11 +50,22 @@ export const managerSchema = yup.object().shape({
       .string()
       .matches(/^([^0-9]*$)/, "Фамилия не должна содержать цифры")
       .required("Фамилия обязательна для заполнения"),
-    phone: yup.number().typeError("Телефон должен быть числом").required("Телефон обязателен для заполнения"),
+    phone: yup
+      .number()
+      .typeError("Телефон должен быть числом")
+      .required("Телефон обязателен для заполнения"),
   }),
   contract: yup.object().shape({
-    startDate: yup.date().required("Заполните начало договора").max(yup.ref("endDate", "Начальная дата не может быть позже конечной")),
-    endDate: yup.date().required("Заполните окончание договора").min(yup.ref("startDate", "Конечная дата не может быть ранее начальной")),
-    trialPeriod: yup.date().required("Заполните окончание испыт.срока").min(yup.ref("endDate", "Испытательный срок не может оканчиваться ранее конечной даты договора")),
+    startDate: yup
+      .date()
+      .required("Заполните начало договора")
+      .typeError("Должна должна быть датой")
+      .max(yup.ref("endDate"), "Начальная дата не может быть позже конечной"),
+    endDate: yup
+      .date()
+      .required("Заполните окончание договора")
+      .typeError("Должна должна быть датой")
+      .min(yup.ref("startDate"), "Конечная дата не может быть ранее начальной"),
+    trialPeriod: yup.string().nullable(),
   }),
 });

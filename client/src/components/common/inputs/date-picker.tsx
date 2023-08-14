@@ -1,22 +1,36 @@
 // MUI
+import {Box, FormHelperText } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
-const DatePickerStyled = ({register, name, label, value, onChange, isLoading}) => {
+const DatePickerStyled = ({
+  register,
+  name,
+  label,
+  value,
+  onChange,
+  helperText,
+  errors,
+  disabled,
+  color="red"
+}) => {
+  
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
+    <Box sx={{width: '100%', display: 'flex', flexDirection: 'column'}}>
+    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru" >
       <DatePicker
         {...register(name)}
         label={label}
         value={value}
         onChange={onChange}
-        disabled={isLoading ? true : false}
+        error={!!errors}
+        disabled={disabled}
         sx={{
           width: "100%",
           "& .MuiOutlinedInput-root": {
             "& fieldset": {
-              borderColor: value ? "green" : "gray",
+              borderColor: errors ? "red" : (value ? "green" : "gray")
             },
             "&.Mui-focused fieldset": {
               borderColor: "green",
@@ -34,6 +48,9 @@ const DatePickerStyled = ({register, name, label, value, onChange, isLoading}) =
         }}
       />
     </LocalizationProvider>
+    <FormHelperText sx={{color: color}}>{errors ? errors?.message : helperText}</FormHelperText>
+    </Box>
+    
   );
 };
 

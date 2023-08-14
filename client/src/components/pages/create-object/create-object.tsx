@@ -93,6 +93,7 @@ const CreateObject = () => {
   const watchName = watch("contact.name");
   const watchStatus = watch("status");
   const watchDistrict = watch("location.district");
+  const watchMetro = watch("location.metro");
   const watchCurrentRenters = watch("estateOptions.currentRenters");
   const watchobjectConditions = watch("estateOptions.objectConditions");
   const watchRentTypes = watch("estateOptions.rentTypes");
@@ -160,6 +161,7 @@ const CreateObject = () => {
         isEmptyFindedObject={isEmptyFindedObject}
         watchName={watchName}
         watchDistrict={watchDistrict}
+        watchMetro={watchMetro}
         watchCurrentRenters={watchCurrentRenters}
         watchobjectConditions={watchobjectConditions}
         watchRentTypes={watchRentTypes}

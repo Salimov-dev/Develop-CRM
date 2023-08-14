@@ -14,6 +14,7 @@ import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import TextFieldStyled from "../inputs/text-field-styled";
 import SimpleSelectField from "../inputs/simple-select-field";
 import SwitchStyled from "../inputs/switch-styled";
+// store
 import { getDistrictsList } from "../../../store/districts.store";
 import { getMetroList } from "../../../store/metro.store";
 import { getWorkingPositionsList } from "../../../store/working-position.store";
@@ -58,6 +59,7 @@ const ObjectForm = ({
   isEmptyFindedObject,
   watchName,
   watchDistrict,
+  watchMetro,
   watchCurrentRenters,
   watchobjectConditions,
   watchRentTypes,
@@ -110,7 +112,7 @@ const ObjectForm = ({
             register={register}
             disabled={!watchDistrict && true}
             defaultValue={object?.location?.metro}
-            helperText="Если есть в радиусе 1км"
+            helperText={!watchMetro ? "Если есть в радиусе 1км" : ""}
             isHelperText={true}
           />
           <SimpleSelectField
@@ -507,7 +509,7 @@ const ObjectForm = ({
             <Button
               type="button"
               variant="outlined"
-              color="success"
+              color="error"
               onClick={handleBackPage}
             >
               Отмена
