@@ -7,7 +7,7 @@ import objectStatusReducer from "./object-status.store";
 import workingPositionReducer from "./working-position.store";
 import sidebarCollapsStateReducer from "./sidebar-collaps-state.store";
 import currentRenterReducer from "./current-renter.store";
-import estateConditionsReducer from "./estate-conditions.store";
+import objectConditionsReducer from "./object-conditions.store";
 import rentTypesReducer from "./rent-types.store";
 import objectTypesReducer from "./object-types.store";
 import estateTypesReducer from "./estate-types.store";
@@ -21,7 +21,7 @@ const rootReducer = combineReducers({
   workingPosition: workingPositionReducer,
   sidebarCollapsState: sidebarCollapsStateReducer,
   currentRenters: currentRenterReducer,
-  estateConditions: estateConditionsReducer,
+  objectConditions: objectConditionsReducer,
   rentTypes: rentTypesReducer,
   objectTypes: objectTypesReducer,
   estateTypes: estateTypesReducer,

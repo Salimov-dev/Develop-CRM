@@ -4,11 +4,11 @@ import { Box, Button, styled, InputAdornment, FormGroup } from "@mui/material";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import PhoneIphoneOutlinedIcon from "@mui/icons-material/PhoneIphoneOutlined";
 import AlternateEmailOutlinedIcon from "@mui/icons-material/AlternateEmailOutlined";
-import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
-import WaterIcon from '@mui/icons-material/Water';
-import ElectricBoltIcon from '@mui/icons-material/ElectricBolt';
-import VerticalAlignBottomOutlinedIcon from '@mui/icons-material/VerticalAlignBottomOutlined';
-import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
+import WaterIcon from "@mui/icons-material/Water";
+import ElectricBoltIcon from "@mui/icons-material/ElectricBolt";
+import VerticalAlignBottomOutlinedIcon from "@mui/icons-material/VerticalAlignBottomOutlined";
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 // components
 import TextFieldStyled from "../inputs/text-field-styled";
 import SimpleSelectField from "../inputs/simple-select-field";
@@ -53,12 +53,12 @@ const ObjectForm = ({
   isEmptyFindedObject,
   objectId,
   currentRenters,
-  estateConditions,
+  objectConditions,
   rentTypes,
   objectTypes,
   estateTypes,
   watchCurrentRenters,
-  watchEstateConditions,
+  watchobjectConditions,
   watchRentTypes,
   watchObjectTypes,
   watchEstateTypes,
@@ -221,9 +221,8 @@ const ObjectForm = ({
             register={register}
             label="Общая площадь"
             type="number"
-            name="estateOptions.totalSquare"
+            name="commercialTerms.totalSquare"
             valueAsNumber={true}
-            errors={errors?.estateOptions?.totalSquare}
             onInputQuantities={5}
             InputProps={{
               endAdornment: <InputAdornment position="end">м²</InputAdornment>,
@@ -234,7 +233,7 @@ const ObjectForm = ({
             register={register}
             label="Площадь аренды"
             type="number"
-            name="estateOptions.rentSquare"
+            name="commercialTerms.rentSquare"
             valueAsNumber={true}
             onInputQuantities={5}
             InputProps={{
@@ -245,11 +244,10 @@ const ObjectForm = ({
             register={register}
             label="Стоимость аренды"
             type="number"
-            name="estateOptions.rentPrice"
+            name="commercialTerms.rentPrice"
             valueAsNumber={true}
             onInputQuantities={8}
             InputProps={{
-              maxLength: 8,
               endAdornment: <InputAdornment position="end">₽</InputAdornment>,
             }}
           />
@@ -257,21 +255,20 @@ const ObjectForm = ({
             register={register}
             label="Индексация"
             type="number"
-            name="estateOptions.indexingAnnual"
+            name="commercialTerms.indexingAnnual"
             valueAsNumber={true}
             onInputQuantities={3}
             InputProps={{
-              maxLength: 3,
               endAdornment: <InputAdornment position="end">%</InputAdornment>,
             }}
           />
         </FieldsContainer>
         <FieldsContainer>
-        <TextFieldStyled
+          <TextFieldStyled
             register={register}
             label="Каникулы"
             type="number"
-            name="estateOptions.rentalHolidays"
+            name="commercialTerms.rentalHolidays"
             valueAsNumber={true}
             onInputQuantities={3}
             InputProps={{
@@ -285,7 +282,7 @@ const ObjectForm = ({
             register={register}
             label="Обеспечительный платёж"
             type="number"
-            name="estateOptions.securityDeposit"
+            name="commercialTerms.securityDeposit"
             valueAsNumber={true}
             onInputQuantities={8}
             InputProps={{
@@ -297,7 +294,7 @@ const ObjectForm = ({
             register={register}
             label="Комиссия агента"
             type="number"
-            name="estateOptions.agentComission"
+            name="commercialTerms.agentComission"
             valueAsNumber={true}
             onInputQuantities={8}
             InputProps={{
@@ -307,11 +304,11 @@ const ObjectForm = ({
           />
           <SimpleSelectField
             itemsList={rentTypes}
-            name="estateOptions.rentTypes"
+            name="commercialTerms.rentTypes"
             labelId="rentTypes"
             label="Тип договора"
             register={register}
-            defaultValue={object?.estateOptions?.rentTypes}
+            defaultValue={object?.commercialTerms?.rentTypes}
             isHelperText={true}
             watch={watchRentTypes}
           />
@@ -323,24 +320,23 @@ const ObjectForm = ({
         <FieldsContainer sx={{ flexDirection: "column" }}>
           <FieldsContainer>
             <SimpleSelectField
-              itemsList={estateConditions}
-              name="estateOptions.estateConditions"
-              labelId="estateConditions "
+              itemsList={objectConditions}
+              name="estateOptions.objectConditions"
+              labelId="objectConditions "
               label="Состояние помещения"
               register={register}
-              defaultValue={object?.estateOptions?.estateConditions}
+              defaultValue={object?.estateOptions?.objectConditions}
               isHelperText={true}
-              watch={watchEstateConditions}
+              watch={watchobjectConditions}
             />
             <TextFieldStyled
               register={register}
               label="Кадастровый номер"
-              type="number"
-              name="estateOptions.cadastalNumber"
+              type="text"
+              name="estateOptions.cadastralNumber"
               valueAsNumber={true}
               onInputQuantities={24}
               InputProps={{
-                maxLength: 7,
                 endAdornment: <InputAdornment position="end">№</InputAdornment>,
               }}
             />
@@ -353,7 +349,11 @@ const ObjectForm = ({
               onInputQuantities={4}
               InputProps={{
                 maxLength: 7,
-                endAdornment: <InputAdornment position="end"><ElectricBoltIcon/></InputAdornment>,
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <ElectricBoltIcon />
+                  </InputAdornment>
+                ),
               }}
             />
             <TextFieldStyled
@@ -362,21 +362,27 @@ const ObjectForm = ({
               name="estateOptions.premisesFloor"
               onInputQuantities={100}
               InputProps={{
-                endAdornment: <InputAdornment position="end"><VerticalAlignBottomOutlinedIcon/></InputAdornment>,
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <VerticalAlignBottomOutlinedIcon />
+                  </InputAdornment>
+                ),
               }}
             />
           </FieldsContainer>
           <FieldsContainer>
-          
             <TextFieldStyled
               register={register}
               label="Водоснабжение"
-              type="number"
-              name="estateOptions.waterSuply "
-              valueAsNumber={true}
+              type="text"
+              name="estateOptions.waterSuply"
               onInputQuantities={20}
               InputProps={{
-                endAdornment: <InputAdornment position="end"><WaterIcon/></InputAdornment>,
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <WaterIcon />
+                  </InputAdornment>
+                ),
               }}
             />
             <TextFieldStyled
@@ -399,7 +405,11 @@ const ObjectForm = ({
               onInputQuantities={4}
               InputProps={{
                 maxLength: 7,
-                endAdornment: <InputAdornment position="end"><DirectionsCarIcon/></InputAdornment>,
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <DirectionsCarIcon />
+                  </InputAdornment>
+                ),
               }}
             />
             <TextFieldStyled
@@ -407,11 +417,13 @@ const ObjectForm = ({
               label="Зона погрузки"
               type="text"
               name="estateOptions.loadingArea"
-              valueAsNumber={true}
               onInputQuantities={30}
               InputProps={{
-                maxLength: 7,
-                endAdornment: <InputAdornment position="end"><LocalShippingIcon/></InputAdornment>,
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <LocalShippingIcon />
+                  </InputAdornment>
+                ),
               }}
             />
           </FieldsContainer>

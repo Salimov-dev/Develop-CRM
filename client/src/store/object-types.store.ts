@@ -26,7 +26,7 @@ const objectTypesSlice = createSlice({
 const { reducer: objectTypesReducer, actions } = objectTypesSlice;
 const { objectTypesRequested, objectTypesReceived, objectTypesFailed } = actions;
 
-export const loadobjectTypesList = () => async (dispatch) => {
+export const loadObjectTypesList = () => async (dispatch) => {
   dispatch(objectTypesRequested());
   try {
     const { content } = await objectTypesService.get();
@@ -40,7 +40,7 @@ export const getObjectTypesList = () => (state) => state.objectTypes.entities;
 
 export const getObjectTypesStatus = () => (state) => state.objectTypes.isLoading;
 
-export const getObjectTypeById = (id) => (state) => {
+export const getObjectTypeNameById = (id) => (state) => {
   const objectType = state?.objectTypes?.entities?.find((type) => type?._id === id);
   const result = objectType?.name;
 

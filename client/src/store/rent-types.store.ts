@@ -40,7 +40,7 @@ export const getRentTypesList = () => (state) => state.rentTypes.entities;
 
 export const getRentTypesStatus = () => (state) => state.rentTypes.isLoading;
 
-export const getRentTypeById = (id) => (state) => {
+export const getRentTypeNameById = (id) => (state) => {
   const rentType = state?.rentTypes?.entities?.find((type) => type?._id === id);
   const result = rentType?.name;
 

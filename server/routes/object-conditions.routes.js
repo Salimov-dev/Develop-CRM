@@ -1,11 +1,11 @@
 import express from "express";
-import EstateConditions from "../models/Estate-conditions.js";
+import ObjectCondition from "../models/Object-condition.js";
 
 const router = express.Router({ mergeParams: true });
 
 router.get("/", async (req, res) => {
   try {
-    const list = await EstateConditions.find();
+    const list = await ObjectCondition.find();
     res.status(200).send(list);
   } catch (e) {
     res.status(500).json({

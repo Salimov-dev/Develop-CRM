@@ -1,7 +1,7 @@
 export const getPriceForRentMetr = (object) => {
   
   const costForMetr = Math.round(
-    object?.estateOptions.rentPrice / object?.estateOptions.rentSquare
+    object?.commercialTerms.rentPrice / object?.commercialTerms.rentSquare
   );
   return costForMetr || "";
 };

@@ -62,7 +62,7 @@ const Objects = () => {
     objects,
     data,
   });
-  console.log("searchedObjects", searchedObjects);
+  // console.log("searchedObjects", searchedObjects);
 
   useEffect(() => {
     localStorage.setItem("search-objects-data", JSON.stringify(data));
@@ -81,7 +81,7 @@ const Objects = () => {
         isLoading={isLoading}
       />
 
-      {searchedObjects.length ? <BasicTable
+      {searchedObjects?.length ? <BasicTable
         items={searchedObjects}
         itemsColumns={columns}
         isLoading={isLoading}

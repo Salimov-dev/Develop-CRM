@@ -1,10 +1,10 @@
 import httpService from "./http.service";
-const estateConditionsEndpoint = "/estateConditions";
+const objectConditionsEndpoint = "/objectConditions";
 
-const estateConditionsService = {
+const objectConditionsService = {
   get: async () => {
-    const { data } = await httpService.get(estateConditionsEndpoint);
+    const { data } = await httpService.get(objectConditionsEndpoint);
     return data;
   },
 };
-export default estateConditionsService;
+export default objectConditionsService;

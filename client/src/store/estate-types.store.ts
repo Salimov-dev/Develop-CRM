@@ -42,7 +42,7 @@ export const getEstateTypesList = () => (state) => state.estateTypes.entities;
 export const getEstateTypesStatus = () => (state) =>
   state.estateTypes.isLoading;
 
-export const getEstateTypeById = (id) => (state) => {
+export const getEstateTypeNameById = (id) => (state) => {
   const estateType = state?.estateTypes?.entities?.find(
     (type) => type?._id === id
   );
