@@ -32,6 +32,7 @@ const SimpleSelectField = ({
   isHelperText = false,
   helperText,
   defaultValue = "",
+  watch
 }) => {
   const sortedItems = orderBy(itemsList, ["name"], ["asc"]);
 
@@ -79,7 +80,7 @@ const SimpleSelectField = ({
           </MenuItem>
         ))}
       </StyledSelect>
-      {isHelperText ? <FormHelperText>{helperText}</FormHelperText> : null}
+      {!watch || !isHelperText ? <FormHelperText sx={{color: "green"}}>{helperText}</FormHelperText> : null}
     </FormControl>
   );
 };

@@ -19,6 +19,10 @@ export const objectSchema = yup.object().shape({
   }),
   location: yup.object().shape({
     district: yup.string().required("Район обязателен для заполнения"),
-    metro: yup.string(),
+  }),
+  estateOptions: yup.object().shape({
+    currentRenters: yup.string().required("Выберите арендатора"),
+    estateTypes: yup.string().required("Выберите тип"),
+    objectTypes: yup.string().required("Выберите тип"),
   }),
 });

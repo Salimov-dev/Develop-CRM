@@ -20,7 +20,7 @@ const rootReducer = combineReducers({
   objectStatus: objectStatusReducer,
   workingPosition: workingPositionReducer,
   sidebarCollapsState: sidebarCollapsStateReducer,
-  currentRenter: currentRenterReducer,
+  currentRenters: currentRenterReducer,
   estateConditions: estateConditionsReducer,
   rentTypes: rentTypesReducer,
   objectTypes: objectTypesReducer,

@@ -4,6 +4,11 @@ import { Box, Button, styled, InputAdornment, FormGroup } from "@mui/material";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import PhoneIphoneOutlinedIcon from "@mui/icons-material/PhoneIphoneOutlined";
 import AlternateEmailOutlinedIcon from "@mui/icons-material/AlternateEmailOutlined";
+import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
+import WaterIcon from '@mui/icons-material/Water';
+import ElectricBoltIcon from '@mui/icons-material/ElectricBolt';
+import VerticalAlignBottomOutlinedIcon from '@mui/icons-material/VerticalAlignBottomOutlined';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 // components
 import TextFieldStyled from "../inputs/text-field-styled";
 import SimpleSelectField from "../inputs/simple-select-field";
@@ -47,8 +52,18 @@ const ObjectForm = ({
   isObjectHasAddress,
   isEmptyFindedObject,
   objectId,
+  currentRenters,
+  estateConditions,
+  rentTypes,
+  objectTypes,
+  estateTypes,
+  watchCurrentRenters,
+  watchEstateConditions,
+  watchRentTypes,
+  watchObjectTypes,
+  watchEstateTypes,
+  watchStatus,
 }) => {
-
   const isValidAndHasObject =
     (Boolean(isEmptyFindedObject) || isObjectHasAddress) && isValid;
 
@@ -62,7 +77,7 @@ const ObjectForm = ({
     <>
       <Form onSubmit={handleSubmit(onSubmit)} noValidate>
         <Box sx={{ marginRight: "auto" }}>
-          <h3>Адрес</h3>
+          <h3>Объект</h3>
         </Box>
         <FieldsContainer>
           <SimpleSelectField
@@ -74,6 +89,7 @@ const ObjectForm = ({
             isHelperText={true}
             helperText="Обязательно"
             defaultValue={object?.location?.district}
+            watch={watchDistrict}
           />
           <SimpleSelectField
             itemsList={metros}
@@ -85,6 +101,52 @@ const ObjectForm = ({
             defaultValue={object?.location?.metro}
             helperText="Если есть в радиусе 1км"
             isHelperText={true}
+          />
+          <SimpleSelectField
+            itemsList={objectStatuses}
+            name="status"
+            labelId="status"
+            label="Статус объекта"
+            register={register}
+            isHelperText={true}
+            helperText="Обязательно"
+            defaultValue={object?.status}
+            watch={watchStatus}
+          />
+        </FieldsContainer>
+        <FieldsContainer>
+          <SimpleSelectField
+            itemsList={objectTypes}
+            name="estateOptions.objectTypes"
+            labelId="objectTypes "
+            label="Тип объекта"
+            register={register}
+            defaultValue={object?.estateOptions?.objectTypes}
+            isHelperText={true}
+            helperText="Обязательно"
+            watch={watchObjectTypes}
+          />
+          <SimpleSelectField
+            itemsList={estateTypes}
+            name="estateOptions.estateTypes"
+            labelId="estateTypes "
+            label="Тип недвижимости"
+            register={register}
+            defaultValue={object?.estateOptions?.estateTypes}
+            isHelperText={true}
+            helperText="Обязательно"
+            watch={watchEstateTypes}
+          />
+          <SimpleSelectField
+            itemsList={currentRenters}
+            name="estateOptions.currentRenters"
+            labelId="currentRenters"
+            label="Текущий арендатор"
+            register={register}
+            defaultValue={object?.estateOptions?.currentRenters}
+            isHelperText={true}
+            helperText="Обязательно"
+            watch={watchCurrentRenters}
           />
         </FieldsContainer>
 
@@ -187,11 +249,25 @@ const ObjectForm = ({
             valueAsNumber={true}
             onInputQuantities={8}
             InputProps={{
-              maxLength: 7,
+              maxLength: 8,
               endAdornment: <InputAdornment position="end">₽</InputAdornment>,
             }}
           />
           <TextFieldStyled
+            register={register}
+            label="Индексация"
+            type="number"
+            name="estateOptions.indexingAnnual"
+            valueAsNumber={true}
+            onInputQuantities={3}
+            InputProps={{
+              maxLength: 3,
+              endAdornment: <InputAdornment position="end">%</InputAdornment>,
+            }}
+          />
+        </FieldsContainer>
+        <FieldsContainer>
+        <TextFieldStyled
             register={register}
             label="Каникулы"
             type="number"
@@ -217,22 +293,91 @@ const ObjectForm = ({
               endAdornment: <InputAdornment position="end">₽</InputAdornment>,
             }}
           />
+          <TextFieldStyled
+            register={register}
+            label="Комиссия агента"
+            type="number"
+            name="estateOptions.agentComission"
+            valueAsNumber={true}
+            onInputQuantities={8}
+            InputProps={{
+              maxLength: 7,
+              endAdornment: <InputAdornment position="end">₽</InputAdornment>,
+            }}
+          />
+          <SimpleSelectField
+            itemsList={rentTypes}
+            name="estateOptions.rentTypes"
+            labelId="rentTypes"
+            label="Тип договора"
+            register={register}
+            defaultValue={object?.estateOptions?.rentTypes}
+            isHelperText={true}
+            watch={watchRentTypes}
+          />
         </FieldsContainer>
 
         <Box sx={{ marginRight: "auto" }}>
-          <h3>Другие параметры</h3>
+          <h3>Параметры помещения</h3>
         </Box>
         <FieldsContainer sx={{ flexDirection: "column" }}>
-          <Box sx={{ display: "flex", gap: "4px" }}>
+          <FieldsContainer>
             <SimpleSelectField
-              itemsList={objectStatuses}
-              name="status"
-              labelId="status"
-              label="Статус объекта"
+              itemsList={estateConditions}
+              name="estateOptions.estateConditions"
+              labelId="estateConditions "
+              label="Состояние помещения"
               register={register}
+              defaultValue={object?.estateOptions?.estateConditions}
               isHelperText={true}
-              helperText="Обязательно"
-              defaultValue={object?.status}
+              watch={watchEstateConditions}
+            />
+            <TextFieldStyled
+              register={register}
+              label="Кадастровый номер"
+              type="number"
+              name="estateOptions.cadastalNumber"
+              valueAsNumber={true}
+              onInputQuantities={24}
+              InputProps={{
+                maxLength: 7,
+                endAdornment: <InputAdornment position="end">№</InputAdornment>,
+              }}
+            />
+            <TextFieldStyled
+              register={register}
+              label="Электричество"
+              type="number"
+              name="estateOptions.electricityKw"
+              valueAsNumber={true}
+              onInputQuantities={4}
+              InputProps={{
+                maxLength: 7,
+                endAdornment: <InputAdornment position="end"><ElectricBoltIcon/></InputAdornment>,
+              }}
+            />
+            <TextFieldStyled
+              register={register}
+              label="Состояние полов"
+              name="estateOptions.premisesFloor"
+              onInputQuantities={100}
+              InputProps={{
+                endAdornment: <InputAdornment position="end"><VerticalAlignBottomOutlinedIcon/></InputAdornment>,
+              }}
+            />
+          </FieldsContainer>
+          <FieldsContainer>
+          
+            <TextFieldStyled
+              register={register}
+              label="Водоснабжение"
+              type="number"
+              name="estateOptions.waterSuply "
+              valueAsNumber={true}
+              onInputQuantities={20}
+              InputProps={{
+                endAdornment: <InputAdornment position="end"><WaterIcon/></InputAdornment>,
+              }}
             />
             <TextFieldStyled
               register={register}
@@ -247,11 +392,29 @@ const ObjectForm = ({
             />
             <TextFieldStyled
               register={register}
-              label="Состояние полов"
-              name="estateOptions.premisesFloor"
-              onInputQuantities={100}
+              label="Парковочных мест"
+              type="number"
+              name="estateOptions.parkingQuantity"
+              valueAsNumber={true}
+              onInputQuantities={4}
+              InputProps={{
+                maxLength: 7,
+                endAdornment: <InputAdornment position="end"><DirectionsCarIcon/></InputAdornment>,
+              }}
             />
-          </Box>
+            <TextFieldStyled
+              register={register}
+              label="Зона погрузки"
+              type="text"
+              name="estateOptions.loadingArea"
+              valueAsNumber={true}
+              onInputQuantities={30}
+              InputProps={{
+                maxLength: 7,
+                endAdornment: <InputAdornment position="end"><LocalShippingIcon/></InputAdornment>,
+              }}
+            />
+          </FieldsContainer>
           <FormGroup sx={{ paddingTop: "10px" }}>
             <SwitchStyled
               register={register}

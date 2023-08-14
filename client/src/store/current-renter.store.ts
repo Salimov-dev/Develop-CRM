@@ -4,7 +4,7 @@ import currentRentersService from "../services/current-renter.service";
 const currentRentersSlice = createSlice({
   name: "currentRenters",
   initialState: {
-    entities: null,
+    entities: [],
     isLoading: true,
     error: null,
   },
@@ -32,15 +32,16 @@ export const loadCurrentRentersList = () => async (dispatch) => {
     const { content } = await currentRentersService.get();
     dispatch(currentRentersReceived(content));
   } catch (error) {
-    currentRentersFailed(error.message);
+    dispatch(currentRentersFailed(error.message))
   }
 };
+
 
 export const getCurrentRentersList = () => (state) => state.currentRenters.entities;
 
 export const getCurrentRentersStatus = () => (state) => state.currentRenters.isLoading;
 
-export const getCurrentRentersById = (id) => (state) => {
+export const getCurrentRenterNameById = (id) => (state) => {
   const currentRenters = state?.currentRenters?.entities?.find((renter) => renter?._id === id);
   const result = currentRenters?.name;
 

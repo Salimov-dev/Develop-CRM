@@ -20,6 +20,11 @@ import { createObject } from "../../../store/objects.store";
 import useFindObject from "../../../hooks/use-find-object";
 import { objectSchema } from "../../../schemas/schemas";
 import { capitalizeFirstLetterOrReturn } from "../../../utils/capitalize-first-letter";
+import { getEstateConditionsList } from "../../../store/estate-conditions.store";
+import { getRentTypesList } from "../../../store/rent-types.store";
+import { getObjectTypesList } from "../../../store/object-types.store";
+import { getEstateTypesList } from "../../../store/estate-types.store";
+import { getCurrentRentersList } from "../../../store/current-renter.store";
 
 const initialState = {
   status: "",
@@ -36,16 +41,27 @@ const initialState = {
     metro: "",
   },
   estateOptions: {
-    estateType: "",
-    objectType: "",
     rentPrice: "",
-    rentPriceForMetr: "",
     securityDeposit: "",
-    rentalHolidays: "",
     totalSquare: "",
     rentSquare: "",
+    rentalHolidays: "",
+    agentComission: "",
+    indexingAnnual: "",
+
+    currentRenters: "",
+    estateConditions: "",
+    rentTypes: "",
+    estateTypes: "",
+    objectTypes: "",
     premisesHeight: "",
     premisesFloor: "",
+    parkingQuantity: "",
+    electricityKw: "",
+    waterSuply: "",
+    cadastalNumber: "",
+    waterSuply: "",
+    loadingArea: "",
   },
   accordTerms: {
     readyToRent: false,
@@ -62,6 +78,11 @@ const CreateObject = () => {
   const metros = useSelector(getMetroList());
   const workingPositions = useSelector(getWorkingPositionsList());
   const objectStatuses = useSelector(getObjectsStatusList());
+  const currentRenters = useSelector(getCurrentRentersList());
+  const estateConditions = useSelector(getEstateConditionsList());
+  const rentTypes = useSelector(getRentTypesList());
+  const objectTypes = useSelector(getObjectTypesList());
+  const estateTypes = useSelector(getEstateTypesList());
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -76,6 +97,8 @@ const CreateObject = () => {
     mode: "onBlur",
     resolver: yupResolver(objectSchema),
   });
+  console.log("errors", errors);
+  
 
   const {
     getCity,
@@ -87,9 +110,16 @@ const CreateObject = () => {
 
   const isEmptyFindedObject = Boolean(Object.keys(findedObject).length);
   const watchName = watch("contact.name");
+  const watchStatus = watch("status");
   const watchDistrict = watch("location.district");
+  const watchCurrentRenters  = watch("estateOptions.currentRenters");
+  const watchEstateConditions  = watch("estateOptions.estateConditions");
+  const watchRentTypes  = watch("estateOptions.rentTypes");
+  const watchObjectTypes  = watch("estateOptions.objectTypes");
+  const watchEstateTypes  = watch("estateOptions.estateTypes");
 
   const onSubmit = (data) => {
+
     const newData = {
       ...data,
       contact: {
@@ -113,9 +143,9 @@ const CreateObject = () => {
         ),
       },
     };
-// console.log("newData", newData);
+    console.log("newData", newData);
 
-    dispatch(createObject(newData)).then(navigate("/objects"));
+    // dispatch(createObject(newData)).then(navigate("/objects"));
   };
 
   const handleClearForm = () => {
@@ -154,6 +184,17 @@ const CreateObject = () => {
         handleClearForm={handleClearForm}
         isValid={isValid}
         isEmptyFindedObject={isEmptyFindedObject}
+        currentRenters={currentRenters}
+        estateConditions={estateConditions}
+        rentTypes={rentTypes}
+        objectTypes={objectTypes}
+        estateTypes={estateTypes}
+        watchCurrentRenters={watchCurrentRenters}
+        watchEstateConditions={watchEstateConditions}
+        watchRentTypes={watchRentTypes}
+        watchObjectTypes={watchObjectTypes}
+        watchEstateTypes={watchEstateTypes}
+        watchStatus={watchStatus}
       />
     </Box>
   );
