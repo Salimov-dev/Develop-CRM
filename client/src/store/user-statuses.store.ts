@@ -40,7 +40,7 @@ export const getUserStatusesList = () => (state) => state?.userStatuses.entities
 
 export const getUserStatusesStatus = () => (state) => state.userStatuses.isLoading;
 
-export const getUserNameById = (id) => (state) => {
+export const getUserStatusNameById = (id) => (state) => {
   const user = state?.userStatuses?.entities?.find((user) => user?._id === id);
   const result = user?.name;
 

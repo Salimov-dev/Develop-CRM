@@ -1,11 +1,7 @@
-import { Schema, model } from "mongoose"
+import { Schema, model } from "mongoose";
 
 const schema = new Schema(
   {
-    name: {
-      type: String,
-      required: true,
-    },
     email: {
       type: String,
       required: true,
@@ -14,9 +10,39 @@ const schema = new Schema(
     password: {
       type: String,
     },
+    curatorId: {
+      type: String,
+    },
     image: {
       type: String,
+    },
+    gender: {
+      type: String,
+    },
+    birthday: {
+      type: String,
+    },
+    status: {
+      type: String,
       required: true,
+    },
+    name: {
+      firstName: String,
+      surName: String,
+      lastName: String,
+    },
+    contacts: {
+      phone: Number,
+    },
+    contract: {
+      startDate: String,
+      endDate: String,
+      trialPeriod: String,
+    },
+    vacation: {
+      startDate: String,
+      endDate: String,
+      trialPeriod: String,
     },
   },
   {

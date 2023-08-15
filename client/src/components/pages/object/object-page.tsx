@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { Box, styled } from "@mui/material";
+import Loader from "../../common/loader/loader";
 // components
 import ObjectsOnMap from "../../common/elements-on-map/objects-on-map";
 import ObjectInfo from "./components/object-info";
@@ -10,7 +11,6 @@ import {
   getObjectById,
   getObjectsLoadingStatus,
 } from "../../../store/objects.store";
-import Loader from "../../common/loader/loader";
 
 const Map = styled(Box)`
   width: 100%;

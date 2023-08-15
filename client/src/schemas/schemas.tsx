@@ -28,6 +28,9 @@ export const objectSchema = yup.object().shape({
 });
 
 export const managerSchema = yup.object().shape({
+  status: yup.string().required("Статус обязателен для заполнения"),
+  birthday: yup.string().required("Заполните дату рождения"),
+  gender: yup.string().required("Выберите пол"),
   email: yup
     .string()
     .email("Введите email корректно")
@@ -36,8 +39,7 @@ export const managerSchema = yup.object().shape({
     .string()
     .min(8, "Слишком короткий пароль - введите не менее 8 символов")
     .required("Пароль обязателен для заполнения"),
-  status: yup.string().required("Статус обязателен для заполнения"),
-  contacts: yup.object().shape({
+  name: yup.object().shape({
     firstName: yup
       .string()
       .matches(/^([^0-9]*$)/, "Имя не должно содержать цифры")
@@ -50,6 +52,8 @@ export const managerSchema = yup.object().shape({
       .string()
       .matches(/^([^0-9]*$)/, "Фамилия не должна содержать цифры")
       .required("Фамилия обязательна для заполнения"),
+  }),
+  contacts: yup.object().shape({
     phone: yup
       .number()
       .typeError("Телефон должен быть числом")

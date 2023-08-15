@@ -2,9 +2,7 @@ import express from"express"
 import bcrypt from"bcryptjs"
 import { check, validationResult } from "express-validator"
 import User from"../models/User.js"
-import  generateUserData  from"../utils/helpers.js"
 import tokenService from"../services/token.service.js"
-import  TokenExpiredError  from 'jsonwebtoken'
 
 const router = express.Router({ mergeParams: true });
 
@@ -13,6 +11,7 @@ router.post("/signUp", [
   check("password", "Минимальная длина пароля 8 символов").isLength({ min: 8 }),
   async (req, res) => {
     try {
+      console.log("req.body", req.body);
       const errors = validationResult(req);
 
       if (!errors.isEmpty()) {
@@ -25,7 +24,7 @@ router.post("/signUp", [
       }
 
       const { email, password } = req.body;
-
+      
       const existingUser = await User.findOne({ email });
 
       if (existingUser) {
@@ -40,7 +39,6 @@ router.post("/signUp", [
       const hashedPassword = await bcrypt.hash(password, 12);
 
       const newUser = await User.create({
-        ...generateUserData(),
         ...req.body,
         password: hashedPassword,
       });

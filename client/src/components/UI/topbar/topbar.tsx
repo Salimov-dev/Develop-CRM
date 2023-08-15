@@ -27,7 +27,7 @@ const TopBar = () => {
   const currentUser = useSelector(getCurrentUserData());
   const isLoading = useSelector(getUsersLoadingStatus());
   const navigate = useNavigate();
-
+  
   const handleGoToLogin = () => {
     navigate("auth/login");
   };

@@ -83,6 +83,7 @@ export const login =
   ({ payload }) =>
   async (dispatch) => {
     const { email, password } = payload;
+
     dispatch(authRequested());
     try {
       const data = await authService.login({ email, password });
@@ -116,9 +117,7 @@ export const signUp = (payload) => async (dispatch) => {
 export const addNewManager = (payload) => async (dispatch) => {
   dispatch(authRequested());
   try {
-    const data = await authService.register(payload);
-
-    dispatch(authRequestSuccess({ userId: data.userId }));
+    await authService.register(payload);
     dispatch(loadUsersList());
   } catch (error) {
     dispatch(authRequestFailed(error.message));
@@ -134,7 +133,6 @@ export const loadUsersList = () => async (dispatch) => {
   dispatch(usersRequested());
   try {
     const { content } = await userService.get();
-
     dispatch(usersReceived(content));
   } catch (error) {
     dispatch(usersFailed(error.message));
@@ -161,7 +159,7 @@ export const getCurrentUserData = () => (state) => {
 export const getUserNameById = (id) => (state) => {
   if (state?.users?.entities) {
     const user = state.users.entities.find((user) => user._id === id);
-    const result = user?.name;
+    const result = `${user?.name.lastName} ${user?.name.firstName}`;
 
     return result;
   }

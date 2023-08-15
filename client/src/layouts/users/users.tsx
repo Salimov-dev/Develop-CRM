@@ -1,10 +1,16 @@
 // libraries
 import { Box, styled, Button, Typography } from "@mui/material";
-import { useEffect } from "react";
-import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
-import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
+// components
+import BasicTable from "../../components/common/table/basic-table";
+import { groupedColumns } from "./table/columns";
+// store
+import {
+  getCurrentUserId,
+  getUsersList,
+  getUsersLoadingStatus,
+} from "../../store/users.store";
 
 const ButtonsBlock = styled(Box)`
   display: flex;
@@ -13,7 +19,15 @@ const ButtonsBlock = styled(Box)`
 `;
 
 const Users = () => {
-    const navigate = useNavigate()
+  const navigate = useNavigate();
+  const users = useSelector(getUsersList());
+  const currentUserId = useSelector(getCurrentUserId());
+  const usersWithoutCurrentUser = users.filter(
+    (user) => user._id !== currentUserId
+  );
+  const columns = groupedColumns;
+  const isLoading = useSelector(getUsersLoadingStatus());
+
   return (
     <Box>
       <h1>Менеджеры</h1>
@@ -37,6 +51,11 @@ const Users = () => {
           </Button>
         )} */}
       </ButtonsBlock>
+      <BasicTable
+        items={usersWithoutCurrentUser}
+        itemsColumns={columns}
+        isLoading={isLoading}
+      />
     </Box>
   );
 };

@@ -5,8 +5,8 @@ import {
   FormatMetro,
   FormatObjectStatus,
   FormatPhone,
-} from "./helpers/helpers";
-import OpenButton from "./helpers/open-button";
+} from "../../../components/common/table/helpers/helpers";
+import OpenButton from "../../../components/common/table/helpers/open-button";
 
 export const groupedColumns = [
   {
@@ -47,7 +47,7 @@ export const groupedColumns = [
         accessorKey: "location.metro",
         header: "Метро",
         cell: (info) => {
-          const metroValue = info.getValue()
+          const metroValue = info.getValue();
           return metroValue !== undefined ? FormatMetro(metroValue) : "";
         },
       },
@@ -65,7 +65,7 @@ export const groupedColumns = [
       {
         accessorKey: "contact.phone",
         header: "Телефон",
-        cell: (info) => FormatPhone(info.getValue()) ,
+        cell: (info) => FormatPhone(info.getValue()),
       },
       {
         accessorKey: "contact.name",

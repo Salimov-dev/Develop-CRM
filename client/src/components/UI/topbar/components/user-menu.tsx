@@ -67,7 +67,7 @@ const UserMenu = ({ currentUser }) => {
             color: open ? "white !important" : "gray",
           }}
         >
-          {currentUser.name}
+          {currentUser.name.firstName}
         </UserName>
       </Button>
       <Menu
