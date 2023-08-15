@@ -27,6 +27,7 @@ import AppLoader from "./hoc/app-loader";
 import { ColorModeContext, useMode } from "./theme";
 import Users from "./layouts/users/users";
 import CreateManager from "./components/pages/create-manager/create-manager";
+import UpdateManager from "./components/pages/update-manager/update-manager";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -59,7 +60,7 @@ function App() {
                 <Route path="users">
                   <Route index element={<Users />} />
                   <Route path="create" element={<CreateManager />} />
-                  {/* <Route path=":userId?/edit" element={<EditManager />} /> */}
+                  <Route path=":userId?/edit" element={<UpdateManager />} />
                   <Route path="*" element={<Navigate to="/users" />} />
                 </Route>
 

@@ -2,7 +2,7 @@
 import { useSelector } from "react-redux";
 // components
 import { FormatPhone } from "../../../components/common/table/helpers/helpers";
-import OpenButton from "../../../components/common/table/helpers/open-button";
+import OpenButton from "./components/open-button";
 // mock
 import { gendersArray } from "../../../mock/genders";
 // store
@@ -57,7 +57,7 @@ export const groupedColumns = [
       },
       {
         accessorKey: "birthday",
-        header: "Дата рождения",
+        header: "Дата рож.",
         cell: (info) => {
           const birthday = info.getValue();
           return FormatDate(new Date(birthday));
@@ -141,7 +141,7 @@ export const groupedColumns = [
     header: "Ссылка",
     cell: (info) => {
       const id = info.getValue();
-      return <OpenButton objectId={id} />;
+      return <OpenButton userId={id} />;
     },
   },
 ];

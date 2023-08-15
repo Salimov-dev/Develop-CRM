@@ -6,7 +6,7 @@ import {
   FormatObjectStatus,
   FormatPhone,
 } from "../../../components/common/table/helpers/helpers";
-import OpenButton from "../../../components/common/table/helpers/open-button";
+import OpenButton from "./components/open-button";
 
 export const groupedColumns = [
   {
