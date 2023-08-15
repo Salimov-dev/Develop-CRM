@@ -4,9 +4,6 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 // MUI
 import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 // components
 import SearchField from "../../../components/common/inputs/search-field";
 import MultiSelectField from "../../../components/common/inputs/multi-select-field";

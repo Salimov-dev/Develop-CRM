@@ -34,6 +34,7 @@ const SimpleSelectField = ({
   helperText,
   defaultValue = "",
   watch,
+  selectedItems
 }) => {
   const sortedItems = orderBy(itemsList, ["name"], ["asc"]);
 
@@ -67,11 +68,20 @@ const SimpleSelectField = ({
         labelId={labelId}
         id={name}
         name={name}
+        value={selectedItems}
         input={<OutlinedInput label={label} />}
         MenuProps={MenuProps}
         disabled={disabled}
         defaultValue={defaultValue}
         error={!!errors}
+        sx={{
+          "& .MuiOutlinedInput-notchedOutline": {
+            borderColor: selectedItems?.length ? "green" : "gray",
+          },
+          "& .MuiInputLabel-root": {
+            color: selectedItems?.length ? "white" : "gray",
+          },
+        }}
       >
         <MenuItem value="">
           <em>Отмена</em>

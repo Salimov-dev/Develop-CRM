@@ -67,10 +67,6 @@ const initialState = {
     endDate: "",
     trialPeriod: "",
   },
-  vacation: {
-    startDate: "",
-    endDate: "",
-  },
 };
 
 const CreateManager = () => {

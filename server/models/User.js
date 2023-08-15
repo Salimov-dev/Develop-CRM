@@ -39,11 +39,6 @@ const schema = new Schema(
       endDate: String,
       trialPeriod: String,
     },
-    vacation: {
-      startDate: String,
-      endDate: String,
-      trialPeriod: String,
-    },
   },
   {
     timestamps: { createdAt: "created_at", updatedAt: "updated_at" },
