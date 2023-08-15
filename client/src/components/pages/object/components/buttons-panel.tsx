@@ -32,6 +32,10 @@ const ButtonsPanel = ({ city, district, address }) => {
     setOpen(false);
   };
 
+  const handleClick = () => {
+    setOpen(true);
+  };
+
   const handleBackPage = () => {
     navigate("/objects");
   };
@@ -46,9 +50,10 @@ const ButtonsPanel = ({ city, district, address }) => {
       description: `Точно удаляем объект: ${city}, ${district}р-н, ${address}?\nВернуть его будет невозможно`,
     })
       .then(() => {
-        dispatch(removeObject(objectId));
-        handleBackPage();
+        dispatch(removeObject(objectId))
       })
+      .then(() => handleClick())
+      .then(() => handleBackPage())
       .catch(() => console.log("Ошибка"));
   };
 
@@ -61,6 +66,9 @@ const ButtonsPanel = ({ city, district, address }) => {
         onClick={handleRemoveObject}
       >
         удалить
+      </Button>
+      <Button color="error" variant="outlined" onClick={handleClick}>
+        open wind
       </Button>
       <Button
         color="success"

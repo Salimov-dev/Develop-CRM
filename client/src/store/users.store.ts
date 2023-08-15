@@ -112,6 +112,19 @@ export const signUp = (payload) => async (dispatch) => {
     dispatch(authRequestFailed(error.message));
   }
 };
+
+export const addNewManager = (payload) => async (dispatch) => {
+  dispatch(authRequested());
+  try {
+    const data = await authService.register(payload);
+
+    dispatch(authRequestSuccess({ userId: data.userId }));
+    dispatch(loadUsersList());
+  } catch (error) {
+    dispatch(authRequestFailed(error.message));
+  }
+};
+
 export const logOut = () => (dispatch) => {
   localStorageService.removeAuthData();
   dispatch(userLoggedOut());

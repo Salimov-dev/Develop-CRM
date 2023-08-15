@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 // MUI
 import { Box } from "@mui/material";
 // components
@@ -25,7 +26,6 @@ const UpdateObject = () => {
   const localStorageObject = JSON.parse(localStorage.getItem("editingObject"));
   const isObjectHasAddress =
     localStorageObject?.location?.city && localStorageObject?.location?.address;
-console.log("localStorageObject", localStorageObject);
 
   const {
     register,
@@ -43,8 +43,7 @@ console.log("localStorageObject", localStorageObject);
   const watchDistrict = watch("location.district");
 
   const onSubmit = (data) => {
-    dispatch(updateObject(data, objectId));
-    navigate(-1);
+    dispatch(updateObject(data, objectId)).then(navigate(-1)).then(toast.success("Объект успешно изменен!"))  
   };
 
   useEffect(() => {

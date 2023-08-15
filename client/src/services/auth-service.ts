@@ -3,12 +3,13 @@ import localStorageService from "./local.storage-service";
 import config from "../config.json";
 
 const httpAuth = axios.create({
-  baseURL: config.apiEndpoint + "/auth/",
+  baseURL: config.apiEndpoint + "auth/",
   params: {},
 });
 
 const authService = {
   register: async (payload) => {
+    
     const { data } = await httpAuth.post(`signUp`, payload);
     return data;
   },

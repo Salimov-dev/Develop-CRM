@@ -3,16 +3,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 // MUI
 import { Box, styled, InputAdornment, Button } from "@mui/material";
-import TextFieldStyled from "../../common/inputs/text-field-styled";
 import PhoneIphoneOutlinedIcon from "@mui/icons-material/PhoneIphoneOutlined";
-import DatePickerStyled from "../../common/inputs/date-picker";
-import SimpleSelectField from "../../common/inputs/simple-select-field";
-import { getUserStatusesList } from "../../../store/user-statuses.store";
 import AlternateEmailOutlinedIcon from "@mui/icons-material/AlternateEmailOutlined";
 import KeyOutlinedIcon from "@mui/icons-material/KeyOutlined";
+// components
+import TextFieldStyled from "../../common/inputs/text-field-styled";
+import DatePickerStyled from "../../common/inputs/date-picker";
+import SimpleSelectField from "../../common/inputs/simple-select-field";
+// store
+import { getUserStatusesList } from "../../../store/user-statuses.store";
+// schema
 import { managerSchema } from "../../../schemas/schemas";
+import { addNewManager } from "../../../store/users.store";
 
 const FieldsContainer = styled(Box)`
   width: 100%;
@@ -68,19 +73,19 @@ const CreateManager = () => {
     mode: "onBlur",
     resolver: yupResolver(managerSchema),
   });
-  console.log("errors", errors);
 
   const watchTrialStatus = watch("status");
-
   const isTrialStatusSelected = watchTrialStatus === "64da643f547d1cfcd04b1dc8";
 
   const onSubmit = (data) => {
-    console.log("data", data);
-    // dispatch(createObject(data)).then(navigate("/objects"));
-  };
-
-  const handleClearForm = () => {
-    reset();
+    const newData = {
+      ...data,
+      image: "https://randomuser.me/api/portraits/women/12.jpg",
+    };
+    // console.log("newData", newData);
+    dispatch(addNewManager(newData))
+      .then(navigate("/users"))
+      .then(toast.success("Менеджер успешно добавлен!"));
   };
 
   const handleBackPage = () => {
