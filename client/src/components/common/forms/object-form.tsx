@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 // MUI
 import { Box, Button, styled, InputAdornment, FormGroup } from "@mui/material";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
@@ -48,7 +48,6 @@ const FooterButtons = styled(Box)`
 
 const ObjectForm = ({
   data,
-  object = {},
   objectId,
   register,
   errors,
@@ -102,7 +101,7 @@ const ObjectForm = ({
             label="Район"
             isHelperText={true}
             helperText="Обязательно"
-            defaultValue={object?.location?.district}
+            defaultValue={data?.location?.district}
             watch={watchDistrict}
           />
           <SimpleSelectField
@@ -112,7 +111,7 @@ const ObjectForm = ({
             label="Метро"
             register={register}
             disabled={!watchDistrict && true}
-            defaultValue={object?.location?.metro}
+            defaultValue={data?.location?.metro}
             helperText={!watchMetro ? "Если есть в радиусе 1км" : ""}
             isHelperText={true}
           />
@@ -124,7 +123,7 @@ const ObjectForm = ({
             register={register}
             isHelperText={true}
             helperText="Обязательно"
-            defaultValue={object?.status}
+            defaultValue={data?.status}
             watch={watchStatus}
           />
         </FieldsContainer>
@@ -135,7 +134,7 @@ const ObjectForm = ({
             labelId="objectTypes "
             label="Тип объекта"
             register={register}
-            defaultValue={object?.estateOptions?.objectTypes}
+            defaultValue={data?.estateOptions?.objectTypes}
             isHelperText={true}
             helperText="Обязательно"
             watch={watchObjectTypes}
@@ -146,7 +145,7 @@ const ObjectForm = ({
             labelId="estateTypes "
             label="Тип недвижимости"
             register={register}
-            defaultValue={object?.estateOptions?.estateTypes}
+            defaultValue={data?.estateOptions?.estateTypes}
             isHelperText={true}
             helperText="Обязательно"
             watch={watchEstateTypes}
@@ -157,7 +156,7 @@ const ObjectForm = ({
             labelId="currentRenters"
             label="Текущий арендатор"
             register={register}
-            defaultValue={object?.estateOptions?.currentRenters}
+            defaultValue={data?.estateOptions?.currentRenters}
             isHelperText={true}
             helperText="Обязательно"
             watch={watchCurrentRenters}
@@ -192,7 +191,7 @@ const ObjectForm = ({
             disabled={!watchName?.length && true}
             helperText={!watchName?.length && "Сначала введите имя"}
             isHelperText={true}
-            defaultValue={object?.contact?.position}
+            defaultValue={data?.contact?.position}
           />
           <TextFieldStyled
             register={register}
@@ -297,7 +296,7 @@ const ObjectForm = ({
               name="commercialTerms.rentalHolidays"
               valueAsNumber={true}
               onInputQuantities={3}
-              value={object?.commercialTerms?.rentalHolidays}
+              value={data?.commercialTerms?.rentalHolidays}
               InputProps={{
                 maxLength: 3,
                 endAdornment: (
@@ -312,7 +311,7 @@ const ObjectForm = ({
               name="commercialTerms.securityDeposit"
               valueAsNumber={true}
               onInputQuantities={8}
-              value={object?.commercialTerms?.securityDeposit}
+              value={data?.commercialTerms?.securityDeposit}
               InputProps={{
                 maxLength: 7,
                 endAdornment: <InputAdornment position="end">₽</InputAdornment>,
@@ -337,7 +336,7 @@ const ObjectForm = ({
               labelId="rentTypes"
               label="Тип договора"
               register={register}
-              defaultValue={object?.commercialTerms?.rentTypes}
+              defaultValue={data?.commercialTerms?.rentTypes}
               isHelperText={true}
               watch={watchRentTypes}
             />
@@ -355,7 +354,7 @@ const ObjectForm = ({
               labelId="objectConditions "
               label="Состояние помещения"
               register={register}
-              defaultValue={object?.estateOptions?.objectConditions}
+              defaultValue={data?.estateOptions?.objectConditions}
               isHelperText={true}
               watch={watchobjectConditions}
             />
@@ -492,7 +491,7 @@ const ObjectForm = ({
           name="description.fullDescription"
           rows="8"
           multiline={true}
-          value={object?.description?.fullDescription}
+          value={data?.description?.fullDescription}
           errors={errors?.description?.fullDescription}
           onInputQuantities={20000}
         />

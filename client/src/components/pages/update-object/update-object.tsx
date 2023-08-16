@@ -32,13 +32,11 @@ const UpdateObject = () => {
     watch,
     handleSubmit,
     formState: { errors, isValid },
-    reset,
   } = useForm({
-    defaultValues: object,
+    defaultValues: object || localStorageObject,
     mode: "onBlur",
     resolver: yupResolver(objectSchema),
   });
-  console.log("object", object);
 
   const data = watch();
   const watchName = watch("contact.name");
@@ -47,7 +45,7 @@ const UpdateObject = () => {
   const onSubmit = (data) => {
     dispatch(updateObject(data, objectId))
       .then(navigate(-1))
-      .then(toast.success("Менеджер успешно изменен!"));
+      .then(toast.success("Объект успешно изменен!"));
   };
 
   useEffect(() => {
@@ -57,6 +55,7 @@ const UpdateObject = () => {
       return;
     }
   }, []);
+
   useEffect(() => {
     if (object !== undefined) {
       localStorage.setItem("editingObject", JSON.stringify(object));
@@ -71,12 +70,10 @@ const UpdateObject = () => {
       <ObjectForm
         data={data}
         objectId={objectId}
-        object={localStorageObject}
         handleSubmit={handleSubmit}
         onSubmit={onSubmit}
         register={register}
         errors={errors}
-        reset={reset}
         isEditMode={isEditMode}
         isValid={isValid}
         isObjectHasAddress={isObjectHasAddress}

@@ -5,21 +5,29 @@ import { Box, styled, Button, Typography } from "@mui/material";
 import { gendersArray } from "../../../mock/genders";
 
 const Form = styled(`form`)({
-    display: "flex",
-    width: "100%",
-    alignItems: "center",
-    flexDirection: "column",
-    marginBottom: "10px",
-    gap: "12px",
-  });
-  
-  const FieldsContainer = styled(Box)`
-    width: 100%;
-    display: flex;
-    gap: 4px;
-  `;
+  display: "flex",
+  width: "100%",
+  alignItems: "center",
+  flexDirection: "column",
+  marginBottom: "10px",
+  gap: "12px",
+});
 
-const FiltersPanel = ({data, itemsList, register, setValue, handleKeyDown, isLoading }) => {
+const FieldsContainer = styled(Box)`
+  width: 100%;
+  display: flex;
+  gap: 4px;
+`;
+
+const FiltersPanel = ({
+  data,
+  usersList,
+  statusesList,
+  register,
+  setValue,
+  handleKeyDown,
+  isLoading,
+}) => {
   return (
     <Form>
       <FieldsContainer>
@@ -51,12 +59,21 @@ const FiltersPanel = ({data, itemsList, register, setValue, handleKeyDown, isLoa
         />
 
         <MultiSelectField
-          itemsList={itemsList}
+          itemsList={usersList}
           selectedItems={data.selectedUsers}
           onChange={(e) => setValue("selectedUsers", e.target.value)}
           name="users"
           labelId="users-label"
           label="Выбор по менеджеру"
+          disabled={isLoading ? true : false}
+        />
+        <MultiSelectField
+          itemsList={statusesList}
+          selectedItems={data.selectedStatuses}
+          onChange={(e) => setValue("selectedStatuses", e.target.value)}
+          name="selectedStatuses"
+          labelId="selectedStatuses-label"
+          label="Выбор по статусу"
           disabled={isLoading ? true : false}
         />
         <SimpleSelectField

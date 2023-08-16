@@ -57,7 +57,7 @@ export const groupedColumns = [
       },
       {
         accessorKey: "birthday",
-        header: "Дата рож.",
+        header: "ДР",
         cell: (info) => {
           const birthday = info.getValue();
           return FormatDate(new Date(birthday));
@@ -112,7 +112,7 @@ export const groupedColumns = [
     columns: [
       {
         accessorKey: "contract.startDate",
-        header: "Начало",
+        header: "От",
         cell: (info) => {
           const startDate = info.getValue();
           return FormatDate(new Date(startDate));
@@ -120,7 +120,7 @@ export const groupedColumns = [
       },
       {
         accessorKey: "contract.endDate",
-        header: "Окончание",
+        header: "До",
         cell: (info) => {
           const endDate = info.getValue();
           return FormatDate(new Date(endDate));
@@ -128,7 +128,7 @@ export const groupedColumns = [
       },
       {
         accessorKey: "contract.trialPeriod",
-        header: "Испыт.срок до",
+        header: "ИС",
         cell: (info) => {
           const trialPeriod = info.getValue();
           return trialPeriod ? FormatDate(new Date(trialPeriod)) : "";

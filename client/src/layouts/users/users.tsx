@@ -18,23 +18,25 @@ import {
 // hooks
 import useSearchUser from "../../hooks/use-search-user";
 import dayjs from "dayjs";
+import { getUserStatusesList } from "../../store/user-statuses.store";
 
 const initialState = {
   lastName: "",
   phone: "",
   email: "",
-  status: "",
   contract: {
     startDate: "",
     endDate: "",
   },
   gender: "",
   selectedUsers: [],
+  selectedStatuses: [],
 };
 
 const Users = () => {
   const users = useSelector(getUsersList());
   const currentUserId = useSelector(getCurrentUserId());
+  const statuses = useSelector(getUserStatusesList());
   const columns = groupedColumns;
   const isLoading = useSelector(getUsersLoadingStatus());
   const usersWithoutCurrentUser = users.filter(
@@ -51,6 +53,7 @@ const Users = () => {
   });
 
   const data = watch();
+  
   const isInputEmpty = JSON.stringify(initialState) !== JSON.stringify(data);
 
   const searchedUsers = useSearchUser({
@@ -85,6 +88,26 @@ const Users = () => {
     return sortedUsers;
   };
 
+  const getActualStatusesList = () => {
+    const filteredStatuses = usersWithoutCurrentUser?.map(
+      (user) => user?.status
+    );
+    const formateStatusesArray = filteredStatuses?.filter((s) => s !== "");
+
+    const uniqueStatuses = [...new Set(formateStatusesArray)];
+
+    const actualStatusesArray = uniqueStatuses?.map((id) => {
+      const foundObject = statuses?.find((obj) => obj._id === id);
+      return foundObject
+        ? { _id: foundObject._id, name: foundObject.name }
+        : null;
+    });
+
+    const sortedStatuses = orderBy(actualStatusesArray, ["name"], ["asc"]);
+
+    return sortedStatuses;
+  };
+
   useEffect(() => {
     localStorage.setItem("search-users-data", JSON.stringify(data));
   }, [data]);
@@ -103,7 +126,8 @@ const Users = () => {
       />
       <FiltersPanel
         data={data}
-        itemsList={getActualUsersList()}
+        usersList={getActualUsersList()}
+        statusesList={getActualStatusesList()}
         register={register}
         setValue={setValue}
         handleKeyDown={handleKeyDown}

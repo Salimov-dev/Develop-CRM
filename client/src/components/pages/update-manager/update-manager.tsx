@@ -5,27 +5,27 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import dayjs from "dayjs";
 // MUI
 import { Box } from "@mui/material";
 // components
 import Header from "./components/header";
+import ManagerForm from "../../common/forms/manager-form";
 // store
 import { getUserDataById, updateUser } from "../../../store/users.store";
 import { getUserStatusesList } from "../../../store/user-statuses.store";
 // other
 import { managerSchema } from "../../../schemas/schemas";
-import ManagerForm from "../../common/forms/manager-form";
-import dayjs from "dayjs";
 
 const UpdateManager = () => {
   const { userId } = useParams();
   const user = useSelector(getUserDataById(userId));
   const userStatuses = useSelector(getUserStatusesList());
   const isEditMode = userId ? true : false;
-  const localStorageUser = JSON.parse(localStorage.getItem("editingUser"));
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const localStorageUser = JSON.parse(localStorage.getItem("editingUser"));
   const formatedState = {
     ...localStorageUser,
     contract: {
@@ -51,18 +51,27 @@ const UpdateManager = () => {
     formState: { errors, isValid },
     setValue,
   } = useForm({
-    defaultValues: formatedState || user,
+    defaultValues: user || formatedState,
     mode: "onBlur",
     resolver: yupResolver(managerSchema),
   });
 
   const data = watch();
+  console.log("data", data);
 
   const onSubmit = (data) => {
     dispatch(updateUser(data))
-    .then(navigate(-1))
-    .then(toast.success("Менеджер успешно изменен!"));
+      .then(navigate(-1))
+      .then(toast.success("Менеджер успешно изменен!"));
   };
+
+  useEffect(() => {
+    if (user !== undefined) {
+      localStorage.setItem("editingUser", JSON.stringify(user));
+    } else {
+      return;
+    }
+  }, []);
 
   useEffect(() => {
     if (user !== undefined) {
@@ -77,15 +86,14 @@ const UpdateManager = () => {
       <Header user={user} />
       <ManagerForm
         data={data}
-        user={localStorageUser}
         register={register}
         handleSubmit={handleSubmit}
         onSubmit={onSubmit}
         errors={errors}
         setValue={setValue}
-        userStatuses={userStatuses}
         isValid={isValid}
         isEditMode={isEditMode}
+        userStatuses={userStatuses}
       />
     </Box>
   );

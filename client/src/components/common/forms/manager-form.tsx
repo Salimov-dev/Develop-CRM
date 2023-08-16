@@ -41,8 +41,7 @@ const ManagerForm = ({
   setValue,
   userStatuses,
   isValid,
-  isEditMode,
-  user,
+  isEditMode= false,
 }) => {
   const navigate = useNavigate();
 
@@ -118,7 +117,7 @@ const ManagerForm = ({
             register={register}
             name="birthday"
             label="Дата рождения"
-            value={data?.birthday}
+            // value={data?.birthday}
             onChange={(value) => setValue("birthday", value)}
           />
           <SimpleSelectField
@@ -127,8 +126,7 @@ const ManagerForm = ({
             name="gender"
             labelId="gender"
             label="Пол"
-            errors={errors?.gender}
-            defaultValue={user?.gender}
+            defaultValue={data?.gender}
           />
         </FieldsContainer>
       </FieldsContainer>
@@ -141,21 +139,21 @@ const ManagerForm = ({
           register={register}
           name="contract.startDate"
           label="Начало договора"
-          value={data?.contract?.startDate}
+          // value={data?.contract?.startDate}
           onChange={(value) => setValue("contract.startDate", value)}
         />
         <DatePickerStyled
           register={register}
           name="contract.endDate"
           label="Окончание договора"
-          value={data?.contract?.endDate}
+          // value={data?.contract?.endDate}
           onChange={(value) => setValue("contract.endDate", value)}
         />
         <DatePickerStyled
           register={register}
           name="contract.trialPeriod"
           label="Окончание испыт.срока"
-          value={data?.contract?.trialPeriod}
+          // value={data?.contract?.trialPeriod}
           color="green"
           onChange={(value) => setValue("contract.trialPeriod", value)}
         />
@@ -172,7 +170,7 @@ const ManagerForm = ({
           label="Статус"
           errors={errors?.status}
           register={register}
-          defaultValue={user?.status}
+          defaultValue={data?.status}
         />
         <TextFieldStyled
           register={register}

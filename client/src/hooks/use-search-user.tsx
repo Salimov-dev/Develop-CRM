@@ -1,5 +1,4 @@
 import { useMemo } from "react";
-import dayjs from "dayjs";
 import "dayjs/locale/ru";
 
 const useSearchUser = ({ users, data }) => {
@@ -25,14 +24,16 @@ const useSearchUser = ({ users, data }) => {
     }
 
     if (data?.gender?.length) {
-      array = array?.filter((user) =>
-        user.gender.includes(data.gender)
-      );
+      array = array?.filter((user) => user.gender.includes(data.gender));
     }
 
     if (data.selectedUsers?.length) {
-      array = array?.filter((user) =>
-        data.selectedUsers.includes(user._id)
+      array = array?.filter((user) => data.selectedUsers.includes(user._id));
+    }
+
+    if (data.selectedStatuses?.length) {
+      array = array?.filter((item) =>
+        data.selectedStatuses?.includes(item?.status)
       );
     }
 
