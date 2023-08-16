@@ -47,6 +47,7 @@ const FooterButtons = styled(Box)`
 `;
 
 const ObjectForm = ({
+  data,
   object = {},
   objectId,
   register,
@@ -94,11 +95,11 @@ const ObjectForm = ({
         </Box>
         <FieldsContainer>
           <SimpleSelectField
+            register={register}
             itemsList={districts}
             name="location.district"
             labelId="district"
             label="Район"
-            register={register}
             isHelperText={true}
             helperText="Обязательно"
             defaultValue={object?.location?.district}
@@ -173,7 +174,7 @@ const ObjectForm = ({
             name="contact.name"
             errors={errors?.contact?.name}
             onInputQuantities={50}
-            value={object?.contact?.name}
+            value={data?.contact?.name}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -203,7 +204,7 @@ const ObjectForm = ({
             valueAsNumber={true}
             helperText={"Только в формате 79098887766, 78129998877, 9302211"}
             isHelperText={true}
-            value={object?.contact?.phone}
+            value={data?.contact?.phone}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -218,7 +219,7 @@ const ObjectForm = ({
             name="contact.email"
             errors={errors?.contact?.email}
             onInputQuantities={100}
-            value={object?.contact?.email}
+            value={data?.contact?.email}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -241,7 +242,7 @@ const ObjectForm = ({
               name="commercialTerms.totalSquare"
               valueAsNumber={true}
               onInputQuantities={5}
-              value={object?.commercialTerms?.totalSquare}
+              value={data?.commercialTerms?.totalSquare}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">м²</InputAdornment>
@@ -256,7 +257,7 @@ const ObjectForm = ({
               name="commercialTerms.rentSquare"
               valueAsNumber={true}
               onInputQuantities={5}
-              value={object?.commercialTerms?.rentSquare}
+              value={data?.commercialTerms?.rentSquare}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">м²</InputAdornment>
@@ -270,7 +271,7 @@ const ObjectForm = ({
               name="commercialTerms.rentPrice"
               valueAsNumber={true}
               onInputQuantities={8}
-              value={object?.commercialTerms?.rentPrice}
+              value={data?.commercialTerms?.rentPrice}
               InputProps={{
                 endAdornment: <InputAdornment position="end">₽</InputAdornment>,
               }}
@@ -282,7 +283,7 @@ const ObjectForm = ({
               name="commercialTerms.indexingAnnual"
               valueAsNumber={true}
               onInputQuantities={3}
-              value={object?.commercialTerms?.indexingAnnual}
+              value={data?.commercialTerms?.indexingAnnual}
               InputProps={{
                 endAdornment: <InputAdornment position="end">%</InputAdornment>,
               }}
@@ -324,10 +325,10 @@ const ObjectForm = ({
               name="commercialTerms.agentComission"
               valueAsNumber={true}
               onInputQuantities={8}
-              value={object?.commercialTerms?.agentComission}
+              value={data?.commercialTerms?.agentComission}
               InputProps={{
                 maxLength: 7,
-                endAdornment: <InputAdornment position="end">₽</InputAdornment>,
+                endAdornment: <InputAdornment position="end">%</InputAdornment>,
               }}
             />
             <SimpleSelectField
@@ -365,7 +366,7 @@ const ObjectForm = ({
               name="estateOptions.cadastralNumber"
               valueAsNumber={true}
               onInputQuantities={24}
-              value={object?.estateOptions?.cadastralNumber}
+              value={data?.estateOptions?.cadastralNumber}
               InputProps={{
                 endAdornment: <InputAdornment position="end">№</InputAdornment>,
               }}
@@ -377,7 +378,7 @@ const ObjectForm = ({
               name="estateOptions.electricityKw"
               valueAsNumber={true}
               onInputQuantities={4}
-              value={object?.estateOptions?.electricityKw}
+              value={data?.estateOptions?.electricityKw}
               InputProps={{
                 maxLength: 7,
                 endAdornment: (
@@ -392,7 +393,7 @@ const ObjectForm = ({
               label="Состояние полов"
               name="estateOptions.premisesFloor"
               onInputQuantities={100}
-              value={object?.estateOptions?.premisesFloor}
+              value={data?.estateOptions?.premisesFloor}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -409,7 +410,7 @@ const ObjectForm = ({
               type="text"
               name="estateOptions.waterSuply"
               onInputQuantities={20}
-              value={object?.estateOptions?.waterSuply}
+              value={data?.estateOptions?.waterSuply}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -425,7 +426,7 @@ const ObjectForm = ({
               name="estateOptions.premisesHeight"
               valueAsNumber={true}
               onInputQuantities={3}
-              value={object?.estateOptions?.premisesHeight}
+              value={data?.estateOptions?.premisesHeight}
               InputProps={{
                 endAdornment: <InputAdornment position="end">м</InputAdornment>,
               }}
@@ -437,7 +438,7 @@ const ObjectForm = ({
               name="estateOptions.parkingQuantity"
               valueAsNumber={true}
               onInputQuantities={4}
-              value={object?.estateOptions?.parkingQuantity}
+              value={data?.estateOptions?.parkingQuantity}
               InputProps={{
                 maxLength: 7,
                 endAdornment: (
@@ -453,7 +454,7 @@ const ObjectForm = ({
               type="text"
               name="estateOptions.loadingArea"
               onInputQuantities={30}
-              value={object?.estateOptions?.loadingArea}
+              value={data?.estateOptions?.loadingArea}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">

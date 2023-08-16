@@ -183,6 +183,7 @@ const FiltersPanel = ({
 
     return sortedType;
   };
+  
   return (
     <>
       <ButtonsBlock>

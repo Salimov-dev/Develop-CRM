@@ -49,13 +49,13 @@ const TextFieldStyled = ({
       {...register(name, {
         valueAsNumber: valueAsNumber,
       })}
-      type={type}
-      label={label}
       variant="outlined"
+      type={type}
       id={name}
+      value={value}
+      label={label}
       rows={rows}
       onKeyDown={onKeyDown}
-      value={value}
       InputProps={InputProps}
       inputProps={inputProps}
       multiline={multiline}

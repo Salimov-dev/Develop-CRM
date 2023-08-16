@@ -45,7 +45,6 @@ const FiltersPanel = ({data, itemsList, register, setValue, handleKeyDown, isLoa
           register={register}
           label="Найти по email"
           name="email"
-          onKeyDown={handleKeyDown}
           value={data.email}
           inputProps={{ maxLength: 30 }}
           disabled={isLoading ? true : false}

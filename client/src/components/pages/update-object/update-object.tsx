@@ -38,14 +38,25 @@ const UpdateObject = () => {
     mode: "onBlur",
     resolver: yupResolver(objectSchema),
   });
+  console.log("object", object);
 
+  const data = watch();
   const watchName = watch("contact.name");
   const watchDistrict = watch("location.district");
 
   const onSubmit = (data) => {
-    dispatch(updateObject(data, objectId)).then(navigate(-1)).then(toast.success("Объект успешно изменен!"))  
+    dispatch(updateObject(data, objectId))
+      .then(navigate(-1))
+      .then(toast.success("Менеджер успешно изменен!"));
   };
 
+  useEffect(() => {
+    if (object !== undefined) {
+      localStorage.setItem("editingObject", JSON.stringify(object));
+    } else {
+      return;
+    }
+  }, []);
   useEffect(() => {
     if (object !== undefined) {
       localStorage.setItem("editingObject", JSON.stringify(object));
@@ -58,6 +69,7 @@ const UpdateObject = () => {
     <Box>
       <Header object={object} />
       <ObjectForm
+        data={data}
         objectId={objectId}
         object={localStorageObject}
         handleSubmit={handleSubmit}

@@ -2,7 +2,7 @@
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 // layouts
 import Presentations from "./layouts/presentations/presentations";
 import ObjectsOnMap from "./layouts/objects-on-map/objects-on-map";
@@ -94,7 +94,7 @@ function App() {
           </AppStyled>
         </AppLoader>
       </ThemeProvider>
-      <ToastContainer />
+      <ToastContainer position="bottom-left" />
     </ColorModeContext.Provider>
   );
 }

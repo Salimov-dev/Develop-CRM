@@ -47,7 +47,7 @@ const Objects = () => {
     startDate: localStorageState?.startDate
       ? dayjs(localStorageState?.startDate)
       : null,
-    endDate: localStorageState?.startDate
+    endDate: localStorageState?.endDate
       ? dayjs(localStorageState?.endDate)
       : null,
     onlyWithPhone: Boolean(localStorageState?.onlyWithPhone),

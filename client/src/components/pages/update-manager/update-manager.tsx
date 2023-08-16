@@ -9,68 +9,84 @@ import { toast } from "react-toastify";
 import { Box } from "@mui/material";
 // components
 import Header from "./components/header";
-import ObjectForm from "../../common/forms/object-form";
 // store
+import { getUserDataById, updateUser } from "../../../store/users.store";
+import { getUserStatusesList } from "../../../store/user-statuses.store";
 // other
-import { objectSchema } from "../../../schemas/schemas";
+import { managerSchema } from "../../../schemas/schemas";
 import ManagerForm from "../../common/forms/manager-form";
-import { getUserDataById } from "../../../store/users.store";
+import dayjs from "dayjs";
 
 const UpdateManager = () => {
   const { userId } = useParams();
   const user = useSelector(getUserDataById(userId));
-  // const isEditMode = objectId ? true : false;
+  const userStatuses = useSelector(getUserStatusesList());
+  const isEditMode = userId ? true : false;
+  const localStorageUser = JSON.parse(localStorage.getItem("editingUser"));
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  // const dispatch = useDispatch();
-  // const navigate = useNavigate();
+  const formatedState = {
+    ...localStorageUser,
+    contract: {
+      startDate: localStorageUser?.contract.startDate
+        ? dayjs(localStorageUser?.contract.startDate)
+        : null,
+      endDate: localStorageUser?.contract.endDate
+        ? dayjs(localStorageUser?.contract.endDate)
+        : null,
+      trialPeriod: localStorageUser?.contract.trialPeriod
+        ? dayjs(localStorageUser?.contract.trialPeriod)
+        : null,
+    },
+    birthday: localStorageUser?.birthday
+      ? dayjs(localStorageUser?.birthday)
+      : null,
+  };
 
-  // const localStorageObject = JSON.parse(localStorage.getItem("editingObject"));
-  // const isObjectHasAddress =
-  //   localStorageObject?.location?.city && localStorageObject?.location?.address;
+  const {
+    register,
+    watch,
+    handleSubmit,
+    formState: { errors, isValid },
+    setValue,
+  } = useForm({
+    defaultValues: formatedState || user,
+    mode: "onBlur",
+    resolver: yupResolver(managerSchema),
+  });
 
-  // const {
-  //   register,
-  //   watch,
-  //   handleSubmit,
-  //   formState: { errors, isValid },
-  //   reset,
-  // } = useForm({
-  //   defaultValues: object,
-  //   mode: "onBlur",
-  //   resolver: yupResolver(objectSchema),
-  // });
+  const data = watch();
 
-  // const watchName = watch("contact.name");
-  // const watchDistrict = watch("location.district");
+  const onSubmit = (data) => {
+    dispatch(updateUser(data))
+    .then(navigate(-1))
+    .then(toast.success("Менеджер успешно изменен!"));
+  };
 
-  // const onSubmit = (data) => {
-  //   dispatch(UpdateManager(data, objectId))
-  //     .then(navigate(-1))
-  //     .then(toast.success("Объект успешно изменен!"));
-  // };
-
-  // useEffect(() => {
-  //   if (object !== undefined) {
-  //     localStorage.setItem("editingObject", JSON.stringify(object));
-  //   } else {
-  //     return;
-  //   }
-  // }, [localStorageObject]);
+  useEffect(() => {
+    if (user !== undefined) {
+      localStorage.setItem("editingUser", JSON.stringify(user));
+    } else {
+      return;
+    }
+  }, [localStorageUser]);
 
   return (
     <Box>
-      <h1>Manager update</h1>
-      {/* <Header object={object} /> */}
-      {/* <ManagerForm
-         register={register}
-         handleSubmit={handleSubmit}
-         onSubmit={onSubmit}
-         errors={errors}
-         setValue={setValue}
-         isTrialStatusSelected={isTrialStatusSelected}
-         userStatuses={userStatuses}
-         isValid={isValid}
-       />  */}
+      <Header user={user} />
+      <ManagerForm
+        data={data}
+        user={localStorageUser}
+        register={register}
+        handleSubmit={handleSubmit}
+        onSubmit={onSubmit}
+        errors={errors}
+        setValue={setValue}
+        userStatuses={userStatuses}
+        isValid={isValid}
+        isEditMode={isEditMode}
+      />
     </Box>
   );
 };

@@ -141,6 +141,7 @@ export const loadUsersList = () => async (dispatch) => {
 
 export const updateUser = (payload) => async (dispatch) => {
   dispatch(userUpdateRequested());
+  
   try {
     const { content } = await userService.update(payload);
 

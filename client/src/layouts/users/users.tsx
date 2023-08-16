@@ -17,6 +17,7 @@ import {
 } from "../../store/users.store";
 // hooks
 import useSearchUser from "../../hooks/use-search-user";
+import dayjs from "dayjs";
 
 const initialState = {
   lastName: "",

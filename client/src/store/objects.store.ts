@@ -98,11 +98,11 @@ export const createObject = (payload) => async (dispatch) => {
   }
 };
 
-export const updateObject = (payload, objectId) => async (dispatch) => {
+export const updateObject = (payload) => async (dispatch) => {
   dispatch(objectUpdateRequested());
   try {
     dispatch(objectUpdateSuccessed(payload));
-    await objectService.update(payload, objectId);
+    await objectService.update(payload);
   } catch (error) {
     dispatch(objectUpdateFailed(error.message));
   }

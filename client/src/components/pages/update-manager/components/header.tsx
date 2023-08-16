@@ -15,14 +15,14 @@ const Title = styled(Box)`
   gap: 8px;
 `;
 
-const Header = ({ object }) => {
+const Header = ({ user }) => {
   const navigate = useNavigate();
   return (
     <Component>
       <Title>
-        <h1>Изменить объект:</h1>
+        <h1>Изменить менеджера:</h1>
         <Typography variant="h3" sx={{ background: "yellow", color: "black" }}>
-          {object?.location.city}, {object?.location.address}
+          {user?.name.lastName} {user?.name.firstName} {user?.name.surName}
         </Typography>
       </Title>
 
