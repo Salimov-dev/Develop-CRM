@@ -463,23 +463,6 @@ const ObjectForm = ({
               }}
             />
           </FieldsContainer>
-          <FormGroup sx={{ paddingTop: "10px" }}>
-            <SwitchStyled
-              register={register}
-              name="accordTerms.readyToRent"
-              label="Готов сдавать под нашу деятельность"
-            />
-            <SwitchStyled
-              register={register}
-              name="accordTerms.readyToContract"
-              label="Собственник согласен на нашу форму договора"
-            />
-            <SwitchStyled
-              register={register}
-              name="accordTerms.readyToRenovation"
-              label="Собственник готов сделать ремонт за свой счёт"
-            />
-          </FormGroup>
         </FieldsContainer>
 
         <Box sx={{ marginRight: "auto" }}>

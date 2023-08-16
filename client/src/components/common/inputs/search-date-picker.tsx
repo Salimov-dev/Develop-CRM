@@ -4,7 +4,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
-const DatePickerStyled = ({
+const SearchDatePicker = ({
   register,
   name,
   label,
@@ -28,6 +28,9 @@ const DatePickerStyled = ({
           sx={{
             width: "100%",
             "& .MuiOutlinedInput-root": {
+              "& fieldset": {
+                borderColor: errors ? "red" : value ? "green" : "gray",
+              },
               "&.Mui-focused fieldset": {
                 borderColor: "green",
               },
@@ -51,4 +54,4 @@ const DatePickerStyled = ({
   );
 };
 
-export default DatePickerStyled;
+export default SearchDatePicker;

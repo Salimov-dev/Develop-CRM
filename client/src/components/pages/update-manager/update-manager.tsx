@@ -44,6 +44,26 @@ const UpdateManager = () => {
       : null,
   };
 
+  const formatedUser = {
+    ...user,
+    contract: {
+      startDate: localStorageUser?.contract.startDate
+        ? dayjs(localStorageUser?.contract.startDate)
+        : null,
+      endDate: localStorageUser?.contract.endDate
+        ? dayjs(localStorageUser?.contract.endDate)
+        : null,
+      trialPeriod: localStorageUser?.contract.trialPeriod
+        ? dayjs(localStorageUser?.contract.trialPeriod)
+        : null,
+    },
+    birthday: localStorageUser?.birthday
+      ? dayjs(localStorageUser?.birthday)
+      : null,
+  };
+  console.log("formatedUser", formatedUser);
+  
+
   const {
     register,
     watch,
@@ -51,7 +71,7 @@ const UpdateManager = () => {
     formState: { errors, isValid },
     setValue,
   } = useForm({
-    defaultValues: user || formatedState,
+    defaultValues: formatedUser || formatedState,
     mode: "onBlur",
     resolver: yupResolver(managerSchema),
   });

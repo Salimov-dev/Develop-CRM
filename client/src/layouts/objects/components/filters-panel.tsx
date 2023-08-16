@@ -4,9 +4,6 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 // MUI
 import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
-// components
-import SearchField from "../../../components/common/inputs/search-field";
-import MultiSelectField from "../../../components/common/inputs/multi-select-field";
 import {
   Box,
   styled,
@@ -17,6 +14,10 @@ import {
   FormGroup,
   Switch,
 } from "@mui/material";
+// components
+import SearchDatePicker from "../../../components/common/inputs/search-date-picker";
+import SearchField from "../../../components/common/inputs/search-field";
+import MultiSelectField from "../../../components/common/inputs/multi-select-field";
 // store
 import { getUsersList } from "../../../store/users.store";
 import { getObjectsStatusList } from "../../../store/object-status.store";
@@ -25,7 +26,6 @@ import { getMetroList } from "../../../store/metro.store";
 import { getCurrentRentersList } from "../../../store/current-renter.store";
 import { getEstateTypesList } from "../../../store/estate-types.store";
 import { getObjectTypesList } from "../../../store/object-types.store";
-import DatePickerStyled from "../../../components/common/inputs/date-picker";
 
 const Form = styled(`form`)({
   display: "flex",
@@ -59,8 +59,6 @@ const FiltersPanel = ({
   const estateTypes = useSelector(getEstateTypesList());
   const objectTypes = useSelector(getObjectTypesList());
   const navigate = useNavigate();
-  // console.log("objects", objects);
-  // console.log("data", data);
 
   const isOnlyPhoneChecked = data?.onlyWithPhone;
 
@@ -183,7 +181,7 @@ const FiltersPanel = ({
 
     return sortedType;
   };
-  
+
   return (
     <>
       <ButtonsBlock>
@@ -350,7 +348,7 @@ const FiltersPanel = ({
           label="Тип объекта"
           disabled={isLoading ? true : false}
         />
-        <DatePickerStyled
+        <SearchDatePicker
           register={register}
           name="startDate"
           label="Начало"
@@ -358,7 +356,7 @@ const FiltersPanel = ({
           onChange={(value) => setValue("startDate", value)}
           isLoading={isLoading}
         />
-        <DatePickerStyled
+        <SearchDatePicker
           register={register}
           name="endDate"
           label="Конец"

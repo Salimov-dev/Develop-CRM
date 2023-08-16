@@ -31,7 +31,6 @@ const InfoBlock = styled(Box)`
 `;
 
 const ObjectInfo = ({ object }) => {
-
   const metroName = useSelector(getMetroName(object?.location.metro));
 
   const createdTime = FormatDate(object?.created_at);
@@ -97,9 +96,9 @@ const ObjectInfo = ({ object }) => {
           <h3>Информация:</h3>
 
           <Typography>Создан: {createdTime}</Typography>
-          <br />
           <Typography>Менеджер: {manager}</Typography>
           <Typography>Статус: {status}</Typography>
+          <br/>
           <Typography>Метро: {metroName ? metroName : "без метро"}</Typography>
           <Typography>Кадастровый №: {cadastralNumber}</Typography>
         </InfoBlock>
@@ -108,15 +107,15 @@ const ObjectInfo = ({ object }) => {
         <InfoBlock>
           <h3>Объект:</h3>
           <Typography>Текущий арендатор: {currentRenters}</Typography>
-          <Typography>Состояние объекта: {objectConditions}</Typography>
           <Typography>Тип недвижимости: {estateTypes}</Typography>
           <Typography>Тип объекта: {objectTypes}</Typography>
-          <Typography>Парковка: {parkingQuantity} авто</Typography>
+          <br/>
           <Typography>Электричество: {electricityKw}кВт</Typography>
           <Typography>Водоснабжение: {waterSuply}</Typography>
           <Typography>Высота потолков: {premisesHeight}м</Typography>
           <Typography>Состояние полов: {premisesFloor}</Typography>
-
+          <br/>
+          <Typography>Парковка: {parkingQuantity} авто</Typography>
           <Typography>Зона погрузки: {loadingArea}</Typography>
         </InfoBlock>
 
@@ -124,12 +123,16 @@ const ObjectInfo = ({ object }) => {
         <InfoBlock>
           <h3>Условия:</h3>
           <Typography>Тип договора: {rentTypes}</Typography>
+          <br />
           <Typography>Площадь (общая): {totalSquare}м²</Typography>
           <Typography>Площадь (аренда): {rentSquare}м²</Typography>
+          <br />
           <Typography>Стоимость (аренда общая): {rentPrice}руб</Typography>
           <Typography>
             Стоимость (аренда м2): {priceForRentMetr}руб/м²
           </Typography>
+          <Typography>Индексация: {indexingAnnual}% ежегодно</Typography>
+          <br />
           <Typography>Каникулы: {rentHolidays} дней</Typography>
           <Typography>
             Комиссия агента: {agentComission}% или{" "}
@@ -137,18 +140,6 @@ const ObjectInfo = ({ object }) => {
               (object?.commercialTerms.rentPrice / 100) * agentComission
             )}
             руб
-          </Typography>
-          <Typography>Индексация: {indexingAnnual}% ежегодно</Typography>
-
-          <br />
-          <Typography>
-            Готов сдавать под нашу деятельность: {readyToRent}
-          </Typography>
-          <Typography>
-            Собственник согласен на нашу форму договора: {readyToContract}
-          </Typography>
-          <Typography>
-            Собственник готов сделать ремонт за свой счёт: {readyToRenovation}
           </Typography>
         </InfoBlock>
 

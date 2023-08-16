@@ -18,7 +18,7 @@ const StyledSelect = styled(Select)(() => ({
   },
   "& .MuiSelect-select": {
     marginTop: "-5px",
-    height: "25px !important",
+    height: "24px !important",
   },
 }));
 
@@ -34,7 +34,7 @@ const SimpleSelectField = ({
   helperText,
   defaultValue = "",
   watch,
-  selectedItems
+  selectedItems,
 }) => {
   const sortedItems = orderBy(itemsList, ["name"], ["asc"]);
 
