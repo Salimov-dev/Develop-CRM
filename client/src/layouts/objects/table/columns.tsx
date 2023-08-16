@@ -75,8 +75,8 @@ export const groupedColumns = [
         accessorKey: "contact.phone",
         header: "Телефон",
         cell: (info) => {
-          const phone = info.getValue();
-          FormatPhone(phone);
+          const phone = info.getValue();        
+          return FormatPhone(phone);
         },
       },
       {

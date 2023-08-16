@@ -28,6 +28,8 @@ import { ColorModeContext, useMode } from "./theme";
 import Users from "./layouts/users/users";
 import CreateManager from "./components/pages/create-manager/create-manager";
 import UpdateManager from "./components/pages/update-manager/update-manager";
+import Meetings from "./layouts/meetings/meetings";
+import CreateMeeting from "./components/pages/create-meeting/create-meeting";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -43,7 +45,6 @@ function App() {
               <TopBar />
               <Routes>
                 <Route index path="" element={<Main />} />
-                <Route index path="objects" element={<Objects />} />
 
                 <Route path="auth" element={<Login />}>
                   <Route index element={<Navigate to="/auth/login" />} />
@@ -74,10 +75,19 @@ function App() {
                 </Route>
 
                 <Route path="objects">
+                  <Route index element={<Objects />} />
                   <Route path={":objectId/"} element={<ObjectPage />} />
                   <Route path={"create"} element={<CreateObject />} />
                   <Route path={":objectId/edit"} element={<UpdateObject />} />
                   <Route path="*" element={<Navigate to="/objects" />} />
+                </Route>
+
+                <Route path="meetings">
+                  <Route index element={<Meetings />} />
+                  {/* <Route path={":meetingId/"} element={<MeetingPage />} /> */}
+                  <Route path={"create"} element={<CreateMeeting />} />
+                  {/* <Route path={":meetingId/edit"} element={<UpdateMeeting />} /> */}
+                  <Route path="*" element={<Navigate to="/meetings" />} />
                 </Route>
 
                 <Route path="map">

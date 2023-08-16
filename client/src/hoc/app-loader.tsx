@@ -14,6 +14,8 @@ import { loadRentTypesList } from "../store/rent-types.store";
 import { loadObjectTypesList } from "../store/object-types.store";
 import { loadEstateTypesList } from "../store/estate-types.store";
 import { loadUserStatusesList } from "../store/user-statuses.store";
+import { loadMeetingsList } from "../store/meetings.store";
+import { loadMeetingStatusList } from "../store/meeting-status.store";
 
 interface AppLoaderProps {
   children: React.ReactNode;
@@ -37,6 +39,8 @@ const AppLoader = ({ children }: AppLoaderProps) => {
     dispatch<any>(loadObjectTypesList());
     dispatch<any>(loadEstateTypesList());
     dispatch<any>(loadUserStatusesList());
+    dispatch<any>(loadMeetingsList());
+    dispatch<any>(loadMeetingStatusList());
   }, []);
 
   return children;
