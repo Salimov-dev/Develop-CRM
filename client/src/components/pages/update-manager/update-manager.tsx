@@ -26,6 +26,7 @@ const UpdateManager = () => {
   const navigate = useNavigate();
 
   const localStorageUser = JSON.parse(localStorage.getItem("editingUser"));
+  
   const formatedState = {
     ...localStorageUser,
     contract: {
@@ -47,22 +48,21 @@ const UpdateManager = () => {
   const formatedUser = {
     ...user,
     contract: {
-      startDate: localStorageUser?.contract.startDate
-        ? dayjs(localStorageUser?.contract.startDate)
+      startDate: user?.contract.startDate
+        ? dayjs(user?.contract.startDate)
         : null,
-      endDate: localStorageUser?.contract.endDate
-        ? dayjs(localStorageUser?.contract.endDate)
+      endDate: user?.contract.endDate
+        ? dayjs(user?.contract.endDate)
         : null,
-      trialPeriod: localStorageUser?.contract.trialPeriod
-        ? dayjs(localStorageUser?.contract.trialPeriod)
+      trialPeriod: user?.contract.trialPeriod
+        ? dayjs(user?.contract.trialPeriod)
         : null,
     },
-    birthday: localStorageUser?.birthday
-      ? dayjs(localStorageUser?.birthday)
+    birthday: user?.birthday
+      ? dayjs(user?.birthday)
       : null,
   };
-  console.log("formatedUser", formatedUser);
-  
+
 
   const {
     register,
@@ -71,13 +71,13 @@ const UpdateManager = () => {
     formState: { errors, isValid },
     setValue,
   } = useForm({
-    defaultValues: formatedUser || formatedState,
+    defaultValues: user?._id === userId ? formatedUser : formatedState,
     mode: "onBlur",
     resolver: yupResolver(managerSchema),
   });
 
   const data = watch();
-  console.log("data", data);
+ 
 
   const onSubmit = (data) => {
     dispatch(updateUser(data))
@@ -104,6 +104,7 @@ const UpdateManager = () => {
   return (
     <Box>
       <Header user={user} />
+      <img src={user?.image} alt="" style={{width: '100px', borderRadius: '10px'}}/>
       <ManagerForm
         data={data}
         register={register}

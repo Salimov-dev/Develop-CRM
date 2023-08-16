@@ -1,7 +1,7 @@
 // libraries
 import { useSelector } from "react-redux";
 // components
-import { FormatPhone } from "../../../components/common/table/helpers/helpers";
+import { FormatPhone, UserAvatar } from "../../../components/common/table/helpers/helpers";
 import OpenButton from "./components/open-button";
 // mock
 import { gendersArray } from "../../../mock/genders";
@@ -21,6 +21,14 @@ export const groupedColumns = [
         cell: (info) => {
           const date = info.getValue();
           return FormatDate(new Date(date));
+        },
+      },
+      {
+        accessorKey: "image",
+        header: "Аватар",
+        cell: (info) => {
+          const ava = info.getValue();
+          return <UserAvatar path={ava}/>;
         },
       },
       {

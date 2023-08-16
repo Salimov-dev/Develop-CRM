@@ -16,14 +16,16 @@ export const groupedColumns = [
         accessorKey: "created_at",
         header: "Дата",
         cell: (info) => {
-          return FormatDate(new Date(info.getValue()));
+          const date = info.getValue();
+          return FormatDate(new Date(date));
         },
       },
       {
         accessorKey: "userId",
         header: "Менеджер",
         cell: (info) => {
-          return FormatManagerName(info.getValue());
+          const userId = info.getValue();
+          return FormatManagerName(userId);
         },
       },
     ],
@@ -34,13 +36,17 @@ export const groupedColumns = [
       {
         accessorKey: "location.city",
         header: "Город",
-        cell: (info) => info.getValue(),
+        cell: (info) => {
+          const city = info.getValue();
+          return city;
+        },
       },
       {
         accessorKey: "location.district",
         header: "Район",
         cell: (info) => {
-          return FormatDistrict(info.getValue());
+          const district = info.getValue();
+          return FormatDistrict(district);
         },
       },
       {
@@ -54,7 +60,10 @@ export const groupedColumns = [
       {
         accessorKey: "location.address",
         header: "Адрес",
-        cell: (info) => info.getValue(),
+        cell: (info) => {
+          const address = info.getValue();
+          return address;
+        },
       },
     ],
   },
@@ -65,17 +74,26 @@ export const groupedColumns = [
       {
         accessorKey: "contact.phone",
         header: "Телефон",
-        cell: (info) => FormatPhone(info.getValue()),
+        cell: (info) => {
+          const phone = info.getValue();
+          FormatPhone(phone);
+        },
       },
       {
         accessorKey: "contact.name",
         header: "Имя",
-        cell: (info) => info.getValue(),
+        cell: (info) => {
+          const name = info.getValue();
+          return name;
+        },
       },
       {
         accessorKey: "",
         header: "Последний контакт",
-        cell: (info) => info.getValue(),
+        cell: (info) => {
+          const contact = info.getValue();
+          return contact;
+        },
       },
     ],
   },
@@ -86,7 +104,8 @@ export const groupedColumns = [
         accessorKey: "status",
         header: "Статус",
         cell: (info) => {
-          return FormatObjectStatus(info.getValue());
+          const status = info.getValue();
+          return FormatObjectStatus(status);
         },
       },
       {

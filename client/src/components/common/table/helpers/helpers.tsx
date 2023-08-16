@@ -32,3 +32,11 @@ export const FormatObjectStatus = (id) => {
 export const FormatMetro = (id) => {
   return useSelector(getMetroName(id));
 };
+
+export const UserAvatar = ({ path }) => {
+  return (
+    <Box sx={{ display: "flex", justifyContent: "center" }}>
+      <img src={path} alt="" style={{ width: "40px", borderRadius:'4px' }} />
+    </Box>
+  );
+};
